@@ -1,0 +1,46 @@
+﻿@using TopTrade.Common
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
+
+    <link href="~/fonts/fa-brands-400.woff2" rel='stylesheet' type='font/woff2' asp-append-version="true">
+    <link href="~/fonts/fa-solid-900.woff2" rel='stylesheet' type='font/woff2' asp-append-version="true">
+    <!-- Font preload -->
+    <link href="~/fonts/inter-v2-latin-regular.woff2" rel='stylesheet' type='font/woff2' asp-append-version="true">
+    <link href="~/fonts/inter-v2-latin-500.woff2" as="font" rel='stylesheet' type='font/woff2' asp-append-version="true">
+    <link href="~/fonts/inter-v2-latin-700.woff2" as="font" rel='stylesheet' type='font/woff2' asp-append-version="true">
+    <!-- Favicon and apple icon -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" asp-append-version="true">
+    <link rel="apple-touch-icon-precomposed" href="~/img/apple-touch-icon.png" asp-append-version="true">
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/css/uikit.min.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="in-loader">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <div class="container">
+        <partial name="_CookieConsentPartial" />
+    </div>
+    @this.RenderBody()    
+
+    <script src="~/js/uikit.min.js" asp-append-version="true"></script>
+    <script src="~/js/blockit.min.js" asp-append-version="true"></script>
+    <script src="~/js/config-theme.js" asp-append-version="true"></script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/js/site.min.js" asp-append-version="true"></script>
+    @await this.RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
