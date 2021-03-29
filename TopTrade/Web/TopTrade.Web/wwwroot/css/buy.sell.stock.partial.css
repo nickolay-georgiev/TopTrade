@@ -1,0 +1,44 @@
+﻿body {
+    background: rgb(19, 23, 34);
+    color: azure;
+}
+
+h6 {
+    text-align: center;
+    font-size: 1.3rem;
+    background: rgb(31, 38, 56);
+    padding: 1.2rem;
+}
+
+.green-text {
+    color: rgb(85, 173, 130);
+}
+
+.red-text {
+    color: rgb(235, 106, 97);
+}
+
+div.button {
+    text-align: center;
+}
+
+div.button > button {
+    width: 80%;
+    text-align: center;
+    height: 55px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
+
+div.button > button.buy-button {
+    background: rgb(85, 173, 130);
+}
+
+div.button > button.sell-button {
+    background: rgb(235, 106, 97);
+}
+
+div.button > button:active {
+    transform: translateY(4px);
+}
