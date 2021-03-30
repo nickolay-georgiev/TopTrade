@@ -38,11 +38,6 @@
     },
     {
       "provider": "unpkg",
-      "library": "chartjs@0.3.24",
-      "destination": "wwwroot/lib/chartjs/"
-    },
-    {
-      "provider": "unpkg",
       "library": "chart.js@2.9.4",
       "destination": "wwwroot/lib/chart.js/"
     }
