@@ -40,6 +40,11 @@
       "provider": "unpkg",
       "library": "chart.js@2.9.4",
       "destination": "wwwroot/lib/chart.js/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "font-awesome@5.15.3",
+      "destination": "wwwroot/lib/font-awesome/"
     }
   ]
 }

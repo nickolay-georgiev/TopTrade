@@ -81,7 +81,27 @@
     padding-left: 220px;
 }
 
-.button-test {
-    position: sticky;
-    bottom: 0;
+.deposit-button-wrapper {
+    text-align: center;
+}
+
+.deposit-button-wrapper > button {
+    background-color: #55AD82;
+    border: none;
+    padding: 0.7rem 2.2rem;
+    border-radius: 0.3rem;
+    margin-top: 1.2rem;
+}
+
+div.card-logos {
+    height: 0.7rem;
+}
+
+div.card-logos img.img-fluid.small-logo {
+    height: 1.0rem;
+}
+
+span.close-mark {
+    color: blue;
+    font-size: 2rem;
 }

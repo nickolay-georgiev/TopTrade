@@ -49,6 +49,14 @@ img {
     height: 6px;
 }
 
+@media (max-width: 960px) {
+    .uk-section.uk-padding-large {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+
 ::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.07);
     border: solid rgba(88, 88, 88, 0.12) 2px;

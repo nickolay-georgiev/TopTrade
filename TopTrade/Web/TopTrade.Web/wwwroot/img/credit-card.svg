@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="27" height="25" viewBox="0 0 27 25">
+  <g id="Group_2619" data-name="Group 2619" transform="translate(-67 -67)">
+    <g id="Group_10" data-name="Group 10" transform="translate(67 67)">
+      <g id="Rectangle_Copy" data-name="Rectangle Copy" fill="none" stroke="#2c2c2c" stroke-miterlimit="10" stroke-width="1">
+        <rect width="22" height="17" rx="2" stroke="none"/>
+        <rect x="0.5" y="0.5" width="21" height="16" rx="1.5" fill="none"/>
+      </g>
+      <rect id="Rectangle_Copy_3" data-name="Rectangle Copy 3" width="3" height="1" rx="0.5" transform="translate(15 9)" fill="#2c2c2c"/>
+      <rect id="Rectangle_Copy_4" data-name="Rectangle Copy 4" width="3" height="1" rx="0.5" transform="translate(11 9)" fill="#2c2c2c"/>
+      <rect id="Rectangle_Copy_5" data-name="Rectangle Copy 5" width="3" height="1" rx="0.5" transform="translate(7 9)" fill="#2c2c2c"/>
+      <rect id="Rectangle_Copy_6" data-name="Rectangle Copy 6" width="3" height="1" rx="0.5" transform="translate(3 9)" fill="#2c2c2c"/>
+      <rect id="Rectangle_Copy_7" data-name="Rectangle Copy 7" width="8" height="2" rx="1" transform="translate(3 3)" fill="#2c2c2c"/>
+    </g>
+    <g id="Activate_my_card_icon" data-name="Activate my card icon" transform="translate(21 -531)">
+      <g id="Rectangle_Copy-2" data-name="Rectangle Copy" transform="translate(49 604)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1">
+        <rect width="24" height="19" rx="2" stroke="none"/>
+        <rect x="0.5" y="0.5" width="23" height="18" rx="1.5" fill="none"/>
+      </g>
+      <g id="Rectangle_Copy-3" data-name="Rectangle Copy" transform="translate(50 605)" fill="#fff" stroke="#2c2c2c" stroke-miterlimit="10" stroke-width="1">
+        <rect width="22" height="17" rx="2" stroke="none"/>
+        <rect x="0.5" y="0.5" width="21" height="16" rx="1.5" fill="none"/>
+      </g>
+      <rect id="Rectangle_184" data-name="Rectangle 184" width="22" height="3" transform="translate(50 608)" fill="#2c2c2c"/>
+    </g>
+  </g>
+</svg>
