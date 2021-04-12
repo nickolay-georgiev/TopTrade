@@ -1,1 +1,266 @@
-﻿from home
+﻿<div class="content-container">
+    <div class="col remove-grow">
+        <div class="search-bar container-fluid d-flex justify-content-center">
+            <form class="search-from col-md-4 d-flex align-items-center" id="search-from">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-prepend search-icon-button">
+                            <span class="input-group-text">
+                                <i class="fas fa-search"></i>
+                            </span>
+                        </span>
+
+                        <input class="form-control border-right-0" placeholder="Search stock">
+
+                        <div class="close-search-bar" hidden>
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <h5 class="watchlist-header font-weight-light p-3 bg-white">My Watchlist</h5>
+
+    </div>
+
+    <div class="container site-content">
+        <!-- <h5 class="font-weight-light p-2">My Watchlist</h5> -->
+
+        <div class="col table-div">
+            <table class="table watchlist-table">
+                <thead class="watchlist-table-header">
+                    <tr>
+                        <th scope="col small">TICKERS</th>
+                        <th scope="col">CHANGE</th>
+                        <th scope="col">CHART</th>
+                        <th scope="col">SELL</th>
+                        <th scope="col">BUY</th>
+                        <th scope="col">SENTIMENT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>mdo</td>
+                        <td>mdo</td>
+                        <td class="d-flex align-items-center">
+                            <span>mdo</span>
+                            <i class="fas fa-ellipsis-v remove-stock-button">
+
+                            </i>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>fat</td>
+                        <td>fat</td>
+                        <td>fat <i class="fas fa-ellipsis-v"></i></td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>twitter</td>
+                        <td>twitter</td>
+                        <td>twitter <i class="fas fa-ellipsis-v"></i></td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>fat</td>
+                        <td>fat</td>
+                        <td>fat <i class="fas fa-ellipsis-v"></i></td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>twitter</td>
+                        <td>twitter</td>
+                        <td>twitter <i class="fas fa-ellipsis-v"></i></td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>fat</td>
+                        <td>fat</td>
+                        <td>fat <i class="fas fa-ellipsis-v"></i></td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>twitter</td>
+                        <td>twitter</td>
+                        <td>twitter <i class="fas fa-ellipsis-v"></i></td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>fat</td>
+                        <td>fat</td>
+                        <td>fat <i class="fas fa-ellipsis-v"></i></td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>twitter</td>
+                        <td>twitter</td>
+                        <td>twitter <i class="fas fa-ellipsis-v"></i></td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+
+    <div class="footer d-flex justify-content-around mb-2">
+
+        <div class="statistics available-amount flex-column d-flex align-items-center border-right">
+            <h5>1000.0000</h5>
+            <span class="small">AVAILABLE</span>
+            <i class="fas fa-plus plus-icon"></i>
+        </div>
+        <div class="statistics available-amount flex-column d-flex align-items-center border-right">
+            <h5>1000.0000</h5>
+            <span class="small">TOTAL ALLOCATED</span>
+            <i class="fas fa-plus plus-icon"></i>
+
+        </div>
+
+        <div class="statistics available-amount flex-column d-flex align-items-center border-right">
+            <h5>1000.0000</h5>
+            <span class="small">PROFIT</span>
+            <i class="fas fa-equals plus-icon"></i>
+
+        </div>
+
+        <div class="statistics available-amount flex-column d-flex align-items-center class=" btn btn-primary"
+             data-toggle="modal" data-target="#remove-stock-modal">
+            <h5>1000.0000</h5>
+            <span class="small">EQUITY</span>
+        </div>
+    </div>
+
+</div>
+
+
+
+<div class="modal fade" id="remove-stock-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll(".remove-stock-button")
+            .forEach(x => x.addEventListener('click', showRemoveStockButton))
+
+        function showRemoveStockButton(event) {
+
+            if (event.target.tagName.toLowerCase() === 'i'
+                && event.target.childElementCount > 0) {
+                [...event.target.children].forEach(x => x.remove());
+                return;
+            }
+            if (event.target.tagName.toLowerCase() === 'div') { return };
+
+            const div = document.createElement('div');
+            div.classList.add('remove-stock-div')
+            div.textContent = 'Remove';
+
+
+            event.target.appendChild(div);
+
+            div.addEventListener('click', removeStockButton)
+        }
+
+        function removeStockButton() {
+            //TODO write functionality to remove stock from watchlist
+            console.log(1);
+        }
+
+
+        document.querySelector('.search-icon-button').addEventListener('click', searchStock)
+
+        function searchStock(event) {
+            const searchMenu = document.querySelector('div.search-bar div.form-group');
+            const closeSearchBarIcon = document.querySelector('div.close-search-bar');
+            closeSearchBarIcon.removeAttribute("hidden");
+
+            const input = searchMenu.querySelector('input');
+
+
+            const searchResultDiv = document.createElement('div');
+            searchResultDiv.classList.add('search-result-div');
+
+
+            const stockNameDiv = document.createElement('div');
+
+            const stockTickerSpan = document.createElement('span');
+            stockTickerSpan.textContent = 'AAPL';
+
+            const stockNameSpan = document.createElement('span');
+            stockNameSpan.textContent = 'APPLE';
+
+            const addStockToWatchlistDiv = document.createElement('div');
+            const addIcon = document.createElement('i');
+            addIcon.classList.add('fas', 'fa-plus');
+            addStockToWatchlistDiv.append(addIcon)
+
+
+            stockNameDiv.append(stockTickerSpan, stockNameSpan);
+
+
+            searchResultDiv.append(stockNameDiv, addStockToWatchlistDiv);
+
+            searchMenu.append(searchResultDiv);
+        }
+
+        document.querySelector('div.close-search-bar').addEventListener('click', closeSearchBar);
+
+        function closeSearchBar(event) {
+            const searchMenu = document.querySelector('div.search-bar div.form-group');
+            const closeSearchBarIcon = document.querySelector('div.close-search-bar');
+            console.log(searchMenu);
+            [...searchMenu.children].slice(1).forEach(x => x.remove());
+            closeSearchBarIcon.setAttribute('hidden', true);
+        }
+
+    </script>
+}
