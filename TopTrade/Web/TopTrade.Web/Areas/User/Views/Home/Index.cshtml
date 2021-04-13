@@ -1,4 +1,61 @@
-﻿<div class="content-container">
+﻿<div class="sidebar-container">
+    <div class="sidebar-logo">
+        <img class="img-fluid" src="./img/top-trade-logo.svg" />
+    </div>
+    <ul class="sidebar-navigation">
+        <li class="header">Trade</li>
+        <li>
+            <a href="#">
+                <i class="fa fa-home" aria-hidden="true"></i> Watchlist
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fa fa-home" aria-hidden="true"></i> Portfolio
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fa fa-home" aria-hidden="true"></i> News Feed
+            </a>
+        </li>
+        <li class="header">Another Menu</li>
+        <li>
+            <a href="#">
+                <i class="fa fa-users" aria-hidden="true"></i> News Feed
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fa fa-cog" aria-hidden="true"></i> Settings
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fa fa-info-circle" aria-hidden="true"></i> Information
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fa fa-info-circle" aria-hidden="true"></i> Withdraw Funds
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fa fa-info-circle" aria-hidden="true"></i> Deposit Funds
+            </a>
+        </li>
+    </ul>
+    <div class="deposit-button-wrapper">
+        <button type="button" class="btn btn-success deposit-button" data-toggle="modal"
+                data-target="#exampleModal">
+            Deposit Funds
+        </button>
+    </div>
+</div>
+
+
+<div class="content-container">
     <div class="col remove-grow">
         <div class="search-bar container-fluid d-flex justify-content-center">
             <form class="search-from col-md-4 d-flex align-items-center" id="search-from">
@@ -40,15 +97,42 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>mdo</td>
-                        <td>mdo</td>
-                        <td class="d-flex align-items-center">
+                        <td>
+                            <img class="company-logo" src="//logo.clearbit.com/spotify.com" alt="">
+                            <div>
+                                <p class="mb-0 ml-2 text-uppercase font-weight-bold stock-ticker">RR.L</p>
+                                <p class="mb-0 ml-2 small stock-name">Rolls-Royce</p>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="mb-0 ml-2 font-weight-bold stock-price-up">25.00</p>
+                            <p class="mb-0 ml-2 font-weight-bold small stock-price-down">(4.00)&#37</p>
+                        </td>
+                        <td>
+                            <img class="stock-line-chart" src="./img/chart.jpg" alt="">
+                        </td>
+                        <td>
+                            <div class="input-group sell-button order-type-button">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text font-weight-bold" id="btnGroupAddon">S</div>
+                                </div>
+                                <button class="form-control font-weight-bold price" data-target="#buy-button" data-toggle="modal">10</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group buy-button order-type-button">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text font-weight-bold" id="btnGroupAddon">B</div>
+                                </div>
+                                <button class="form-control font-weight-bold" data-target="#buy-button"
+                                        data-toggle="modal">
+                                    10
+                                </button>
+                            </div>
+                        </td>
+                        <td>
                             <span>mdo</span>
                             <i class="fas fa-ellipsis-v remove-stock-button">
-
                             </i>
                         </td>
 
@@ -127,7 +211,7 @@
                     </tr>
                 </tbody>
             </table>
-
+            <a class="pl-2 text-secondary" href="https://clearbit.com">Logos provided by Clearbit</a>
         </div>
     </div>
 
@@ -154,33 +238,76 @@
 
         </div>
 
-        <div class="statistics available-amount flex-column d-flex align-items-center class=" btn btn-primary"
-             data-toggle="modal" data-target="#remove-stock-modal">
+        <div class="statistics available-amount flex-column d-flex align-items-center
+             data-toggle=" modal" data-target="#remove-stock-modal">
             <h5>1000.0000</h5>
             <span class="small">EQUITY</span>
         </div>
     </div>
-
 </div>
 
 
 
-<div class="modal fade" id="remove-stock-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="buy-button" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <div class="modal-header bg-info">
+                <div class="text-center w-100">
+                    <button class="btn btn-secondary px-5 ml-5 order-sell-btn order-type-button configure-order-button">SELL</button>
+                    <button class="btn btn-secondary px-5 order-buy-btn order-type-button configure-order-button">BUY</button>
+                </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true" class="text-light close-buy-sell-modal">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                ...
+            <div class="modal-body pb-0">
+                <div class="stock-buy">
+                    <div class="d-flex mb-3">
+                        <img class="company-logo order-company-logo" src="//logo.clearbit.com/spotify.com" alt="">
+                        <div>
+                            <p class="mb-0 ml-2 text-uppercase font-weight-bold te">
+                                <span class="text-secondary order-type">
+                                    BUY
+                                </span>
+                                <span class="order-stock-ticker"></span>
+                            </p>
+                            <p class="mb-0 ml-2 small order-stock-name">Rolls-Royce</p>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend"> <span class="input-group-text">Price</span> </div>
+                        <input type="text" class="form-control input-stock-price" placeholder="0.02323476" readonly="">
+                        <div class="input-group-append"> <span class="input-group-text">USD</span> </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend"> <span class="input-group-text">Quantity</span> </div>
+                        <input id="test" type="number" class="form-control stock-quantity">
+                        <div class="input-group-append"> <span class="input-group-text">Shares</span> </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend"> <span class="input-group-text">Total</span> </div>
+                        <input type="text" class="form-control total-amount" readonly="" placeholder="">
+                        <div class="input-group-append"> <span class="input-group-text">Amount</span> </div>
+                    </div>
+                    <div class="text-center mt-5 mb-3 crypt-up">
+                        <p>
+                            You are going to
+                            <span class="font-weight-bold h5 order-type text-uppercase">
+                                BUY
+                            </span>
+                            <span class="font-weight-bold h5 order-details-quantity">
+                                0
+                            </span>
+                            <span class="font-weight-bold h5 order-stock-ticker">RR.</span> shares for
+                        </p>
+                        <h4>$ <span class="order-details-price">0.00</span></h4>
+                    </div>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+            <div class="text-center mb-4">
+                <hr>
+                <button type="button" disabled class="btn btn-info px-5 py-3 execute-order-button"><span class="h5 order-type text-uppercase">BUY</span> <span class="order-stock-ticker h5">RR.</span></button>
             </div>
         </div>
     </div>
@@ -260,6 +387,73 @@
             console.log(searchMenu);
             [...searchMenu.children].slice(1).forEach(x => x.remove());
             closeSearchBarIcon.setAttribute('hidden', true);
+        }
+
+
+        [...document.querySelectorAll('.order-type-button')].forEach(x => {
+            x.addEventListener('click', configureOrder);
+        })
+        function configureOrder(event) {
+            let stockPrice;
+            const inputPrice = document.querySelector('.input-stock-price');
+            const totalAmount = document.querySelector('.total-amount');
+            const stockQuantity = document.querySelector('.stock-quantity');
+            const stockTicker = document.querySelector('.stock-ticker').textContent;
+            const stockName = document.querySelector('.stock-name').textContent;
+            const companyLogo = document.querySelector('.company-logo').src;
+
+            const orderStockName = document.querySelector('.order-stock-name');
+            orderStockName.textContent = stockName;
+
+            let orderType;
+            if (event.target.classList.contains('configure-order-button')) {
+                event.preventDefault()
+                orderType = event.target.textContent[0].toLowerCase();
+                stockPrice = Number(document.querySelector('.price').textContent);
+            } else {
+                orderType = event.target.previousElementSibling.firstElementChild.textContent;
+                stockPrice = stockPrice = Number(event.target.textContent);
+            }
+
+            var timeOut;
+            if (orderType.toLowerCase() == 'b') {
+                [...document.querySelectorAll('.order-type')].forEach(x => {
+                    x.textContent = 'buy';
+                });
+                document.querySelector(".order-buy-btn").classList.add('active');
+                document.querySelector(".order-sell-btn").classList.remove('active');
+            } else {
+                [...document.querySelectorAll('.order-type')].forEach(x => {
+                    x.textContent = 'sell';
+                });
+                document.querySelector(".order-sell-btn").classList.add('active');
+                document.querySelector(".order-buy-btn").classList.remove('active');
+            }
+
+            document.querySelector('.order-company-logo').src = companyLogo;
+
+            [...document.querySelectorAll('.order-stock-ticker')].forEach(x => {
+                x.textContent = stockTicker;
+            });
+            stockQuantity.addEventListener('input', (e) => {
+                const quantity = Number(e.target.value);
+                if (quantity < 0) { return };
+
+                const executeOrderButton = document.querySelector('.execute-order-button');
+                executeOrderButton.removeAttribute('disabled');
+
+                const totalPrice = stockPrice * quantity;
+                totalAmount.placeholder = `$ ${totalPrice.toFixed(2)}`
+
+                const orderDetailsPrice = document.querySelector('.order-details-price');
+                orderDetailsPrice.textContent = `${totalPrice.toFixed(2)}`;
+
+                const orderDetailsQuantity = document.querySelector('.order-details-quantity');
+                orderDetailsQuantity.textContent = quantity;
+                if (quantity == 0) { executeOrderButton.disabled = true; }
+            })
+
+            inputPrice.placeholder = `${stockPrice.toFixed(2)}`
         }
 
     </script>

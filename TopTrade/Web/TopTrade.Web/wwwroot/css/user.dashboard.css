@@ -1,3 +1,8 @@
+button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
 .sidebar-container {
     position: fixed;
     width: 220px;
@@ -23,59 +28,59 @@
     position: relative;
 }
 
-    .sidebar-navigation li {
-        background-color: transparent;
-        position: relative;
-        display: inline-block;
-        width: 100%;
-        line-height: 20px;
-    }
+.sidebar-navigation li {
+    background-color: transparent;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    line-height: 20px;
+}
 
-        .sidebar-navigation li a {
-            padding: 10px 15px 10px 30px;
-            display: block;
-            color: #fff;
-        }
+.sidebar-navigation li a {
+    padding: 10px 15px 10px 30px;
+    display: block;
+    color: #fff;
+}
 
-        .sidebar-navigation li .fa {
-            margin-right: 10px;
-        }
+.sidebar-navigation li .fa {
+    margin-right: 10px;
+}
 
-        .sidebar-navigation li a:active, .sidebar-navigation li a:hover, .sidebar-navigation li a:focus {
-            text-decoration: none;
-            outline: none;
-        }
+.sidebar-navigation li a:active, .sidebar-navigation li a:hover, .sidebar-navigation li a:focus {
+    text-decoration: none;
+    outline: none;
+}
 
-        .sidebar-navigation li::before {
-            background-color: #2574A9;
-            position: absolute;
-            content: '';
-            height: 100%;
-            left: 0;
-            top: 0;
-            -webkit-transition: width 0.2s ease-in;
-            transition: width 0.2s ease-in;
-            width: 3px;
-            z-index: -1;
-        }
+.sidebar-navigation li::before {
+    background-color: #2574A9;
+    position: absolute;
+    content: '';
+    height: 100%;
+    left: 0;
+    top: 0;
+    -webkit-transition: width 0.2s ease-in;
+    transition: width 0.2s ease-in;
+    width: 3px;
+    z-index: -1;
+}
 
-        .sidebar-navigation li:hover::before {
-            width: 100%;
-        }
+.sidebar-navigation li:hover::before {
+    width: 100%;
+}
 
-    .sidebar-navigation .header {
-        font-size: 12px;
-        text-transform: uppercase;
-        background-color: #151515;
-        padding: 10px 15px 10px 30px;
-    }
+.sidebar-navigation .header {
+    font-size: 12px;
+    text-transform: uppercase;
+    background-color: #151515;
+    padding: 10px 15px 10px 30px;
+}
 
-        .sidebar-navigation .header::before {
-            background-color: transparent;
-        }
+.sidebar-navigation .header::before {
+    background-color: transparent;
+}
 
 .content-container {
-    padding-left: 6rem;
+    padding-left: 6.4rem;
     height: 100vh;
     display: flex;
     flex-flow: column;
@@ -85,21 +90,21 @@
     text-align: center;
 }
 
-    .deposit-button-wrapper > button {
-        background-color: #55AD82;
-        border: none;
-        padding: 0.7rem 2.2rem;
-        border-radius: 0.3rem;
-        margin-top: 1.2rem;
-    }
+.deposit-button-wrapper > button {
+    background-color: #55AD82;
+    border: none;
+    padding: 0.7rem 2.2rem;
+    border-radius: 0.3rem;
+    margin-top: 1.2rem;
+}
 
 div.card-logos {
     height: 0.7rem;
 }
 
-    div.card-logos img.img-fluid.small-logo {
-        height: 1.0rem;
-    }
+div.card-logos img.img-fluid.small-logo {
+    height: 1.0rem;
+}
 
 span.close-mark {
     color: blue;
@@ -139,27 +144,26 @@ form.search-from {
     padding: 0.5rem 1rem;
 }
 
-    .search-result-div:last-child {
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
-    }
+.search-result-div:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
 
-    .search-result-div > div:first-child {
-        display: flex;
-        flex-flow: column wrap;
-    }
+.search-result-div > div:first-child {
+    display: flex;
+    flex-flow: column wrap;
+}
 
-    .search-result-div > div:last-child {
-        display: flex;
-        flex-flow: column wrap;
-        border: 2px solid #e2e2e2;
-        border-radius: 50%;
-        padding: 0.4rem 0.6rem;
-        color: #b1b1b1;
-    }
+.search-result-div > div:last-child {
+    display: flex;
+    flex-flow: column wrap;
+    border: 2px solid #e2e2e2;
+    border-radius: 50%;
+    padding: 0.4rem 0.6rem;
+    color: #b1b1b1;
+}
 
-.search-icon-button,
-.close-search-bar {
+.search-icon-button, .close-search-bar {
     cursor: pointer;
 }
 
@@ -223,22 +227,88 @@ form.search-from > div.form-group {
     cursor: pointer;
 }
 
-    .remove-stock-button:hover {
-        color: black;
-    }
+.remove-stock-button:hover {
+    color: black;
+}
 
 div.table-div {
     padding: 0;
+}
+
+img.company-logo {
+    width: 3rem;
+    height: 3rem;
+}
+
+.stock-line-chart {
+    width: 8rem;
+    height: 3rem;
+}
+
+tbody td div.sell-button, tbody td div.buy-button {
+    max-width: 9rem;
+}
+
+tbody td div.sell-button button {
+    background: rgb(205, 47, 66);
+    color: whitesmoke;
+}
+
+tbody td div.sell-button > button:focus {
+    z-index: 0 !important;
+    background: rgb(189, 41, 58);
+    color: whitesmoke;
+}
+
+tbody td div.buy-button button {
+    background: rgb(107, 173, 16);
+    color: whitesmoke;
+}
+
+tbody td div.buy-button > button:focus {
+    z-index: 0 !important;
+    background: rgb(107, 173, 16);
+    color: whitesmoke;
+}
+
+tbody td div.buy-button button:hover {
+    background: rgb(94, 151, 14);
+}
+
+tbody td div.sell-button button:hover {
+    background: rgb(189, 41, 58)
+}
+
+#btnGroupAddon {
+    background: #54626e;
+    color: whitesmoke;
+}
+
+.table td, .table th {
+    vertical-align: inherit;
+}
+
+.stock-price-up {
+    color: rgb(107, 173, 16);
+}
+
+.stock-price-down {
+    color: rgb(205, 47, 66);
+}
+
+.watchlist-table td:first-child {
+    display: flex;
+    align-items: center;
 }
 
 .watchlist-table-header {
     background: #f3f3f3;
 }
 
-    .watchlist-table-header th {
-        color: grey;
-        font-size: 0.9rem;
-    }
+.watchlist-table-header th {
+    color: grey;
+    font-size: 0.9rem;
+}
 
 .watchlist-table td:last-child {
     position: relative;
@@ -265,6 +335,22 @@ div.remove-stock-div {
     font-weight: 100;
 }
 
-    div.remove-stock-div:hover {
-        background: #fdfdfd;
-    }
+div.remove-stock-div:hover {
+    background: #fdfdfd;
+}
+
+
+.close-buy-sell-modal {
+    font-size: 2rem;
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.execute-order-button:disabled {
+    cursor: not-allowed;
+}

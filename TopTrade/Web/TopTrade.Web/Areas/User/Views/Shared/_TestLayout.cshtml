@@ -16,9 +16,10 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" asp-append-version="true">
     <link rel="apple-touch-icon-precomposed" href="~/img/apple-touch-icon.png" asp-append-version="true">
     <!-- CSS -->
-    <link rel="stylesheet" href="~/css/uikit.min.css" asp-append-version="true">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" asp-append-version="true">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/user.dashboard.css" asp-append-version="true" />
 </head>
 <body>
     <div class="in-loader">
@@ -85,8 +86,8 @@
 
     <div class="content-container">
         @*<div class="container-fluid">*@
-            @*<partial name="_CookieConsentPartial" />*@
-            @this.RenderBody()
+        @*<partial name="_CookieConsentPartial" />*@
+        @this.RenderBody()
         @*</div>*@
     </div>
     @*<div class="container">
