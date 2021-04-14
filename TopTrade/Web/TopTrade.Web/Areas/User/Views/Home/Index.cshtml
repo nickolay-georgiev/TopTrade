@@ -1,60 +1,4 @@
-﻿<div class="sidebar-container">
-    <div class="sidebar-logo">
-        <img class="img-fluid" src="./img/top-trade-logo.svg" />
-    </div>
-    <ul class="sidebar-navigation">
-        <li class="header">Trade</li>
-        <li>
-            <a href="#">
-                <i class="fa fa-home" aria-hidden="true"></i> Watchlist
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-home" aria-hidden="true"></i> Portfolio
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-home" aria-hidden="true"></i> News Feed
-            </a>
-        </li>
-        <li class="header">Another Menu</li>
-        <li>
-            <a href="#">
-                <i class="fa fa-users" aria-hidden="true"></i> News Feed
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-cog" aria-hidden="true"></i> Settings
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-info-circle" aria-hidden="true"></i> Information
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-info-circle" aria-hidden="true"></i> Withdraw Funds
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-info-circle" aria-hidden="true"></i> Deposit Funds
-            </a>
-        </li>
-    </ul>
-    <div class="deposit-button-wrapper">
-        <button type="button" class="btn btn-success deposit-button" data-toggle="modal"
-                data-target="#exampleModal">
-            Deposit Funds
-        </button>
-    </div>
-</div>
-
-
+﻿
 <div class="content-container">
     <div class="col remove-grow">
         <div class="search-bar container-fluid d-flex justify-content-center">
@@ -81,8 +25,6 @@
     </div>
 
     <div class="container site-content">
-        <!-- <h5 class="font-weight-light p-2">My Watchlist</h5> -->
-
         <div class="col table-div">
             <table class="table watchlist-table">
                 <thead class="watchlist-table-header">
@@ -135,79 +77,6 @@
                             <i class="fas fa-ellipsis-v remove-stock-button">
                             </i>
                         </td>
-
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>fat</td>
-                        <td>fat</td>
-                        <td>fat <i class="fas fa-ellipsis-v"></i></td>
-
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>twitter</td>
-                        <td>twitter</td>
-                        <td>twitter <i class="fas fa-ellipsis-v"></i></td>
-
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>fat</td>
-                        <td>fat</td>
-                        <td>fat <i class="fas fa-ellipsis-v"></i></td>
-
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>twitter</td>
-                        <td>twitter</td>
-                        <td>twitter <i class="fas fa-ellipsis-v"></i></td>
-
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>fat</td>
-                        <td>fat</td>
-                        <td>fat <i class="fas fa-ellipsis-v"></i></td>
-
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>twitter</td>
-                        <td>twitter</td>
-                        <td>twitter <i class="fas fa-ellipsis-v"></i></td>
-
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>fat</td>
-                        <td>fat</td>
-                        <td>fat <i class="fas fa-ellipsis-v"></i></td>
-
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>twitter</td>
-                        <td>twitter</td>
-                        <td>twitter <i class="fas fa-ellipsis-v"></i></td>
-
                     </tr>
                 </tbody>
             </table>
@@ -238,7 +107,7 @@
 
         </div>
 
-        <div class="statistics available-amount flex-column d-flex align-items-center
+        <div class="statistics available-amount flex-column d-flex align-items-center"
              data-toggle=" modal" data-target="#remove-stock-modal">
             <h5>1000.0000</h5>
             <span class="small">EQUITY</span>
@@ -329,8 +198,12 @@
 
             const div = document.createElement('div');
             div.classList.add('remove-stock-div')
-            div.textContent = 'Remove';
 
+            const span = document.createElement('span');
+
+            span.textContent = 'Remove';
+
+            div.appendChild(span);
 
             event.target.appendChild(div);
 
@@ -339,9 +212,8 @@
 
         function removeStockButton() {
             //TODO write functionality to remove stock from watchlist
-            console.log(1);
+            this.parentElement.parentElement.parentElement.remove();
         }
-
 
         document.querySelector('.search-icon-button').addEventListener('click', searchStock)
 
@@ -352,31 +224,107 @@
 
             const input = searchMenu.querySelector('input');
 
+            const logo = 'spotify';
 
             const searchResultDiv = document.createElement('div');
             searchResultDiv.classList.add('search-result-div');
 
-
             const stockNameDiv = document.createElement('div');
+            stockNameDiv.classList.add('d-flex', 'flex-row');
 
-            const stockTickerSpan = document.createElement('span');
-            stockTickerSpan.textContent = 'AAPL';
+            const stockLogo = document.createElement('img');
+            stockLogo.src = `//logo.clearbit.com/${logo}.com`;
+            stockLogo.classList.add('company-logo');
 
-            const stockNameSpan = document.createElement('span');
-            stockNameSpan.textContent = 'APPLE';
+            const stockDiv = document.createElement('div');
+            stockDiv.classList.add('ml-2');
+
+            const stockTickerParagraph = document.createElement('p');
+            stockTickerParagraph.textContent = 'AAPL';
+            stockTickerParagraph.classList.add('mb-0');
+            stockTickerParagraph.classList.add('font-weight-bold');
+
+            const stockNameParagraph = document.createElement('p');
+            stockNameParagraph.textContent = 'APPLE';
+            stockNameParagraph.classList.add('mb-0');
+            stockNameParagraph.classList.add('small');
 
             const addStockToWatchlistDiv = document.createElement('div');
+            addStockToWatchlistDiv.style.cursor = "pointer";
+            addStockToWatchlistDiv.style.background = 'green';
+            addStockToWatchlistDiv.style.color = 'white';
+
             const addIcon = document.createElement('i');
             addIcon.classList.add('fas', 'fa-plus');
-            addStockToWatchlistDiv.append(addIcon)
 
+            const icon = document.createElement('i');
+            icon.classList.add('fas', 'fa-check');
 
-            stockNameDiv.append(stockTickerSpan, stockNameSpan);
+            addStockToWatchlistDiv.append(icon);
 
+            addStockToWatchlistDiv.addEventListener('click', addStockToWatchList);
+
+            stockDiv.append(stockTickerParagraph, stockNameParagraph);
+            stockNameDiv.append(stockLogo, stockDiv);
 
             searchResultDiv.append(stockNameDiv, addStockToWatchlistDiv);
-
             searchMenu.append(searchResultDiv);
+        }
+
+        function addStockToWatchList(event) {
+            const logo = 'spotify';
+            const ticker = 'RR.L';
+            const companyName = 'Rolls-Royce';
+            const changeInCash = 25;
+            const changeInPercents = 4;
+            const chart = './img/chart.jpg';
+            const sellPrice = 10;
+            const buyPrice = 20;
+
+            // const i = document.createElement('i');
+            // i.classList.add('fas', 'fa-ellipsis-v', 'remove-stock-button');
+
+            const trContent = `
+          <td>
+              <img class="company-logo" src="//logo.clearbit.com/${logo}.com" alt="">
+              <div>
+                  <p class="mb-0 ml-2 text-uppercase font-weight-bold stock-ticker">${ticker}</p>
+                  <p class="mb-0 ml-2 small stock-name">${companyName}</p>
+              </div>
+          </td>
+          <td>
+              <p class="mb-0 ml-2 font-weight-bold stock-price-up">${changeInCash.toFixed(2)}</p>
+              <p class="mb-0 ml-2 font-weight-bold small stock-price-down">(${changeInPercents.toFixed(2)})&#37</p>
+          </td>
+          <td>
+              <img class="stock-line-chart" src="${chart}" alt="">
+          </td>
+          <td>
+              <div class="input-group sell-button order-type-button">
+                  <div class="input-group-prepend">
+                      <div class="input-group-text font-weight-bold" id="btnGroupAddon">S</div>
+                  </div>
+                  <button class="form-control font-weight-bold price" data-target="#buy-button"  data-toggle="modal">${sellPrice.toFixed(2)}</button>
+              </div>
+          </td>
+          <td>
+              <div class="input-group buy-button order-type-button">
+                  <div class="input-group-prepend">
+                      <div class="input-group-text font-weight-bold" id="btnGroupAddon">B</div>
+                  </div>
+                  <button class="form-control font-weight-bold" data-target="#buy-button"
+                      data-toggle="modal">${buyPrice.toFixed(2)}</button>
+              </div>
+          </td>
+          <td>
+              <span>mdo</span>
+              <i class="fas fa-ellipsis-v remove-stock-button"></i>
+          </td>`
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = trContent;
+            tr.lastElementChild.lastElementChild.addEventListener('click', showRemoveStockButton);
+            document.querySelector('tbody').appendChild(tr);
         }
 
         document.querySelector('div.close-search-bar').addEventListener('click', closeSearchBar);
@@ -455,6 +403,5 @@
 
             inputPrice.placeholder = `${stockPrice.toFixed(2)}`
         }
-
     </script>
 }

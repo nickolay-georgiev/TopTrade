@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
           integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" asp-append-version="true">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/user.dashboard.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/user-dashboard.css" asp-append-version="true" />
 </head>
 <body>
     <div class="in-loader">
@@ -30,27 +30,39 @@
 
     <div class="sidebar-container">
         <div class="sidebar-logo">
-            @*TopTrade*@
-            <img class="img-fluid" src="~/img/top-trade-logo.svg" />
+            <img class="img-fluid" src="./img/top-trade-logo.svg" />
         </div>
         <ul class="sidebar-navigation">
-            <li class="header">Trade</li>
+            <li class="user-card">
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="~/img/female-avatar.jpg" class="card-img ml-3 my-3" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h6 class="card-title ml-3 text-center">nickwork5500</h6>
+                                <h5 class="card-title ml-3 mt-4 text-center">Not Verified</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
             <li>
                 <a href="#">
-                    <i class="fa fa-home" aria-hidden="true"></i> Watchlist
+                    <i class="fa fa-th-list" aria-hidden="true"></i> Watchlist
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <i class="fa fa-home" aria-hidden="true"></i> Portfolio
+                    <i class="fa fa-home" aria-hidden="true"></i> History
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <i class="fa fa-home" aria-hidden="true"></i> News Feed
+                    <i class="fa fa-home" aria-hidden="true"></i> Transactions
                 </a>
             </li>
-            <li class="header">Another Menu</li>
             <li>
                 <a href="#">
                     <i class="fa fa-users" aria-hidden="true"></i> News Feed
@@ -73,31 +85,28 @@
             </li>
             <li>
                 <a href="#">
-                    <i class="fa fa-info-circle" aria-hidden="true"></i> Deposit Funds
+                    <i class="fa fa-sign-out-alt" aria-hidden="true"></i> Logout
                 </a>
             </li>
         </ul>
         <div class="deposit-button-wrapper">
-            <button type="button" class="btn btn-success deposit-button" data-toggle="modal" data-target="#exampleModal">
+            <button type="button" class="btn btn-success deposit-button" data-toggle="modal"
+                    data-target="#deposit-modal">
                 Deposit Funds
             </button>
         </div>
     </div>
 
     <div class="content-container">
-        @*<div class="container-fluid">*@
-        @*<partial name="_CookieConsentPartial" />*@
         @this.RenderBody()
-        @*</div>*@
     </div>
-    @*<div class="container">
-            <partial name="_CookieConsentPartial" />
-        </div>
-        @this.RenderBody()*@
+    <div class="container">
+        <partial name="_CookieConsentPartial" />
+    </div>
 
 
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="deposit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
