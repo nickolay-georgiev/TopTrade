@@ -1,0 +1,22 @@
+﻿.content-container {
+    background: #f4f5fa;
+}
+
+div.row {
+    margin-right: unset;
+}
+
+.app-content.content {
+    padding-left: 9.7rem;
+}
+
+.transactions-deposit-card {
+    background: white;
+    box-shadow: 1px 7px 20px 0px grey;
+    border-radius: 0.8rem;
+    margin: 2rem;
+}
+
+.transactions-content-wrapper {
+    background: rgb(244, 245, 250);
+}

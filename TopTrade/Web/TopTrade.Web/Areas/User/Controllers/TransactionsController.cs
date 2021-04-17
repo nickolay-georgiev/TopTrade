@@ -7,11 +7,10 @@
 
     using Microsoft.AspNetCore.Mvc;
 
-    
-    public class TradePlatformController : Controller
+    public class TransactionsController : Controller
     {
         [Area("User")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return this.View();
         }

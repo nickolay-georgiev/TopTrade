@@ -1,0 +1,461 @@
+﻿
+<div class="app-content content">
+    <div class="history-content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left ml-5 mt-4">
+                <h3 class="content-header-title mb-0 d-inline-block">Wallet History</h3>
+                <div class="row breadcrumbs-top d-inline-block">
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item">
+                                <a asp-area="User" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                Wallet history
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-body">
+            <section id="pagination">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="history-deposit-card">
+                            <div class="card-header">
+                                <h4 class="card-title">Deposit</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <div class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="dataTables_length">
+                                                    <label>
+                                                        Show <select class="custom-select custom-select-sm form-control form-control-sm">
+                                                            <option value="10">10</option>
+                                                            <option value="25">25</option>
+                                                            <option value="50">50</option>
+                                                            <option value="100">100</option>
+                                                        </select> entries
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                                    <label>
+                                                        Search:<input type="search"
+                                                                      class="form-control form-control-sm"
+                                                                      placeholder="">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <table class="table alt-pagination history-wrapper dataTable no-footer"
+                                                       role="grid"
+                                                       aria-describedby="DataTables_Table_0_info">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th class="sorting_asc" tabindex="0"
+                                                                aria-controls="DataTables_Table_0" rowspan="1"
+                                                                colspan="1" aria-sort="ascending"
+                                                                aria-label="Date: activate to sort column descending"
+                                                                style="width: 208px;">Date</th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="DataTables_Table_0" rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Coin: activate to sort column ascending"
+                                                                style="width: 217px;">Coin</th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="DataTables_Table_0" rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Volume: activate to sort column ascending"
+                                                                style="width: 193px;">Volume</th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="DataTables_Table_0" rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending"
+                                                                style="width: 199px;">Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr role="row" class="odd">
+                                                            <td class="align-middle sorting_1">
+                                                                <div class="date">02/12/2018</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="coin">
+                                                                    <i class="cc BTC warning"></i>Bitcoin
+                                                                </div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="volume">0.725.00</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="status badge badge-success badge-pill badge-sm">
+                                                                    Completed
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td class="align-middle sorting_1">
+                                                                <div class="date">05/30/2018</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="coin">
+                                                                    <i class="cc LTC info"></i>Litecoin
+                                                                </div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="volume">0.134.00</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="status badge badge-danger badge-pill badge-sm">
+                                                                    Cancel
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td class="align-middle sorting_1">
+                                                                <div class="date">06/02/2021</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="coin">
+                                                                    <i class="cc DASH primary"></i>DASH
+                                                                </div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="volume">0.124.00</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="status badge badge-success badge-pill badge-sm">
+                                                                    Completed
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td class="align-middle sorting_1">
+                                                                <div class="date">06/27/2019</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="coin">
+                                                                    <i class="cc NEO success"></i>NEO
+                                                                </div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="volume">1.345.00</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="status badge badge-secondary badge-pill badge-sm">
+                                                                    Pending
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td class="align-middle sorting_1">
+                                                                <div class="date">08/11/2022</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="coin">
+                                                                    <i class="cc LTC info"></i>Litecoin
+                                                                </div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="volume">0.123.00</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="status badge badge-success badge-pill badge-sm">
+                                                                    Completed
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td class="align-middle sorting_1">
+                                                                <div class="date">12/10/2020</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="coin">
+                                                                    <i class="cc DASH primary"></i>DASH
+                                                                </div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="volume">0.755.00</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="status badge badge-secondary badge-pill badge-sm">
+                                                                    Pending
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-5">
+                                                <div class="dataTables_info" id="DataTables_Table_0_info"
+                                                     role="status" aria-live="polite">
+                                                    Showing 1 to 6 of 6 entries
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-7">
+                                                <div class="dataTables_paginate paging_full_numbers">
+                                                    <ul class="pagination justify-content-end">
+                                                        <li class="paginate_button page-item first disabled"
+                                                            id="DataTables_Table_0_first">
+                                                            <a href="#"
+                                                               aria-controls="DataTables_Table_0" data-dt-idx="0"
+                                                               tabindex="0" class="page-link">First</a>
+                                                        </li>
+                                                        <li class="paginate_button page-item previous disabled"
+                                                            id="DataTables_Table_0_previous">
+                                                            <a href="#"
+                                                               aria-controls="DataTables_Table_0" data-dt-idx="1"
+                                                               tabindex="0" class="page-link">Previous</a>
+                                                        </li>
+                                                        <li class="paginate_button page-item active">
+                                                            <a href="#"
+                                                               aria-controls="DataTables_Table_0" data-dt-idx="2"
+                                                               tabindex="0" class="page-link">1</a>
+                                                        </li>
+                                                        <li class="paginate_button page-item next disabled"
+                                                            id="DataTables_Table_0_next">
+                                                            <a href="#"
+                                                               aria-controls="DataTables_Table_0" data-dt-idx="3"
+                                                               tabindex="0" class="page-link">Next</a>
+                                                        </li>
+                                                        <li class="paginate_button page-item last disabled"
+                                                            id="DataTables_Table_0_last">
+                                                            <a href="#"
+                                                               aria-controls="DataTables_Table_0" data-dt-idx="4"
+                                                               tabindex="0" class="page-link">Last</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="history-withdraw-card">
+                            <div class="card-header">
+                                <h4 class="card-title">Withdraw</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <div id="DataTables_Table_1_wrapper"
+                                         class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="dataTables_length" id="DataTables_Table_1_length">
+                                                    <label>
+                                                        Show <select name="DataTables_Table_1_length"
+                                                                     aria-controls="DataTables_Table_1"
+                                                                     class="custom-select custom-select-sm form-control form-control-sm">
+                                                            <option value="10">10</option>
+                                                            <option value="25">25</option>
+                                                            <option value="50">50</option>
+                                                            <option value="100">100</option>
+                                                        </select> entries
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div id="DataTables_Table_1_filter" class="dataTables_filter">
+                                                    <label>
+                                                        Search:<input type="search"
+                                                                      class="form-control form-control-sm" placeholder=""
+                                                                      aria-controls="DataTables_Table_1">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <table class="table alt-pagination history-wrapper dataTable no-footer"
+                                                       id="DataTables_Table_1" role="grid"
+                                                       aria-describedby="DataTables_Table_1_info">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th class="sorting_asc" tabindex="0"
+                                                                aria-controls="DataTables_Table_1" rowspan="1"
+                                                                colspan="1" aria-sort="ascending"
+                                                                aria-label="Date: activate to sort column descending"
+                                                                style="width: 132px;">Date</th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="DataTables_Table_1" rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Coin: activate to sort column ascending"
+                                                                style="width: 138px;">Coin</th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="DataTables_Table_1" rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Volume: activate to sort column ascending"
+                                                                style="width: 121px;">Volume</th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="DataTables_Table_1" rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Receiver: activate to sort column ascending"
+                                                                style="width: 264px;">Receiver</th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="DataTables_Table_1" rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending"
+                                                                style="width: 126px;">Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+
+
+
+                                                        <tr role="row" class="odd">
+                                                            <td class="align-middle sorting_1">
+                                                                <div class="date">02/10/2017</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="coin">
+                                                                    <i class="cc BTC warning"></i>Bitcoin
+                                                                </div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="volume">0.4345.00</div>
+                                                            </td>
+                                                            <td class="align-middle receiver">
+                                                                BTC Wallet - #23412
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="status badge badge-success badge-pill badge-sm">
+                                                                    Completed
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td class="align-middle sorting_1">
+                                                                <div class="date">02/12/2018</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="coin">
+                                                                    <i class="cc LTC info"></i>Litecoin
+                                                                </div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="volume">0.1235.00</div>
+                                                            </td>
+                                                            <td class="align-middle receiver">
+                                                                Bank - 2043********951
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="status badge badge-success badge-pill badge-sm">
+                                                                    Completed
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td class="align-middle sorting_1">
+                                                                <div class="date">07/10/2020</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="coin">
+                                                                    <i class="cc DASH primary"></i>DASH
+                                                                </div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="volume">1.234.00</div>
+                                                            </td>
+                                                            <td class="align-middle receiver">
+                                                                Bank - 2043********342
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="status badge badge-danger badge-pill badge-sm">
+                                                                    Cancel
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td class="align-middle sorting_1">
+                                                                <div class="date">07/12/2020</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="coin">
+                                                                    <i class="cc NEO success"></i>NEO
+                                                                </div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="volume">0.550</div>
+                                                            </td>
+                                                            <td class="align-middle receiver">
+                                                                NEO Wallet - #14342
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="status badge badge-secondary badge-pill badge-sm">
+                                                                    Pending
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-5">
+                                                <div class="dataTables_info" id="DataTables_Table_1_info"
+                                                     role="status" aria-live="polite">
+                                                    Showing 1 to 4 of 4 entries
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-7">
+                                                <div class="dataTables_paginate paging_full_numbers"
+                                                     id="DataTables_Table_1_paginate">
+                                                    <ul class="pagination justify-content-end">
+                                                        <li class="paginate_button page-item first disabled"
+                                                            id="DataTables_Table_1_first">
+                                                            <a href="#"
+                                                               aria-controls="DataTables_Table_1" data-dt-idx="0"
+                                                               tabindex="0" class="page-link">First</a>
+                                                        </li>
+                                                        <li class="paginate_button page-item previous disabled"
+                                                            id="DataTables_Table_1_previous">
+                                                            <a href="#"
+                                                               aria-controls="DataTables_Table_1" data-dt-idx="1"
+                                                               tabindex="0" class="page-link">Previous</a>
+                                                        </li>
+                                                        <li class="paginate_button page-item active">
+                                                            <a href="#"
+                                                               aria-controls="DataTables_Table_1" data-dt-idx="2"
+                                                               tabindex="0" class="page-link">1</a>
+                                                        </li>
+                                                        <li class="paginate_button page-item next disabled"
+                                                            id="DataTables_Table_1_next">
+                                                            <a href="#"
+                                                               aria-controls="DataTables_Table_1" data-dt-idx="3"
+                                                               tabindex="0" class="page-link">Next</a>
+                                                        </li>
+                                                        <li class="paginate_button page-item last disabled"
+                                                            id="DataTables_Table_1_last">
+                                                            <a href="#"
+                                                               aria-controls="DataTables_Table_1" data-dt-idx="4"
+                                                               tabindex="0" class="page-link">Last</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

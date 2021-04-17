@@ -5,7 +5,7 @@ button:focus {
 
 .sidebar-container {
     position: fixed;
-    width: 16rem;
+    width: 18rem;
     height: 100%;
     left: 0;
     overflow-x: hidden;
@@ -81,10 +81,14 @@ button:focus {
         }
 
 .content-container {
-    padding-left: 7.52rem;
+    padding-left: 8.54rem;
     height: 100vh;
     display: flex;
     flex-flow: column;
+}
+
+.table-div {
+    padding-right: 0;
 }
 
 #deposit-modal .modal-header {
@@ -92,9 +96,10 @@ button:focus {
     color: white;
 }
 
-
 .deposit-button-wrapper {
     text-align: center;
+    box-shadow: 0 0 20px 0px grey;
+    margin-top: 1rem;
 }
 
     .deposit-button-wrapper > button {
@@ -102,7 +107,7 @@ button:focus {
         border: none;
         padding: 0.7rem 2.2rem;
         border-radius: 0.3rem;
-        margin-top: 1.2rem;
+        margin: 1rem 0;
     }
 
 div.card-logos {
@@ -114,12 +119,12 @@ div.card-logos {
     }
 
 span.close-mark {
-    color: white;
+    color: blue;
     font-size: 2rem;
 }
 
 div.search-bar div.form-group {
-    position: relative;
+    display: relative;
 }
 
 .search-bar {
@@ -211,6 +216,7 @@ form.search-from > div.form-group {
     margin-left: 0;
     padding-right: 0;
     flex-grow: 1;
+    background: white;
 }
 
 @media (min-width: 1200px) {
@@ -237,10 +243,6 @@ form.search-from > div.form-group {
     .remove-stock-button:hover {
         color: black;
     }
-
-div.table-div {
-    padding: 0;
-}
 
 img.company-logo {
     width: 3rem;
@@ -347,6 +349,8 @@ div.remove-stock-div {
         color: whitesmoke;
     }
 
+/* buy modal */
+
 .close-buy-sell-modal {
     font-size: 2rem;
 }
@@ -373,5 +377,4 @@ hr {
 
 .card-title:nth-child(2) {
     color: #eaa4a4;
-    /* color: #77d89e; */
 }

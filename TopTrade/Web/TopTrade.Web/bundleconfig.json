@@ -6,7 +6,16 @@
     // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
       "wwwroot/css/site.css",
-      "wwwroot/css/user.dashboard.css"
+      "wwwroot/css/user-dashboard.css",
+      "wwwroot/css/wallet-history.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/user.min.css",
+    "inputFiles": [
+      "wwwroot/css/user-dashboard.css",
+      "wwwroot/css/wallet-history.css",
+      "wwwroot/css/transactions.css"
     ]
   },
   {

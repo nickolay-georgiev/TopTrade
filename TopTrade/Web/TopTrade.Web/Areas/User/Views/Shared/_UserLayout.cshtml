@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
           integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" asp-append-version="true">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/user-dashboard.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/user.min.css" asp-append-version="true" />
 </head>
 <body>
     <div class="in-loader">
@@ -30,7 +30,7 @@
 
     <div class="sidebar-container">
         <div class="sidebar-logo">
-            <img class="img-fluid" src="./img/top-trade-logo.svg" />
+            <img class="img-fluid" src="~/img/top-trade-logo.svg" />
         </div>
         <ul class="sidebar-navigation">
             <li class="user-card">
@@ -49,18 +49,18 @@
                 </div>
             </li>
             <li>
-                <a href="#">
+                <a asp-area="User" asp-controller="Home" asp-action="Index">
                     <i class="fa fa-th-list" aria-hidden="true"></i> Watchlist
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class="fa fa-home" aria-hidden="true"></i> History
+                <a asp-area="User" asp-controller="Wallet" asp-action="Index">
+                    <i class="fa fa-university" aria-hidden="true"></i> Wallet
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class="fa fa-home" aria-hidden="true"></i> Transactions
+                <a asp-area="User" asp-controller="Transactions" asp-action="Index">
+                    <i class="fa fa-money-bill-alt" aria-hidden="true"></i> Transactions
                 </a>
             </li>
             <li>
@@ -80,7 +80,7 @@
             </li>
             <li>
                 <a href="#">
-                    <i class="fa fa-info-circle" aria-hidden="true"></i> Withdraw Funds
+                    <i class="fa fa-money-bill-wave-alt" aria-hidden="true"></i> Withdraw Funds
                 </a>
             </li>
             <li>
