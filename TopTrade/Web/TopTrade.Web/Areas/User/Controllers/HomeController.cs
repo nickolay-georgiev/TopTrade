@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TopTrade.Services.Data;
+using TopTrade.Web.Controllers;
 
 namespace TopTrade.Web.Areas.User
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private IAlphaVantageApiClientService stockService;
 

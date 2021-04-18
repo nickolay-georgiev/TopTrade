@@ -41,6 +41,7 @@ button:focus {
             padding: 10px 15px 10px 30px;
             display: block;
             color: #fff;
+            font-size: 1.1rem;
         }
 
         .sidebar-navigation li .fa {

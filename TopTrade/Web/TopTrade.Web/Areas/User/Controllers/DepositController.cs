@@ -8,14 +8,18 @@
     using Microsoft.AspNetCore.Mvc;
     using TopTrade.Web.Controllers;
 
-    [ApiController]
-    [Route("api/[controller]")]
-    public class DepositController : BaseController
+    public class DepositController : BaseApiController
     {
         [HttpGet]
-       public string Test()
+        public string Test()
         {
-            return "Deposit Wokrs";
+            return "Deposit Get Wokrs";
+        }
+
+        [HttpPost]
+        public object Test1(object test)
+        {
+            return "Deposit Post Wokrs";
         }
     }
 }

@@ -6,8 +6,9 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using TopTrade.Web.Controllers;
 
-    public class TransactionsController : Controller
+    public class TransactionsController : BaseController
     {
         [Area("User")]
         public async Task<IActionResult> Index()

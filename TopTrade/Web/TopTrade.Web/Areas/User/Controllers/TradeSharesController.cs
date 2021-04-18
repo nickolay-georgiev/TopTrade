@@ -1,21 +1,20 @@
 ﻿namespace TopTrade.Web.Areas.User.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-
     using Microsoft.AspNetCore.Mvc;
+    using TopTrade.Web.Controllers;
 
-    [ApiController]
-    [Route("api/[controller]")]
-    public class TradeSharesController : Controller
+    public class TradeSharesController : BaseApiController
     {
-        [HttpGet]
-        [IgnoreAntiforgeryToken]
-        public string Post()
+        [HttpPost]
+        public string Sell()
         {
-            return "test Api Controller";
+            return "test Sell Controller";
+        }
+
+        [HttpPost]
+        public string Buy()
+        {
+            return "test Buy Controller";
         }
     }
 }

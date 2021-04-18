@@ -117,23 +117,23 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form method="POST">
 
                         <div class="row align-items-end justify-content-between">
                             <div class="form-group col col-md-8 pr-1">
                                 <label class="small">Amount</label>
-                                <input type="number" class="form-control" placeholder="1000">
+                                <input type="number" class="form-control deposit-amount" placeholder="1000">
                             </div>
                             <div class="form-group col col-md-4 pl-1">
                                 <label></label>
-                                <input type="number" class="form-control">
+                                <input type="text" class="form-control text-center" placeholder="USD" disabled>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="small">Payment method</label>
                             <div class="input-group">
-                                <input class="form-control border-right-0" placeholder="Credit/Debit card">
+                                <input class="form-control border-right-0" placeholder="Credit/Debit card" disabled>
                                 <span class="input-group-append bg-white border-left-0">
                                     <span class="input-group-text bg-transparent">
                                         <img src="~/img/credit-card.svg" />
@@ -148,15 +148,17 @@
                         </div>
 
                         <div class="form-group my-md-4">
-                            <input class="form-control" placeholder="Card Number">
+                            <input class="form-control card-number" placeholder="Card Number" maxlength="19">
                         </div>
 
                         <div class="row">
                             <div class="form-group col pr-1">
-                                <input class="form-control text-secondary" placeholder="1000">
+                                <input class="form-control text-secondary card-expiry-date" placeholder="MM / YY"
+                                       maxlength="7">
                             </div>
                             <div class="form-group col pl-1">
-                                <input class="form-control text-secondary">
+                                <input class="form-control text-secondary card-cvv-number"
+                                       maxlength="3">
                             </div>
                         </div>
 
@@ -164,13 +166,13 @@
                             <p class="small">Name on Card</p>
                             <div class="row">
                                 <div class="form-group col-md-4 pr-0 mb-0">
-                                    <input class="form-control text-secondary" placeholder="1000">
+                                    <input class="form-control text-secondary card-first-name" placeholder="1000">
                                 </div>
                                 <div class="form-group col-md-4 px-1 mb-0">
-                                    <input class="form-control text-secondary">
+                                    <input class="form-control text-secondary card-middle-name">
                                 </div>
                                 <div class="form-group col-md-4 pl-0 mb-0">
-                                    <input class="form-control text-secondary">
+                                    <input class="form-control text-secondary card-last-name">
                                 </div>
                             </div>
                             <p class="small text-secondary"> * This card should belong to you and be in your name. </p>
@@ -178,7 +180,7 @@
 
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-success">Deposit</button>
+                            <button type="submit" class="btn btn-success make-deposit-button">Deposit</button>
                         </div>
                     </form>
                 </div>
