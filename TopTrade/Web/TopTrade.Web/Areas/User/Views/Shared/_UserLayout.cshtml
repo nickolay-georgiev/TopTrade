@@ -64,12 +64,12 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a asp-area="User" asp-controller="News" asp-action="Index">
                     <i class="fa fa-users" aria-hidden="true"></i> News Feed
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a asp-area="User" asp-controller="Settings" asp-action="Index">
                     <i class="fa fa-cog" aria-hidden="true"></i> Settings
                 </a>
             </li>
@@ -84,7 +84,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@this.Url.Action("Index", "Home", new { area = string.Empty })">
                     <i class="fa fa-sign-out-alt" aria-hidden="true"></i> Logout
                 </a>
             </li>

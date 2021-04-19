@@ -1,0 +1,308 @@
+﻿<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="transactions-content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left ml-5 mt-4 breadcrumb-new">
+                <h3 class="content-header-title mb-0 d-inline-block">Settings</h3>
+                <div class="row breadcrumbs-top d-inline-block">
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a asp-area="User" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                Settings
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-body">
+            <section id="all-transactions">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="transactions-deposit-card">
+                            <div class="card-header">
+                                <h4 class="card-title">Transactions Details</h4>
+                            </div>
+                            <div class="card-content mt-1">
+                                <div class="table-responsive">
+                                    <table id="crypto-transaction" class="table table-hover table-xl trans-wrapper">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-top-0">ID</th>
+                                                <th class="border-top-0">Type</th>
+                                                <th class="border-top-0">Amount</th>
+                                                <th class="border-top-0">Price</th>
+                                                <th class="border-top-0">USD ($)</th>
+                                                <th class="border-top-0">Fee (%)</th>
+                                                <th class="border-top-0">Status</th>
+                                                <th class="border-top-0">Time</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="Trans-id">#14342</div>
+                                                </td>
+                                                <td>
+                                                    <div class="trans-type success">Buy</div>
+                                                </td>
+                                                <td>
+                                                    <div class="amount">
+                                                        <i class="la la-bitcoin"></i>0.586
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="price">119.12</div>
+                                                </td>
+                                                <td>
+                                                    <div class="usd">979.78</div>
+                                                </td>
+                                                <td>
+                                                    <div class="fee">0.2</div>
+                                                </td>
+                                                <td>
+                                                    <div class="status badge badge-success badge-pill badge-sm">Completed</div>
+                                                </td>
+                                                <td>
+                                                    <div class="time">04.40 am</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="Trans-id">#14321</div>
+                                                </td>
+                                                <td>
+                                                    <div class="trans-type danger">Sell</div>
+                                                </td>
+                                                <td>
+                                                    <div class="amount">
+                                                        <i class="la la-viacoin"></i>1.386
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="price">134.12</div>
+                                                </td>
+                                                <td>
+                                                    <div class="usd">346.23</div>
+                                                </td>
+                                                <td>
+                                                    <div class="fee">0.2</div>
+                                                </td>
+                                                <td>
+                                                    <div class="status badge badge-danger badge-pill badge-sm">Cancel</div>
+                                                </td>
+                                                <td>
+                                                    <div class="time">03.50 pm</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="Trans-id">#23531</div>
+                                                </td>
+                                                <td>
+                                                    <div class="trans-type success">Buy</div>
+                                                </td>
+                                                <td>
+                                                    <div class="amount">
+                                                        <i class="la la-gg-circle"></i>0.231
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="price">124.12</div>
+                                                </td>
+                                                <td>
+                                                    <div class="usd">456.23</div>
+                                                </td>
+                                                <td>
+                                                    <div class="fee">0.2</div>
+                                                </td>
+                                                <td>
+                                                    <div class="status badge badge-success badge-pill badge-sm">Completed</div>
+                                                </td>
+                                                <td>
+                                                    <div class="time">12.23 pm</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="Trans-id">#12463</div>
+                                                </td>
+                                                <td>
+                                                    <div class="trans-type success">Buy</div>
+                                                </td>
+                                                <td>
+                                                    <div class="amount">
+                                                        <i class="la la-bitcoin"></i>0.231
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="price">231.12</div>
+                                                </td>
+                                                <td>
+                                                    <div class="usd">346.34</div>
+                                                </td>
+                                                <td>
+                                                    <div class="fee">0.2</div>
+                                                </td>
+                                                <td>
+                                                    <div class="status badge badge-secondary badge-pill badge-sm">Pending</div>
+                                                </td>
+                                                <td>
+                                                    <div class="time">02.12 pm</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="Trans-id">#12431</div>
+                                                </td>
+                                                <td>
+                                                    <div class="trans-type danger">Sell</div>
+                                                </td>
+                                                <td>
+                                                    <div class="amount">
+                                                        <i class="la la-bitcoin"></i>2.945
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="price">431.12</div>
+                                                </td>
+                                                <td>
+                                                    <div class="usd">125.12</div>
+                                                </td>
+                                                <td>
+                                                    <div class="fee">0.2</div>
+                                                </td>
+                                                <td>
+                                                    <div class="status badge badge-danger badge-pill badge-sm">Cancel</div>
+                                                </td>
+                                                <td>
+                                                    <div class="time">10.00 am</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="Trans-id">#12532</div>
+                                                </td>
+                                                <td>
+                                                    <div class="trans-type danger">Sell</div>
+                                                </td>
+                                                <td>
+                                                    <div class="amount">
+                                                        <i class="la la-gg-circle"></i>0.235
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="price">215.34</div>
+                                                </td>
+                                                <td>
+                                                    <div class="usd">236.12</div>
+                                                </td>
+                                                <td>
+                                                    <div class="fee">0.2</div>
+                                                </td>
+                                                <td>
+                                                    <div class="status badge badge-secondary badge-pill badge-sm">Pending</div>
+                                                </td>
+                                                <td>
+                                                    <div class="time">08.22 am</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="Trans-id">#23165</div>
+                                                </td>
+                                                <td>
+                                                    <div class="trans-type success">Buy</div>
+                                                </td>
+                                                <td>
+                                                    <div class="amount">
+                                                        <i class="la la-bitcoin"></i>2.346
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="price">235.12</div>
+                                                </td>
+                                                <td>
+                                                    <div class="usd">332.23</div>
+                                                </td>
+                                                <td>
+                                                    <div class="fee">0.2</div>
+                                                </td>
+                                                <td>
+                                                    <div class="status badge badge-success badge-pill badge-sm">Completed</div>
+                                                </td>
+                                                <td>
+                                                    <div class="time">12.43 am</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="Trans-id">#63423</div>
+                                                </td>
+                                                <td>
+                                                    <div class="trans-type danger">Sell</div>
+                                                </td>
+                                                <td>
+                                                    <div class="amount">
+                                                        <i class="la la-viacoin"></i>3.213
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="price">456.12</div>
+                                                </td>
+                                                <td>
+                                                    <div class="usd">231.53</div>
+                                                </td>
+                                                <td>
+                                                    <div class="fee">0.2</div>
+                                                </td>
+                                                <td>
+                                                    <div class="status badge badge-secondary badge-pill badge-sm">Pending</div>
+                                                </td>
+                                                <td>
+                                                    <div class="time">11.21 am</div>
+                                                </td>
+                                            </tr>
+
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <nav aria-label="Page navigation">
+                                            <ul class="pagination justify-content-end m-2">
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#" aria-label="Previous">
+                                                        <span aria-hidden="true">« Prev</span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                </li>
+                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                <li class="page-item active"><a class="page-link" href="#">3</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#" aria-label="Next">
+                                                        <span aria-hidden="true">Next »</span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

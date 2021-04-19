@@ -8,7 +8,7 @@
     using Microsoft.AspNetCore.Mvc;
     using TopTrade.Web.Controllers;
 
-    public class WalletController : BaseController
+    public class WalletController : BaseLoggedUserController
     {
         [Area("User")]
         public async Task<IActionResult> Index()

@@ -13,7 +13,6 @@
 
     public class AlphaVantageApiClientService : IAlphaVantageApiClientService
     {
-
         public async Task<ICollection<SymbolSearchMatch>> SearchStock()
         {
             using var client = new AlphaVantageClient("AYEDU2WZ2YC86XC0");

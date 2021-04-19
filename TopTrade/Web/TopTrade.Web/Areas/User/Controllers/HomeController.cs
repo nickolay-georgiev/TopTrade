@@ -1,23 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TopTrade.Services.Data;
-using TopTrade.Web.Controllers;
-
-namespace TopTrade.Web.Areas.User
+﻿namespace TopTrade.Web.Areas.User
 {
-    public class HomeController : BaseController
-    {
-        private IAlphaVantageApiClientService stockService;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
 
-        public HomeController(IAlphaVantageApiClientService stockService)
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using TopTrade.Data.Models;
+    using TopTrade.Services.Data;
+    using TopTrade.Web.Areas.User.Controllers;
+    using TopTrade.Web.Controllers;
+
+    public class HomeController : BaseLoggedUserController
+    {
+        private readonly IAlphaVantageApiClientService stockService;
+        private readonly SignInManager<ApplicationUser> signInManager;
+
+        public HomeController(
+            IAlphaVantageApiClientService stockService,
+            SignInManager<ApplicationUser> signInManager)
         {
             this.stockService = stockService;
+            this.signInManager = signInManager;
         }
 
-        [Area("User")]
         public async Task<IActionResult> Index()
         {
             //var getStockByTicker = await this.stockService.GetStockByTicker();

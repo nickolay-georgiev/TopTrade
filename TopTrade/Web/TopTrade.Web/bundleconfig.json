@@ -15,7 +15,8 @@
     "inputFiles": [
       "wwwroot/css/user-dashboard.css",
       "wwwroot/css/wallet-history.css",
-      "wwwroot/css/transactions.css"
+      "wwwroot/css/transactions.css",
+      "wwwroot/css/news-page.css"
     ]
   },
   {

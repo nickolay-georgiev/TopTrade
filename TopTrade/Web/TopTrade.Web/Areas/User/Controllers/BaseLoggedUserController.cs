@@ -5,15 +5,12 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using TopTrade.Web.Controllers;
 
-    public class StockSearchController : BaseApiController
+    [Area("User")]
+    [Authorize]
+    public class BaseLoggedUserController : Controller
     {
-        [HttpPost]
-        public string Search()
-        {
-            return "Search works";
-        }
     }
 }

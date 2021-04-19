@@ -12,22 +12,23 @@
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Logging;
     using TopTrade.Data.Models;
+    using TopTrade.Web.Areas.User;
 
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ILogger<LoginModel> _logger;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly ILogger<LoginModel> logger;
 
         public LoginModel(
             SignInManager<ApplicationUser> signInManager,
             ILogger<LoginModel> logger,
             UserManager<ApplicationUser> userManager)
         {
-            this._userManager = userManager;
-            this._signInManager = signInManager;
-            this._logger = logger;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.logger = logger;
         }
 
         [BindProperty]
@@ -68,7 +69,7 @@
             // Clear the existing external cookie to ensure a clean login process
             await this.HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            this.ExternalLogins = (await this._signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             this.ReturnUrl = returnUrl;
         }
@@ -77,17 +78,17 @@
         {
             returnUrl ??= this.Url.Content("~/");
 
-            this.ExternalLogins = (await this._signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             if (this.ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await this._signInManager.PasswordSignInAsync(this.Input.Email, this.Input.Password, this.Input.RememberMe, lockoutOnFailure: false);
+                var result = await this.signInManager.PasswordSignInAsync(this.Input.Email, this.Input.Password, this.Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    this._logger.LogInformation("User logged in.");
-                    return this.LocalRedirect(returnUrl);
+                    this.logger.LogInformation("User logged in.");
+                    return this.RedirectToAction(nameof(HomeController.Index), "Home", new { area = "User" });
                 }
 
                 if (result.RequiresTwoFactor)
@@ -97,7 +98,7 @@
 
                 if (result.IsLockedOut)
                 {
-                    this._logger.LogWarning("User account locked out.");
+                    this.logger.LogWarning("User account locked out.");
                     return this.RedirectToPage("./Lockout");
                 }
                 else
