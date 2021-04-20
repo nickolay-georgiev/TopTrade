@@ -22,6 +22,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\TopTrade.Data.Common\TopTrade.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\TopTrade.Data.Models\TopTrade.Data.Models.csproj" />
+    <ProjectReference Include="..\..\TopTrade.Common\TopTrade.Common.csproj" />
+    <ProjectReference Include="..\..\Web\TopTrade.Web.ViewModels\TopTrade.Web.ViewModels.csproj" />
     <ProjectReference Include="..\TopTrade.Services.Mapping\TopTrade.Services.Mapping.csproj" />
   </ItemGroup>
 

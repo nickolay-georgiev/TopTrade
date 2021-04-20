@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
+    <title>@this.ViewData["Title"]</title>
 
     <link href="~/fonts/fa-brands-400.woff2" rel='stylesheet' type='font/woff2' asp-append-version="true">
     <link href="~/fonts/fa-solid-900.woff2" rel='stylesheet' type='font/woff2' asp-append-version="true">
@@ -13,7 +13,7 @@
     <link href="~/fonts/inter-v2-latin-500.woff2" as="font" rel='stylesheet' type='font/woff2' asp-append-version="true">
     <link href="~/fonts/inter-v2-latin-700.woff2" as="font" rel='stylesheet' type='font/woff2' asp-append-version="true">
     <!-- Favicon and apple icon -->
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" asp-append-version="true">
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" asp-append-version="true">
     <link rel="apple-touch-icon-precomposed" href="~/img/apple-touch-icon.png" asp-append-version="true">
     <!-- CSS -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
@@ -197,6 +197,7 @@
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
     <script src="~/js/site.min.js" asp-append-version="true"></script>
+    <script src="~/js/user/stock-search.js" asp-append-version="true"></script>
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

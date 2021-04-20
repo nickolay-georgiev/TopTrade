@@ -34,11 +34,5 @@
 
             return this.View();
         }
-
-
-        public async Task<IActionResult> Test()
-        {
-            return this.View();
-        }
     }
 }

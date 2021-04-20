@@ -1,12 +1,13 @@
-document.querySelector('.search-icon-button').addEventListener('click', stockSearch);
-document.querySelector('div.close-search-bar').addEventListener('click', closeSearchBar);
+﻿document.querySelector('.search-icon-button').addEventListener('click', stockSearch);
+document.querySelector('div.close-search-bar').addEventListener('click', closeSearchBarAndClearSearchResult);
+const token = document.querySelector('[name=__RequestVerificationToken]').value
 
 async function stockSearch() {
-    const token = document.querySelector('[name=__RequestVerificationToken]').value
     const searchMenu = document.querySelector('div.search-bar div.form-group');
     const inputValue = searchMenu.querySelector('input').value;
 
-    const response = await fetch('api/stockSearch', {
+    closeSearchBarAndClearSearchResult();
+    const response = await fetch('api/stockSearch/list', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -18,65 +19,77 @@ async function stockSearch() {
 
     let searchResult = await response.json();
 
-   
+    searchResult.map(async stock => {
+        stock.logoName = stock.name.split(/[ .]+/)[0];
+        console.log(searchResult)
 
-    searchResult.name = searchResult.name.split(/[ .]+/)[0];
-    console.log(searchResult)
+        const closeSearchBarIcon = document.querySelector('div.close-search-bar');
+        closeSearchBarIcon.removeAttribute("hidden");
 
-    const closeSearchBarIcon = document.querySelector('div.close-search-bar');
-    closeSearchBarIcon.removeAttribute("hidden");
+        const logo = stock.logoName;
 
-    const logo = searchResult.name;
+        const searchResultDiv = document.createElement('div');
+        searchResultDiv.classList.add('search-result-div');
 
-    const searchResultDiv = document.createElement('div');
-    searchResultDiv.classList.add('search-result-div');
+        const stockNameDiv = document.createElement('div');
+        stockNameDiv.classList.add('d-flex', 'flex-row');
 
-    const stockNameDiv = document.createElement('div');
-    stockNameDiv.classList.add('d-flex', 'flex-row');
+        const stockLogo = document.createElement('img');
+        stockLogo.src = `//logo.clearbit.com/${logo}.com`;
+        stockLogo.classList.add('company-logo');
 
-    const stockLogo = document.createElement('img');
-    stockLogo.src = `//logo.clearbit.com/${logo}.com`;
-    stockLogo.classList.add('company-logo');
+        const stockDiv = document.createElement('div');
+        stockDiv.classList.add('ml-2');
 
-    const stockDiv = document.createElement('div');
-    stockDiv.classList.add('ml-2');
+        const stockTickerParagraph = document.createElement('p');
+        stockTickerParagraph.textContent = stock.ticker;
+        stockTickerParagraph.classList.add('mb-0');
+        stockTickerParagraph.classList.add('font-weight-bold');
 
-    const stockTickerParagraph = document.createElement('p');
-    stockTickerParagraph.textContent = searchResult.ticker;
-    stockTickerParagraph.classList.add('mb-0');
-    stockTickerParagraph.classList.add('font-weight-bold');
+        const stockNameParagraph = document.createElement('p');
+        stockNameParagraph.textContent = stock.name;
+        stockNameParagraph.classList.add('mb-0');
+        stockNameParagraph.classList.add('small');
 
-    const stockNameParagraph = document.createElement('p');
-    stockNameParagraph.textContent = searchResult.name;
-    stockNameParagraph.classList.add('mb-0');
-    stockNameParagraph.classList.add('small');
+        const addStockToWatchlistDiv = document.createElement('div');
+        addStockToWatchlistDiv.style.cursor = "pointer";
+        addStockToWatchlistDiv.style.background = 'green';
+        addStockToWatchlistDiv.style.color = 'white';
 
-    const addStockToWatchlistDiv = document.createElement('div');
-    addStockToWatchlistDiv.style.cursor = "pointer";
-    addStockToWatchlistDiv.style.background = 'green';
-    addStockToWatchlistDiv.style.color = 'white';
+        const addIcon = document.createElement('i');
+        addIcon.classList.add('fas', 'fa-plus');
 
-    const addIcon = document.createElement('i');
-    addIcon.classList.add('fas', 'fa-plus');
+        const icon = document.createElement('i');
+        icon.classList.add('fas', 'fa-check');
 
-    const icon = document.createElement('i');
-    icon.classList.add('fas', 'fa-check');
+        addStockToWatchlistDiv.append(icon);
 
-    addStockToWatchlistDiv.append(icon);
+        stockDiv.append(stockTickerParagraph, stockNameParagraph);
+        stockNameDiv.append(stockLogo, stockDiv);
 
-    stockDiv.append(stockTickerParagraph, stockNameParagraph);
-    stockNameDiv.append(stockLogo, stockDiv);
+        searchResultDiv.append(stockNameDiv, addStockToWatchlistDiv);
+        searchMenu.append(searchResultDiv);
 
-    searchResultDiv.append(stockNameDiv, addStockToWatchlistDiv);
-    searchMenu.append(searchResultDiv);
-
-    addStockToWatchlistDiv.addEventListener('click', addStockToWatchList.bind(this, searchResult));
+        addStockToWatchlistDiv.addEventListener('click', addStockToWatchList.bind(this, stock));
+    });
 }
 
-function addStockToWatchList(searchResult) {
-    const logo = searchResult.name;
+async function addStockToWatchList(stock) {
+
+    const response = await fetch('api/stockSearch/stock', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "X-CSRF-TOKEN": token
+        },
+        body: JSON.stringify(stock.ticker)
+    });
+    let searchResult = await response.json();
+
+    const logo = stock.logoName;
     const ticker = searchResult.ticker;
-    const companyName = searchResult.name;
+    const companyName = stock.name.split(/[ .]+/)[0];
     const changeInCash = searchResult.change;
     const changeInPercents = searchResult.changePercent;
     const chart = './img/chart.jpg';
@@ -129,9 +142,7 @@ function addStockToWatchList(searchResult) {
     document.querySelector('tbody').appendChild(tr);
 }
 
-
-
-function closeSearchBar(event) {
+function closeSearchBarAndClearSearchResult() {
     const searchMenu = document.querySelector('div.search-bar div.form-group');
     const closeSearchBarIcon = document.querySelector('div.close-search-bar');
     console.log(searchMenu);

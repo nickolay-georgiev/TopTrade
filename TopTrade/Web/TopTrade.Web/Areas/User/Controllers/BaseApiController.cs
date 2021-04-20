@@ -7,7 +7,7 @@
 
     using Microsoft.AspNetCore.Mvc;
 
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class BaseApiController : Controller
     {

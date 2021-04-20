@@ -1,19 +1,34 @@
 ﻿namespace TopTrade.Web.Areas.User.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
+    using AlphaVantage.Net.Stocks;
     using Microsoft.AspNetCore.Mvc;
+    using TopTrade.Services.Data;
     using TopTrade.Web.Controllers;
+    using TopTrade.Web.ViewModels.User;
 
     public class StockSearchController : BaseApiController
     {
-        [HttpPost]
-        public string Search()
+        private readonly IAlphaVantageApiClientService stockService;
+
+        public StockSearchController(IAlphaVantageApiClientService stockService)
         {
-            return "Search works";
+            this.stockService = stockService;
+        }
+
+        [HttpPost]
+        [ActionName("list")]
+        public async Task<ActionResult<StockSearchResultViewModel[]>> StockSearch([FromBody] string stockNameOrTicker)
+        {
+            return await this.stockService.SearchStockBySymbol(stockNameOrTicker);
+        }
+
+        [HttpPost]
+        [ActionName("stock")]
+        public async Task<ActionResult<StockViewModel>> GetStockByTicker([FromBody] string stockTicker)
+        {
+            return await this.stockService.GetStockByTicker(stockTicker);
         }
     }
 }

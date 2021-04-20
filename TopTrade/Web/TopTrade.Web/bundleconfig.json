@@ -35,17 +35,17 @@
     // Optionally generate .map file
     "sourceMap": false
   },
-  {
-    "outputFileName": "wwwroot/js/user/user-dashboard.min.js",
-    "inputFiles": [
-      "wwwroot/js/user/user-dashboard.js"
-    ],
-    // Optionally specify minification options
-    "minify": {
-      "enabled": true,
-      "renameLocals": true
-    },
-    // Optionally generate .map file
-    "sourceMap": false
-  }
+  //{
+  //  "outputFileName": "wwwroot/js/site.js",
+  //  "inputFiles": [
+  //    "wwwroot/js/user/stock-search.js"
+  //  ],
+  //  // Optionally specify minification options
+  //  "minify": {
+  //    "enabled": true,
+  //    "renameLocals": true
+  //  },
+  //  // Optionally generate .map file
+  //  "sourceMap": false
+  //}
 ]

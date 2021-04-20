@@ -4,13 +4,14 @@
     using System.Threading.Tasks;
 
     using AlphaVantage.Net.Stocks;
+    using TopTrade.Web.ViewModels.User;
 
     public interface IAlphaVantageApiClientService
     {
-        Task<ICollection<SymbolSearchMatch>> SearchStock();
+        Task<StockSearchResultViewModel[]> SearchStockBySymbol(string stockNameOrTicker);
 
-        Task<GlobalQuote> GetStockByTicker();
+        Task<StockViewModel> GetStockByTicker(string stockTicker);
 
-        Task<StockTimeSeries> GetStockByTicker1();
+        Task<StockTimeSeries> GetStockTimeSeries();
     }
 }
