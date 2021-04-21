@@ -6,6 +6,7 @@ async function stockSearch() {
     const searchMenu = document.querySelector('div.search-bar div.form-group');
     const inputValue = searchMenu.querySelector('input').value;
 
+    activateSpinner();
     closeSearchBarAndClearSearchResult();
     const response = await fetch('api/stockSearch/list', {
         method: 'POST',
@@ -19,7 +20,7 @@ async function stockSearch() {
 
     let searchResult = await response.json();
 
-    searchResult.map(async stock => {
+    searchResult.map(stock => {
         stock.logoName = stock.name.split(/[ .]+/)[0];
         console.log(searchResult)
 
@@ -56,6 +57,7 @@ async function stockSearch() {
         addStockToWatchlistDiv.style.background = 'green';
         addStockToWatchlistDiv.style.color = 'white';
 
+
         const addIcon = document.createElement('i');
         addIcon.classList.add('fas', 'fa-plus');
 
@@ -69,6 +71,7 @@ async function stockSearch() {
 
         searchResultDiv.append(stockNameDiv, addStockToWatchlistDiv);
         searchMenu.append(searchResultDiv);
+        removeSpinner();
 
         addStockToWatchlistDiv.addEventListener('click', addStockToWatchList.bind(this, stock));
     });
@@ -94,7 +97,7 @@ async function addStockToWatchList(stock) {
     const changeInPercents = searchResult.changePercent;
     const chart = './img/chart.jpg';
     const sellPrice = searchResult.price;
-    const buyPrice = searchResult.price * 1.05;
+    const buyPrice = searchResult.price * 1.005;
 
     // const i = document.createElement('i');
     // i.classList.add('fas', 'fa-ellipsis-v', 'remove-stock-button');
@@ -148,4 +151,28 @@ function closeSearchBarAndClearSearchResult() {
     console.log(searchMenu);
     [...searchMenu.children].slice(1).forEach(x => x.remove());
     closeSearchBarIcon.setAttribute('hidden', true);
+}
+
+function activateSpinner() {
+    const spinner = document.createElement('div');
+    spinner.classList.add('spinner-border', 'text-light', 'spinner');
+
+    const span = document.createElement('span');
+    span.classList.add('sr-only');
+    span.textContent = 'Loading...';
+    spinner.appendChild(span);
+
+    document.querySelector('.search-icon-button i').parentElement.appendChild(spinner);
+    document.querySelector('.search-icon-button i').remove();
+}
+
+function removeSpinner() {
+    const span = document.createElement('span');
+    span.classList.add('input-group-prepend', 'search-icon-button');
+    span.innerHTML = ` <span class="input-group-text">
+                                <i class="fas fa-search"></i>
+                            </span>`;
+    const div = document.querySelector('.input-group');
+    div.firstElementChild.remove();
+    div.insertBefore(span, div.firstElementChild);
 }

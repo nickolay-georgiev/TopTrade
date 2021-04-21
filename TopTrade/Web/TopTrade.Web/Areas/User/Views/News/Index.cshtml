@@ -1,4 +1,7 @@
-﻿@{
+﻿@model List<TopTrade.Web.ViewModels.User.AllNewsViewModel>
+
+
+@{
     ViewData["Title"] = "News Feed Page";
     ViewData["PageName"] = "News Feed";
 }
@@ -8,81 +11,132 @@
     <div class="history-content-wrapper">
         <partial name="_NavigationPartial" view-data="ViewData">
             <div class="content-body">
-                <div class="row justify-content-md-center">
-                    <div class="col-8">
-                        <form class="search-news-from col-md-6">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input class="form-control border-right-0" placeholder="Search stock news">
-                                    <span class="input-group-prepend search-icon-button">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-search"></i>
-                                        </span>
+                <form action="News/Test" method="get">
+                    <div class="row justify-content-md-center">
+                        <div class="form-group search-news-form col-md-4">
+                            <div class="input-group">
+                                <input name="keyword" class="form-control border-right-0" placeholder="Search stock news">
+                                <span class="input-group-prepend search-news-icon-button">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-search"></i>
                                     </span>
-                                    <div class="close-search-bar" hidden>
-                                        <i class="fas fa-times"></i>
+                                </span>
+                                <button type="submit" class="close-search-bar" hidden>
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                </form>
+
+
+                @*<div class="col-8">
+                    <div class="news-card">
+                        <div class="card-header">
+                            <h4 class="card-title">Aticle Title</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="img-wrapper">
+                                <img class="img-fluid"
+                                     src="https://hipertextual.com/wp-content/uploads/2019/12/hipertextual-2019982676.jpg"
+                                     alt="">
+                            </div>
+                            <hr>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto placeat consequuntur,
+                                eius nisi esse provident ex fugiat eum alias distinctio officiis debitis dolor,
+                                perferendis deserunt quod magnam, voluptate minima. Suscipit?
+                            </p>
+                            <div>
+                                <span>article.Url: somelink.com</span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row justify-content-between mx-3">
+                                <p>Author: <strong>Author Name</strong></p>
+                                <p>Published At : <strong>12.12.2022</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+                @foreach (var article in Model)
+                    {
+                        <div class="col-8">
+                            <div class="news-card">
+                                <div class="card-header">
+                                    <h4 class="card-title">@article.Title</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="img-wrapper">
+                                        <img class="img-fluid"
+                                             src="@article.ImageUrl"
+                                             alt="article image">
+                                    </div>
+                                    <hr>
+                                    <p>
+                                        @article.Description
+                                    </p>
+                                    <div>
+                                        <a href="@article.Url">Read all article</a>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="row justify-content-between mx-3">
+                                        <p>Author: <strong>@article.Author</strong></p>
+                                        <p>Published At : <strong>@article.PublishedAt</strong></p>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                        <div class="news-card">
-                            <div class="card-header">
-                                <h4 class="card-title">Aticle Title</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="img-wrapper">
-                                    <img class="img-fluid"
-                                         src="https://hipertextual.com/wp-content/uploads/2019/12/hipertextual-2019982676.jpg"
-                                         alt="">
-                                </div>
-                                <hr>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto placeat consequuntur,
-                                    eius nisi esse provident ex fugiat eum alias distinctio officiis debitis dolor,
-                                    perferendis deserunt quod magnam, voluptate minima. Suscipit?
-                                </p>
-                                <div>
-                                    <span>article.Url: somelink.com</span>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="row justify-content-between mx-3">
-                                    <p>Author: <strong>Author Name</strong></p>
-                                    <p>Published At : <strong>12.12.2022</strong></p>
-                                </div>
-                            </div>
                         </div>
-                    </div>
-                    <div class="col-8">
-                        <div class="news-card">
-                            <div class="card-header">
-                                <h4 class="card-title">Aticle Title</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="img-wrapper">
-                                    <img class="img-fluid"
-                                         src="https://hipertextual.com/wp-content/uploads/2019/12/hipertextual-2019982676.jpg"
-                                         alt="">
-                                </div>
-                                <hr>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto placeat consequuntur,
-                                    eius nisi esse provident ex fugiat eum alias distinctio officiis debitis dolor,
-                                    perferendis deserunt quod magnam, voluptate minima. Suscipit?
-                                </p>
-                                <div>
-                                    <span>article.Url: somelink.com</span>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="row justify-content-between mx-3">
-                                    <p>Author: <strong>Author Name</strong></p>
-                                    <p>Published At : <strong>12.12.2022</strong></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    }
+
             </div>
     </div>
 </div>
+</div>
+@section Scripts {
+    <script src="~/js/user/stock-news-search.js" type="text/javascript"></script>
+}
+@*<div class="col-8">
+        <form class="search-news-from col-md-6">
+            <div class="form-group">
+                <div class="input-group">
+                    <input class="form-control border-right-0" placeholder="Search stock news">
+                    <span class="input-group-prepend search-icon-button">
+                        <span class="input-group-text">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </span>
+                    <div class="close-search-bar" hidden>
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="news-card">
+            <div class="card-header">
+                <h4 class="card-title">Aticle Title</h4>
+            </div>
+            <div class="card-body">
+                <div class="img-wrapper">
+                    <img class="img-fluid"
+                         src="https://hipertextual.com/wp-content/uploads/2019/12/hipertextual-2019982676.jpg"
+                         alt="">
+                </div>
+                <hr>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto placeat consequuntur,
+                    eius nisi esse provident ex fugiat eum alias distinctio officiis debitis dolor,
+                    perferendis deserunt quod magnam, voluptate minima. Suscipit?
+                </p>
+                <div>
+                    <span>article.Url: somelink.com</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row justify-content-between mx-3">
+                    <p>Author: <strong>Author Name</strong></p>
+                    <p>Published At : <strong>12.12.2022</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>*@

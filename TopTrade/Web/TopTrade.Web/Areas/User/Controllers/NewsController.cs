@@ -6,12 +6,28 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using TopTrade.Services.Stock;
 
     public class NewsController : BaseLoggedUserController
     {
+        private readonly INewsService newsService;
+
+        public NewsController(INewsService newsService)
+        {
+            this.newsService = newsService;
+        }
+
         public async Task<IActionResult> Index()
         {
-            return this.View();
+            var news = await this.newsService.GetLatestStocksNewsAsync();
+            return this.View(news);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string keyword)
+        {
+            var news = await this.newsService.GetStockNewsByTickerAsync(keyword);
+            return this.View(nameof(this.Index), news);
         }
     }
 }

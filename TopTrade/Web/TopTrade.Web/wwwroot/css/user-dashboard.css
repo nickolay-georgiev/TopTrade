@@ -379,3 +379,9 @@ hr {
 .card-title:nth-child(2) {
     color: #eaa4a4;
 }
+
+div.spinner-border.spinner {
+    width: 1rem;
+    height: 1rem;
+    color: dodgerblue !important;
+}

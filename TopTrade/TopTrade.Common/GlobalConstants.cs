@@ -8,6 +8,8 @@
 
         public const string AlphaVantageApiKey = "AlphaVantage:ApiKey";
 
+        public const string NewsApiKey = "NewsApi:ApiKey";
+
         public const string StockSearchRegion = "United States";
     }
 }

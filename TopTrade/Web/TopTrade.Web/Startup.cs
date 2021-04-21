@@ -19,6 +19,7 @@
     using TopTrade.Services.Data;
     using TopTrade.Services.Mapping;
     using TopTrade.Services.Messaging;
+    using TopTrade.Services.Stock;
     using TopTrade.Web.ViewModels;
 
     public class Startup
@@ -68,9 +69,8 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
 
-
             services.AddTransient<IAlphaVantageApiClientService, AlphaVantageApiClientService>();
-
+            services.AddTransient<INewsService, NewsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

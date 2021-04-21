@@ -2,8 +2,14 @@
     padding-left: 16rem;
 }
 
-.search-news-from {
-    margin: 0 auto;
+.content-body {
+    position: relative;
+    margin-top: 2rem;
+}
+
+.search-news-form {
+    position: absolute;
+    top: -2rem;
 }
 
 .history-deposit-card, .history-withdraw-card, .news-card {
