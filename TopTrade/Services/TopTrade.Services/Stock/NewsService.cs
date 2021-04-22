@@ -23,33 +23,9 @@
             this.newsApiClient = new NewsApiClient(this.configuration.GetSection(GlobalConstants.NewsApiKey).Value);
         }
 
-        public async Task<IList<AllNewsViewModel>> GetLatestStocksNewsAsync()
+        public async Task<IList<AllNewsViewModel>> GetLatestStocksNewsAsync(string keyword)
         {
-            ArticlesResult articlesResponse = await this.newsApiClient.GetEverythingAsync(new EverythingRequest
-            {
-                Q = "Stock market news",
-                SortBy = SortBys.PublishedAt,
-                Language = Languages.EN,
-            });
-
-            IList<AllNewsViewModel> articles = articlesResponse.Articles
-                .GroupBy(x => x.Title)
-                .Select(x => x.First())
-                .Select(x => new AllNewsViewModel
-                {
-                    Title = x.Title ?? "Unknown",
-                    Author = x.Author,
-                    Description = x.Description,
-                    Url = x.Url,
-                    PublishedAt = x.PublishedAt,
-                    ImageUrl = x.UrlToImage,
-                }).Take(20).ToList();
-
-            return articles;
-        }
-
-        public async Task<IList<AllNewsViewModel>> GetStockNewsByTickerAsync(string keyword)
-        {
+            keyword = keyword == "All" ? "NYSE" : keyword;
 
             ArticlesResult articlesResponse = await this.newsApiClient.GetEverythingAsync(new EverythingRequest
             {
@@ -63,8 +39,8 @@
                 .Select(x => x.First())
                 .Select(x => new AllNewsViewModel
                 {
-                    Title = x.Title ?? "Unknown",
-                    Author = x.Author,
+                    Title = x.Title,
+                    Author = x.Author ?? "Unknown",
                     Description = x.Description,
                     Url = x.Url,
                     PublishedAt = x.PublishedAt,

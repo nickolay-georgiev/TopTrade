@@ -10,8 +10,6 @@
 
     public interface INewsService
     {
-        Task<IList<AllNewsViewModel>> GetLatestStocksNewsAsync();
-
-        Task<IList<AllNewsViewModel>> GetStockNewsByTickerAsync(string keyword);
+        Task<IList<AllNewsViewModel>> GetLatestStocksNewsAsync(string keyword);
     }
 }

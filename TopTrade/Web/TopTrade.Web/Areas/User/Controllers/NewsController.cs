@@ -19,14 +19,14 @@
 
         public async Task<IActionResult> Index()
         {
-            var news = await this.newsService.GetLatestStocksNewsAsync();
+            var news = await this.newsService.GetLatestStocksNewsAsync("All");
             return this.View(news);
         }
 
         [HttpGet]
         public async Task<IActionResult> Search(string keyword)
         {
-            var news = await this.newsService.GetStockNewsByTickerAsync(keyword);
+            var news = await this.newsService.GetLatestStocksNewsAsync(keyword);
             return this.View(nameof(this.Index), news);
         }
     }

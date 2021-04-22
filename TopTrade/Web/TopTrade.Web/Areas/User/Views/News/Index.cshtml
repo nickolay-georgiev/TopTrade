@@ -11,19 +11,19 @@
     <div class="history-content-wrapper">
         <partial name="_NavigationPartial" view-data="ViewData">
             <div class="content-body">
-                <form action="News/Test" method="get">
+                <form asp-action="Search" method="get">
                     <div class="row justify-content-md-center">
                         <div class="form-group search-news-form col-md-4">
                             <div class="input-group">
                                 <input name="keyword" class="form-control border-right-0" placeholder="Search stock news">
-                                <span class="input-group-prepend search-news-icon-button">
-                                    <span class="input-group-text">
+                                <span class="input-group-prepend">
+                                    <button type="submit" class="input-group-text search-news-button">
                                         <i class="fas fa-search"></i>
-                                    </span>
+                                    </button>
                                 </span>
-                                <button type="submit" class="close-search-bar" hidden>
+                                @*<button type="submit" class="close-search-bar" hidden>
                                     <i class="fas fa-times"></i>
-                                </button>
+                                </button>*@
                             </div>
                         </div>
                 </form>
@@ -76,7 +76,7 @@
                                         @article.Description
                                     </p>
                                     <div>
-                                        <a href="@article.Url">Read all article</a>
+                                        <a href="@article.Url">Read this article</a>
                                     </div>
                                 </div>
                                 <div class="card-footer">

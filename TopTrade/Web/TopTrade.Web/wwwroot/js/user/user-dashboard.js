@@ -94,37 +94,37 @@ function configureOrder(event) {
 }
 
 
-document.querySelector('.make-deposit-button').addEventListener('click', makeDeposit);
+//document.querySelector('.make-deposit-button').addEventListener('click', makeDeposit);
 
-function makeDeposit(event) {
-    event.preventDefault();
+//function makeDeposit(event) {
+//    event.preventDefault();
 
-    const depositAmount = document.querySelector('.deposit-amount').value.trim();
-    const cardNumber = document.querySelector('.card-number').value;
-    const cardExpiryDate = document.querySelector('.card-expiry-date').value;
-    const cardCvvNumber = document.querySelector('.card-cvv-number').value;
-    const cardFirstName = document.querySelector('.card-first-name').value.trim();
-    const cardMiddleName = document.querySelector('.card-middle-name').value.trim();
-    const cardLastName = document.querySelector('.card-last-name').value.trim();
-    const token = document.querySelector('[name=__RequestVerificationToken]').value
+//    const depositAmount = document.querySelector('.deposit-amount').value.trim();
+//    const cardNumber = document.querySelector('.card-number').value;
+//    const cardExpiryDate = document.querySelector('.card-expiry-date').value;
+//    const cardCvvNumber = document.querySelector('.card-cvv-number').value;
+//    const cardFirstName = document.querySelector('.card-first-name').value.trim();
+//    const cardMiddleName = document.querySelector('.card-middle-name').value.trim();
+//    const cardLastName = document.querySelector('.card-last-name').value.trim();
+//    const token = document.querySelector('[name=__RequestVerificationToken]').value
 
-    var card = {
-        depositAmount, cardNumber, cardExpiryDate, cardCvvNumber, cardFirstName, cardMiddleName, cardLastName
-    }
+//    var card = {
+//        depositAmount, cardNumber, cardExpiryDate, cardCvvNumber, cardFirstName, cardMiddleName, cardLastName
+//    }
 
-    fetch('api/deposit', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            "X-CSRF-TOKEN": token
-        },
-        body: JSON.stringify(card)
-    }).then(res => {
-        console.log(res);
-    })
+//    fetch('api/deposit', {
+//        method: 'POST',
+//        headers: {
+//            'Accept': 'application/json',
+//            'Content-Type': 'application/json',
+//            "X-CSRF-TOKEN": token
+//        },
+//        body: JSON.stringify(card)
+//    }).then(res => {
+//        console.log(res);
+//    })
 
-}
+//}
 
 document.querySelector('.card-number').addEventListener('input', function (e) {
     var cardNumber = this.value.split("-").join("");

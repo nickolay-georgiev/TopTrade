@@ -12,6 +12,7 @@
     using TopTrade.Services.Data;
     using TopTrade.Web.Areas.User.Controllers;
     using TopTrade.Web.Controllers;
+    using TopTrade.Web.ViewModels.User.ViewComponents;
 
     public class HomeController : BaseLoggedUserController
     {
@@ -33,6 +34,17 @@
             //var searchStock = await this.stockService.SearchStock();
 
             return this.View();
+        }
+
+        [HttpPost]
+        public IActionResult MakeDeposit(DepositModalInputModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                // TODO
+            }
+
+            return this.RedirectToAction(nameof(this.Index));
         }
     }
 }
