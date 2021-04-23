@@ -71,6 +71,7 @@
 
             services.AddTransient<IAlphaVantageApiClientService, AlphaVantageApiClientService>();
             services.AddTransient<INewsService, NewsService>();
+            services.AddTransient<IUploadDocumentsService, UploadDocumentsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

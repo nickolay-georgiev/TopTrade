@@ -30,7 +30,9 @@
 
     <div class="sidebar-container">
         <div class="sidebar-logo">
-            <img class="img-fluid" src="~/img/top-trade-logo.svg" />
+            <a asp-area="User" asp-controller="Home" asp-action="Index">
+                <img class="img-fluid" src="~/img/top-trade-logo.svg" />
+            </a>
         </div>
         <ul class="sidebar-navigation">
             <li class="user-card">
@@ -42,7 +44,10 @@
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h6 class="card-title ml-3 text-center">nickwork5500</h6>
-                                <h5 class="card-title ml-3 mt-4 text-center">Not Verified</h5>
+                                <h5 class="card-title ml-3 mt-4 text-center verification-status" data-toggle="modal"
+                                    data-target="#profile-verification">
+                                    Not Verified
+                                </h5>
                             </div>
                         </div>
                     </div>
@@ -69,8 +74,8 @@
                 </a>
             </li>
             <li>
-                <a asp-area="User" asp-controller="Settings" asp-action="Index">
-                    <i class="fa fa-cog" aria-hidden="true"></i> Settings
+                <a asp-area="User" asp-controller="Profile" asp-action="Index">
+                    <i class="fa fa-cog" aria-hidden="true"></i> Profile
                 </a>
             </li>
             <li>
@@ -105,10 +110,7 @@
     </div>
 
     <vc:deposit-modal></vc:deposit-modal>
-
-    <script src="~/js/uikit.min.js" asp-append-version="true"></script>
-    <script src="~/js/blockit.min.js" asp-append-version="true"></script>
-    <script src="~/js/config-theme.js" asp-append-version="true"></script>
+    <vc:account-verification></vc:account-verification>
 
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>

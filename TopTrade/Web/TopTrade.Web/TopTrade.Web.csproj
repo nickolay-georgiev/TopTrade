@@ -42,4 +42,8 @@
     <ProjectReference Include="..\TopTrade.Web.Infrastructure\TopTrade.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\TopTrade.Web.ViewModels\TopTrade.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\verification-documents\" />
+  </ItemGroup>
 </Project>

@@ -378,6 +378,7 @@ hr {
 
 .card-title:nth-child(2) {
     color: #eaa4a4;
+    cursor: pointer;
 }
 
 div.spinner-border.spinner {
