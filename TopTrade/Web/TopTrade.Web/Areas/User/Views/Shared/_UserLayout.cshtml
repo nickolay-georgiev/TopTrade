@@ -86,7 +86,8 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a data-toggle="modal"
+                   data-target="#withdraw-modal">
                     <i class="fa fa-money-bill-wave-alt" aria-hidden="true"></i> Withdraw Funds
                 </a>
             </li>
@@ -113,9 +114,11 @@
 
     <vc:deposit-modal></vc:deposit-modal>
     <vc:account-verification></vc:account-verification>
+    <vc:withdraw-funds></vc:withdraw-funds>
 
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
     <script src="~/js/site.min.js" asp-append-version="true"></script>

@@ -8,3 +8,7 @@ document.querySelector('.upload-documents-btn').addEventListener('click', (event
     });
     input.click();
 });
+
+$(function () {
+    $('[data-toggle="popover"]').popover()
+});

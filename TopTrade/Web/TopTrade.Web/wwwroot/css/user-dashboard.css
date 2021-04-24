@@ -386,3 +386,11 @@ div.spinner-border.spinner {
     height: 1rem;
     color: dodgerblue !important;
 }
+
+div.poppover-info {
+    cursor: pointer !important;
+}
+
+div.card-logo-div {
+    width: 4rem;
+}
