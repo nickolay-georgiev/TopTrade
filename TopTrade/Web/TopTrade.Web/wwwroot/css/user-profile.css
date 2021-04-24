@@ -1,0 +1,73 @@
+﻿.profile-wrapper {
+    margin: 0 0 0 9.5rem;
+}
+
+.profile-page-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-clip: border-box;
+    border-radius: .25rem;
+}
+
+.card-user .card-image {
+    height: 110px;
+}
+
+.profile-page-card .card-image {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+    .profile-page-card .card-image img {
+        width: 100%;
+        border-radius: 1rem;
+    }
+
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+
+.profile-page-card .card-body,
+div.profile-page-card.card-user {
+    margin: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 12px 1px #c4c4c4;
+}
+
+
+.card-user .card-body {
+    min-height: 10rem;
+    box-shadow: none;
+}
+
+.card-user .author {
+    text-align: center;
+    text-transform: none;
+    margin-top: -70px;
+}
+
+.card-user .avatar {
+    width: 124px;
+    height: 124px;
+    border: 5px solid #fff;
+    position: relative;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.profile-page-card .avatar {
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 5px;
+    top: 4rem;
+}
+
+img {
+    vertical-align: middle;
+}

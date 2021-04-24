@@ -10,5 +10,7 @@
     public interface IUploadDocumentsService
     {
         Task UploadDocumentsAsync(VerificationDocumentsInputModel input, string imagePath);
+
+        Task UploadAvatarAsync(UserAvatarInputModel input, string imagePath);
     }
 }

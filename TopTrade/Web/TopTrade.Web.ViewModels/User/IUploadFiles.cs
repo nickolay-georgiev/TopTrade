@@ -6,13 +6,8 @@
 
     using Microsoft.AspNetCore.Http;
 
-    public class VerificationDocumentsInputModel : IUploadFiles
+    public interface IUploadFiles
     {
-        public VerificationDocumentsInputModel()
-        {
-            this.Documents = new List<IFormFile>();
-        }
-
         public IList<IFormFile> Documents { get; set; }
     }
 }

@@ -1,0 +1,144 @@
+﻿@model TopTrade.Web.ViewModels.User.UserAvatarInputModel
+
+@{
+    ViewData["Title"] = "User Profile";
+    ViewData["PageName"] = "User Profile";
+}
+
+
+<div class="content-body profile-wrapper">
+    <partial name="_NavigationPartial" view-data="ViewData">
+        <div class="row">
+            <div class="col-12">
+                <div class="history-deposit-card">
+                    <div class="card-header d-flex justify-content-between">
+                        <h4 class="card-title">Edit Profile</h4>
+                        <button class="btn btn-info" data-toggle="modal"
+                                    data-target="#profile-verification">Verify Your Account</button>
+                    </div>
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="profile-page-card">
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label">
+                                                            First Name
+                                                        </label>
+                                                        <input aria-describedby="addon-right addon-left"
+                                                               type="text" placeholder="First Name"
+                                                               class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label">
+                                                            Middle Name
+                                                        </label>
+                                                        <input aria-describedby="addon-right addon-left"
+                                                               type="text" placeholder="Last Name"
+                                                               class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label">
+                                                            Last Name
+                                                        </label>
+                                                        <input aria-describedby="addon-right addon-left"
+                                                               type="text" placeholder="Last Name" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">
+                                                            Address
+                                                        </label>
+                                                        <input aria-describedby="addon-right addon-left"
+                                                               type="text" placeholder="Home Address"
+                                                               class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label">
+                                                            City
+                                                        </label>
+                                                        <input aria-describedby="addon-right addon-left"
+                                                               type="text" placeholder="City" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label">
+                                                            Country
+                                                        </label>
+                                                        <input aria-describedby="addon-right addon-left"
+                                                               type="text" placeholder="Country"
+                                                               class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label">
+                                                            Postal Code
+                                                        </label>
+                                                        <input aria-describedby="addon-right addon-left"
+                                                               type="number" placeholder="ZIP Code"
+                                                               class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>About Me</label>
+                                                        <textarea rows="5" class="form-control border-input"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-info btn-fill float-right">
+                                                    Update Profile
+                                                </button>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="profile-page-card card-user">
+                                    <div class="card-image">
+                                        <img src="~/img/avatar-background-img.png" alt="...">
+                                    </div>
+                                    <div class="card-body">
+                                        <form asp-controller="Profile" asp-action="UploadAvatar" method="POST" enctype="multipart/form-data">
+                                            <label asp-for="Documents" class="author d-block">
+                                                <input asp-for="Documents" type="file" hidden onchange="form.submit()" />
+                                                <img src="~/img/face-3.jpg"
+                                                     alt="user-avatar" class="avatar border-gray">
+                                            </label>
+                                        </form>
+                                    </div>
+
+                                    <p class="description text-center">
+                                        "Lamborghini Mercy <br>
+                                        Your chick she so thirsty <br>
+                                        I'm in that two seat Lambo"
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

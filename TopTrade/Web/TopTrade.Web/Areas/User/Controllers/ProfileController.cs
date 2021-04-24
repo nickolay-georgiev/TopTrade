@@ -22,14 +22,22 @@
 
         public IActionResult Index()
         {
-            return this.View();
+            UserAvatarInputModel userAvatarInputModel = new UserAvatarInputModel();
+            return this.View(userAvatarInputModel);
         }
 
+        [HttpPost]
         public async Task<IActionResult> UploadDocuments(VerificationDocumentsInputModel input)
         {
-            // /wwwroot/images/recipes/jhdsi-343g3h453-=g34g.jpg
-            await this.uploadDocumentsService.UploadDocumentsAsync(input, $"{this.environment.WebRootPath}/verification-documents");
+            await this.uploadDocumentsService.UploadDocumentsAsync(input, $"{this.environment.WebRootPath}/user/verification-documents");
             return this.RedirectToAction(nameof(this.Index), "Home");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadAvatar(UserAvatarInputModel input)
+        {
+            await this.uploadDocumentsService.UploadAvatarAsync(input, $"{this.environment.WebRootPath}/user/profile-images");
+            return this.View(nameof(this.Index));
         }
     }
 }
