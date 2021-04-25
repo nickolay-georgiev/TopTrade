@@ -10,6 +10,7 @@
     using Microsoft.EntityFrameworkCore;
     using TopTrade.Data.Common.Models;
     using TopTrade.Data.Models;
+    using TopTrade.Data.Models.User;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -24,6 +25,22 @@
         }
 
         public DbSet<Setting> Settings { get; set; }
+
+        public DbSet<Card> Cards { get; set; }
+
+        public DbSet<Deposit> Deposits { get; set; }
+
+        public DbSet<Stock> Stocks { get; set; }
+
+        public DbSet<Trade> Trades { get; set; }
+
+        public DbSet<Withdraw> Withdraws { get; set; }
+
+        public DbSet<UserWatchlist> UsersWatchlists { get; set; }
+
+        public DbSet<UserWatchlistsStocks> UserWatchlistsStocks { get; set; }
+
+        public DbSet<VerificationDocument> VerificationDocuments { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -46,6 +63,9 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<UserWatchlistsStocks>()
+                .HasKey(k => new { k.UserWatchlistId, k.StockId });
+
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 
