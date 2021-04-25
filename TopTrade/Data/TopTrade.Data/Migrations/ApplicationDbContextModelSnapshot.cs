@@ -255,7 +255,7 @@ namespace TopTrade.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int>("UserWatchlistId")
+                    b.Property<int?>("WatchlistId")
                         .HasColumnType("int");
 
                     b.Property<int>("ZipCode")
@@ -275,7 +275,9 @@ namespace TopTrade.Data.Migrations
 
                     b.HasIndex("StockId");
 
-                    b.HasIndex("UserWatchlistId");
+                    b.HasIndex("WatchlistId")
+                        .IsUnique()
+                        .HasFilter("[WatchlistId] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -494,50 +496,6 @@ namespace TopTrade.Data.Migrations
                     b.ToTable("Trades");
                 });
 
-            modelBuilder.Entity("TopTrade.Data.Models.User.UserWatchlist", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("UsersWatchlists");
-                });
-
-            modelBuilder.Entity("TopTrade.Data.Models.User.UserWatchlistsStocks", b =>
-                {
-                    b.Property<int>("UserWatchlistId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StockId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserWatchlistId", "StockId");
-
-                    b.HasIndex("StockId");
-
-                    b.ToTable("UserWatchlistsStocks");
-                });
-
             modelBuilder.Entity("TopTrade.Data.Models.User.VerificationDocument", b =>
                 {
                     b.Property<int>("Id")
@@ -573,6 +531,50 @@ namespace TopTrade.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("VerificationDocuments");
+                });
+
+            modelBuilder.Entity("TopTrade.Data.Models.User.Watchlist", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Watchlists");
+                });
+
+            modelBuilder.Entity("TopTrade.Data.Models.User.WatchlistStocks", b =>
+                {
+                    b.Property<int>("WatchlistId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StockId")
+                        .HasColumnType("int");
+
+                    b.HasKey("WatchlistId", "StockId");
+
+                    b.HasIndex("StockId");
+
+                    b.ToTable("WatchlistStocks");
                 });
 
             modelBuilder.Entity("TopTrade.Data.Models.User.Withdraw", b =>
@@ -677,13 +679,11 @@ namespace TopTrade.Data.Migrations
                         .WithMany("Users")
                         .HasForeignKey("StockId");
 
-                    b.HasOne("TopTrade.Data.Models.User.UserWatchlist", "UserWatchlist")
-                        .WithMany("ApplicationUser")
-                        .HasForeignKey("UserWatchlistId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.HasOne("TopTrade.Data.Models.User.Watchlist", "Watchlist")
+                        .WithOne("User")
+                        .HasForeignKey("TopTrade.Data.Models.ApplicationUser", "WatchlistId");
 
-                    b.Navigation("UserWatchlist");
+                    b.Navigation("Watchlist");
                 });
 
             modelBuilder.Entity("TopTrade.Data.Models.User.Card", b =>
@@ -721,25 +721,6 @@ namespace TopTrade.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TopTrade.Data.Models.User.UserWatchlistsStocks", b =>
-                {
-                    b.HasOne("TopTrade.Data.Models.User.Stock", "Stock")
-                        .WithMany("UsersWatchlists")
-                        .HasForeignKey("StockId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("TopTrade.Data.Models.User.UserWatchlist", "UserWatchlist")
-                        .WithMany("Stocks")
-                        .HasForeignKey("UserWatchlistId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Stock");
-
-                    b.Navigation("UserWatchlist");
-                });
-
             modelBuilder.Entity("TopTrade.Data.Models.User.VerificationDocument", b =>
                 {
                     b.HasOne("TopTrade.Data.Models.ApplicationUser", "User")
@@ -747,6 +728,25 @@ namespace TopTrade.Data.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TopTrade.Data.Models.User.WatchlistStocks", b =>
+                {
+                    b.HasOne("TopTrade.Data.Models.User.Stock", "Stock")
+                        .WithMany("Watchlists")
+                        .HasForeignKey("StockId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TopTrade.Data.Models.User.Watchlist", "Watchlist")
+                        .WithMany("Stocks")
+                        .HasForeignKey("WatchlistId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Stock");
+
+                    b.Navigation("Watchlist");
                 });
 
             modelBuilder.Entity("TopTrade.Data.Models.User.Withdraw", b =>
@@ -789,14 +789,14 @@ namespace TopTrade.Data.Migrations
                 {
                     b.Navigation("Users");
 
-                    b.Navigation("UsersWatchlists");
+                    b.Navigation("Watchlists");
                 });
 
-            modelBuilder.Entity("TopTrade.Data.Models.User.UserWatchlist", b =>
+            modelBuilder.Entity("TopTrade.Data.Models.User.Watchlist", b =>
                 {
-                    b.Navigation("ApplicationUser");
-
                     b.Navigation("Stocks");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

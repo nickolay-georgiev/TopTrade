@@ -3,7 +3,7 @@ namespace TopTrade.Data.Models
 {
     using System;
     using System.Collections.Generic;
-
+    using System.ComponentModel.DataAnnotations.Schema;
     using Microsoft.AspNetCore.Identity;
     using TopTrade.Data.Common.Models;
     using TopTrade.Data.Models.User;
@@ -51,9 +51,9 @@ namespace TopTrade.Data.Models
 
         public string AvatarUrl { get; set; }
 
-        public int UserWatchlistId { get; set; }
+        public int? WatchlistId { get; set; }
 
-        public virtual UserWatchlist UserWatchlist { get; set; }
+        public virtual Watchlist Watchlist { get; set; }
 
         public virtual UserProfileVerificationStatus ProfileStatus { get; set; }
 

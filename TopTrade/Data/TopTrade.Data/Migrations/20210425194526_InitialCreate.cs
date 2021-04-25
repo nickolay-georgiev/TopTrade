@@ -65,12 +65,12 @@ namespace TopTrade.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UsersWatchlists",
+                name: "Watchlists",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -78,7 +78,7 @@ namespace TopTrade.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UsersWatchlists", x => x.Id);
+                    table.PrimaryKey("PK_Watchlists", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -119,7 +119,7 @@ namespace TopTrade.Data.Migrations
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ZipCode = table.Column<int>(type: "int", nullable: false),
                     AvatarUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserWatchlistId = table.Column<int>(type: "int", nullable: false),
+                    WatchlistId = table.Column<int>(type: "int", nullable: true),
                     ProfileStatus = table.Column<int>(type: "int", nullable: false),
                     StockId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -147,33 +147,33 @@ namespace TopTrade.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_UsersWatchlists_UserWatchlistId",
-                        column: x => x.UserWatchlistId,
-                        principalTable: "UsersWatchlists",
+                        name: "FK_AspNetUsers_Watchlists_WatchlistId",
+                        column: x => x.WatchlistId,
+                        principalTable: "Watchlists",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserWatchlistsStocks",
+                name: "WatchlistStocks",
                 columns: table => new
                 {
-                    UserWatchlistId = table.Column<int>(type: "int", nullable: false),
+                    WatchlistId = table.Column<int>(type: "int", nullable: false),
                     StockId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserWatchlistsStocks", x => new { x.UserWatchlistId, x.StockId });
+                    table.PrimaryKey("PK_WatchlistStocks", x => new { x.WatchlistId, x.StockId });
                     table.ForeignKey(
-                        name: "FK_UserWatchlistsStocks_Stocks_StockId",
+                        name: "FK_WatchlistStocks_Stocks_StockId",
                         column: x => x.StockId,
                         principalTable: "Stocks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_UserWatchlistsStocks_UsersWatchlists_UserWatchlistId",
-                        column: x => x.UserWatchlistId,
-                        principalTable: "UsersWatchlists",
+                        name: "FK_WatchlistStocks_Watchlists_WatchlistId",
+                        column: x => x.WatchlistId,
+                        principalTable: "Watchlists",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -456,9 +456,11 @@ namespace TopTrade.Data.Migrations
                 column: "StockId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_UserWatchlistId",
+                name: "IX_AspNetUsers_WatchlistId",
                 table: "AspNetUsers",
-                column: "UserWatchlistId");
+                column: "WatchlistId",
+                unique: true,
+                filter: "[WatchlistId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
@@ -513,16 +515,6 @@ namespace TopTrade.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UsersWatchlists_IsDeleted",
-                table: "UsersWatchlists",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserWatchlistsStocks_StockId",
-                table: "UserWatchlistsStocks",
-                column: "StockId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_VerificationDocuments_IsDeleted",
                 table: "VerificationDocuments",
                 column: "IsDeleted");
@@ -531,6 +523,16 @@ namespace TopTrade.Data.Migrations
                 name: "IX_VerificationDocuments_UserId",
                 table: "VerificationDocuments",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Watchlists_IsDeleted",
+                table: "Watchlists",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WatchlistStocks_StockId",
+                table: "WatchlistStocks",
+                column: "StockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Withdraws_CardId",
@@ -575,10 +577,10 @@ namespace TopTrade.Data.Migrations
                 name: "Trades");
 
             migrationBuilder.DropTable(
-                name: "UserWatchlistsStocks");
+                name: "VerificationDocuments");
 
             migrationBuilder.DropTable(
-                name: "VerificationDocuments");
+                name: "WatchlistStocks");
 
             migrationBuilder.DropTable(
                 name: "Withdraws");
@@ -596,7 +598,7 @@ namespace TopTrade.Data.Migrations
                 name: "Stocks");
 
             migrationBuilder.DropTable(
-                name: "UsersWatchlists");
+                name: "Watchlists");
         }
     }
 }

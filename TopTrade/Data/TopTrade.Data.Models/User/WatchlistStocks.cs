@@ -6,11 +6,11 @@
 
     using TopTrade.Data.Common.Models;
 
-    public class UserWatchlistsStocks
+    public class WatchlistStocks
     {
-        public int UserWatchlistId { get; set; }
+        public int WatchlistId { get; set; }
 
-        public virtual UserWatchlist UserWatchlist { get; set; }
+        public virtual Watchlist Watchlist { get; set; }
 
         public int StockId { get; set; }
 

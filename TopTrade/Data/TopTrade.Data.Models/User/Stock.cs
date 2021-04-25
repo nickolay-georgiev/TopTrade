@@ -12,7 +12,7 @@
         public Stock()
         {
             this.Users = new HashSet<ApplicationUser>();
-            this.UsersWatchlists = new HashSet<UserWatchlistsStocks>();
+            this.Watchlists = new HashSet<WatchlistStocks>();
         }
 
         [Required]
@@ -33,7 +33,7 @@
         [Required]
         public double ChangePercent { get; set; }
 
-        public virtual ICollection<UserWatchlistsStocks> UsersWatchlists { get; set; }
+        public virtual ICollection<WatchlistStocks> Watchlists { get; set; }
 
         public virtual ICollection<ApplicationUser> Users { get; set; }
     }

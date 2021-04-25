@@ -36,9 +36,9 @@
 
         public DbSet<Withdraw> Withdraws { get; set; }
 
-        public DbSet<UserWatchlist> UsersWatchlists { get; set; }
+        public DbSet<Watchlist> Watchlists { get; set; }
 
-        public DbSet<UserWatchlistsStocks> UserWatchlistsStocks { get; set; }
+        public DbSet<WatchlistStocks> WatchlistStocks { get; set; }
 
         public DbSet<VerificationDocument> VerificationDocuments { get; set; }
 
@@ -63,8 +63,13 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<UserWatchlistsStocks>()
-                .HasKey(k => new { k.UserWatchlistId, k.StockId });
+            builder.Entity<ApplicationUser>()
+                .HasOne(x => x.Watchlist)
+                .WithOne(x => x.User)
+                .HasForeignKey<ApplicationUser>(x => x.WatchlistId);
+
+            builder.Entity<WatchlistStocks>()
+                .HasKey(k => new { k.WatchlistId, k.StockId });
 
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
