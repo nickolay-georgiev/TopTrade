@@ -1,88 +1,120 @@
 ﻿@model TopTrade.Web.ViewModels.User.ViewComponents.DepositModalInputModel
 
-<div class="modal fade" id="deposit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Fund your account</h5>
-                <button type="button" class="close border" data-dismiss="modal" aria-label="Close">
-                    <span class="close-mark" aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form asp-action="MakeDeposit" method="POST">
-                    <div class="row align-items-end justify-content-between">
-                        <div class="form-group col col-md-8 pr-1">
-                            <label asp-for="@Model.Amount" class="small">Amount</label>
-                            <input asp-for="@Model.Amount" class="form-control deposit-amount">
-                        </div>
-                        <div class="form-group col col-md-4 pl-1">
-                            @*<label></label>*@
-                            <input type="text" class="form-control text-center" placeholder="USD" disabled>
-                        </div>
-                        <span asp-validation-for="@Model.Amount" class="text-danger error-message"></span>
-                    </div>
 
-                    <div class="form-group">
-                        <label class="small">Payment method</label>
-                        <div class="input-group">
-                            <input class="form-control border-right-0" placeholder="Credit/Debit card" disabled>
-                            <span class="input-group-append bg-white border-left-0">
-                                <span class="input-group-text bg-transparent">
-                                    <img src="~/img/credit-card.svg" />
+@if (Model.IsVerified)
+{
+    <div class="modal fade" id="deposit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Fund your account</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="close-mark text-light" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form asp-action="MakeDeposit" method="POST">
+                        <div class="row align-items-end justify-content-between">
+                            <div class="form-group col col-md-8 pr-1">
+                                <label asp-for="@Model.Amount" class="small">Amount</label>
+                                <input asp-for="@Model.Amount" class="form-control deposit-amount">
+                            </div>
+                            <div class="form-group col col-md-4 pl-1">
+                                @*<label></label>*@
+                                <input type="text" class="form-control text-center" placeholder="USD" disabled>
+                            </div>
+                            <span asp-validation-for="@Model.Amount" class="text-danger error-message"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="small">Payment method</label>
+                            <div class="input-group">
+                                <input class="form-control border-right-0" placeholder="Credit/Debit card" disabled>
+                                <span class="input-group-append bg-white border-left-0">
+                                    <span class="input-group-text bg-transparent">
+                                        <img src="~/img/credit-card.svg" />
+                                    </span>
                                 </span>
-                            </span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-logos d-flex justify-content-end">
-                        <img class="img-fluid small-logo" src="~/img/maestro-logo.svg" />
-                        <img class="img-fluid px-2" src="~/img/visa-logo.svg" />
-                        <img class="img-fluid small-logo" src="~/img/mastercard-logo.svg" />
-                    </div>
-
-                    <div class="form-group my-md-4">
-                        <input asp-for="@Model.Card.Number" class="form-control card-number" placeholder="Card Number" maxlength="19">
-                        <span asp-validation-for="@Model.Card.Number" class="text-danger error-message"></span>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group col pr-1">
-                            <input asp-for="@Model.Card.ExpirationDate" class="form-control text-secondary card-expiry-date" placeholder="MM / YY"
-                                   maxlength="7">
-                            <span asp-validation-for="@Model.Card.ExpirationDate" class="text-danger error-message"></span>
+                        <div class="card-logos d-flex justify-content-end">
+                            <img class="img-fluid small-logo" src="~/img/maestro-logo.svg" />
+                            <img class="img-fluid px-2" src="~/img/visa-logo.svg" />
+                            <img class="img-fluid small-logo" src="~/img/mastercard-logo.svg" />
                         </div>
-                        <div class="form-group col pl-1">
-                            <input class="form-control text-secondary card-cvv-number"
-                                   maxlength="3">
-                        </div>
-                    </div>
 
-                    <div class="form-group mt-3">
-                        <p class="small">Name on Card</p>
+                        <div class="form-group my-md-4">
+                            <input asp-for="@Model.Card.Number" class="form-control card-number" placeholder="Card Number" maxlength="19">
+                            <span asp-validation-for="@Model.Card.Number" class="text-danger error-message"></span>
+                        </div>
+
                         <div class="row">
-                            <div class="form-group col-md-4 pr-0 mb-0">
-                                <input asp-for="@Model.Card.FirstName" class="form-control text-secondary card-first-name">
+                            <div class="form-group col pr-1">
+                                <input asp-for="@Model.Card.ExpirationDate" class="form-control text-secondary card-expiry-date" placeholder="MM / YY"
+                                       maxlength="7">
+                                <span asp-validation-for="@Model.Card.ExpirationDate" class="text-danger error-message"></span>
                             </div>
-                            <div class="form-group col-md-4 px-1 mb-0">
-                                <input asp-for="@Model.Card.MiddleName" class="form-control text-secondary card-middle-name">
+                            <div class="form-group col pl-1">
+                                <input class="form-control text-secondary card-cvv-number"
+                                       maxlength="3">
                             </div>
-                            <div class="form-group col-md-4 pl-0 mb-0">
-                                <input asp-for="@Model.Card.LastName" class="form-control text-secondary card-last-name">
-                            </div>
-                            <span asp-validation-for="@Model.Card.FirstName" class="text-danger error-message"></span>
-                            <span asp-validation-for="@Model.Card.MiddleName" class="text-danger error-message"></span>
-                            <span asp-validation-for="@Model.Card.LastName" class="text-danger error-message"></span>
                         </div>
-                        <p class="small text-secondary"> * This card should belong to you and be in your name. </p>
-                    </div>
 
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success make-deposit-button">Deposit</button>
-                    </div>
-                </form>
+                        <div class="form-group mt-3">
+                            <p class="small">Name on Card</p>
+                            <div class="row">
+                                <div class="form-group col-md-4 pr-0 mb-0">
+                                    <input asp-for="@Model.Card.FirstName" class="form-control text-secondary card-first-name">
+                                </div>
+                                <div class="form-group col-md-4 px-1 mb-0">
+                                    <input asp-for="@Model.Card.MiddleName" class="form-control text-secondary card-middle-name">
+                                </div>
+                                <div class="form-group col-md-4 pl-0 mb-0">
+                                    <input asp-for="@Model.Card.LastName" class="form-control text-secondary card-last-name">
+                                </div>
+                                <span asp-validation-for="@Model.Card.FirstName" class="text-danger error-message"></span>
+                                <span asp-validation-for="@Model.Card.MiddleName" class="text-danger error-message"></span>
+                                <span asp-validation-for="@Model.Card.LastName" class="text-danger error-message"></span>
+                            </div>
+                            <p class="small text-secondary"> * This card should belong to you and be in your name. </p>
+                        </div>
+
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success make-deposit-button">Deposit</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
+else
+{
+    <div class="modal fade" id="deposit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Verification Manager</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="close-mark text-light" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        @*<h5 class="text-center w-100 my-5">You need to verify your identity in order to start trading</h5>*@
+                        <h5 class="text-center w-100 my-5">In order to start trading You need to verify your identity and to complete your profile details on profile page</h5>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit" class="btn btn-success make-deposit-button" data-dismiss="modal" data-toggle="modal"
+                                data-target="#profile-verification">
+                            Start Verification
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

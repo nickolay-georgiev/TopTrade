@@ -23,6 +23,10 @@
 
         public DateTime ExecutionTime { get; set; }
 
+        public int StockId { get; set; }
+
+        public virtual Stock Stock { get; set; }
+ 
         public string UserId { get; set; }
 
         public virtual ApplicationUser User { get; set; }

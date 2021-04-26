@@ -9,6 +9,20 @@ document.querySelector('.upload-documents-btn').addEventListener('click', (event
     input.click();
 });
 
+document.querySelector('.t-close').addEventListener('click', () => {
+    document.querySelector('.toaster-container').style.display = 'none';
+});
+
+const toaster = document.querySelector('.toaster-container');
+setTimeout(function () {
+    setTimeout(function () {
+        toaster.style.display = 'none';
+        console.log(1);
+    }, 350);
+}, 5000);
+
+
+
 $(function () {
     $('[data-toggle="popover"]').popover()
 });

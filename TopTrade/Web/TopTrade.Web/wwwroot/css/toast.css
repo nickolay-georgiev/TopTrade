@@ -1,16 +1,10 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
-
-body {
-    font-family: 'Quicksand',Georgia,"Times New Roman",Times,serif;
-}
-
-/*toast*/
-.toaster-container {
-    font-family: 'Quicksand', sans-serif;
+﻿.toaster-container {
+    font-weight: 300;
     position: fixed;
     z-index: 9999;
     top: 20px;
     right: 20px;
+    transition: all 1.3s ease-in-out;
 }
 
     .toaster-container .toaster.success {
@@ -30,6 +24,7 @@ body {
         padding: 15px;
         margin-bottom: 20px;
         box-shadow: 0 5px 10px -5px rgb(0 0 0 / 15%), 0 10px 10px -5px rgb(0 0 0 / 10%);
+        transition: all 1.3s ease-in-out;
     }
 
         .toaster-container .toaster .t-title {
@@ -64,8 +59,13 @@ body {
             padding: 0;
             margin: 0;
             background-color: #464646;
+            color: whitesmoke;
             border-radius: 50%;
-            transform: rotate( 45deg );
             cursor: pointer;
             box-shadow: 0 5px 10px -5px rgb(0 0 0 / 15%), 0 10px 10px -5px rgb(0 0 0 / 10%);
         }
+
+
+.toaster-container .toaster.error {
+    background-color: #fc6969;
+}

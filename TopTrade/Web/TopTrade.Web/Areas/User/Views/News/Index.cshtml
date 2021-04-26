@@ -2,7 +2,7 @@
 
 
 @{
-    ViewData["Title"] = "News Feed Page";
+    ViewData["Title"] = "News Feed";
     ViewData["PageName"] = "News Feed";
 }
 
@@ -22,72 +22,41 @@
                                     </button>
                                 </span>
                                 @*<button type="submit" class="close-search-bar" hidden>
-                                    <i class="fas fa-times"></i>
-                                </button>*@
+                                        <i class="fas fa-times"></i>
+                                    </button>*@
                             </div>
                         </div>
                 </form>
-
-
-                @*<div class="col-8">
-                    <div class="news-card">
-                        <div class="card-header">
-                            <h4 class="card-title">Aticle Title</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="img-wrapper">
-                                <img class="img-fluid"
-                                     src="https://hipertextual.com/wp-content/uploads/2019/12/hipertextual-2019982676.jpg"
-                                     alt="">
+                @foreach (var article in Model)
+                {
+                    <div class="col-8">
+                        <div class="news-card">
+                            <div class="card-header">
+                                <h4 class="card-title">@article.Title</h4>
                             </div>
-                            <hr>
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto placeat consequuntur,
-                                eius nisi esse provident ex fugiat eum alias distinctio officiis debitis dolor,
-                                perferendis deserunt quod magnam, voluptate minima. Suscipit?
-                            </p>
-                            <div>
-                                <span>article.Url: somelink.com</span>
+                            <div class="card-body">
+                                <div class="img-wrapper">
+                                    <img class="img-fluid"
+                                         src="@article.ImageUrl"
+                                         alt="article image">
+                                </div>
+                                <hr>
+                                <p>
+                                    @article.Description
+                                </p>
+                                <div>
+                                    <a href="@article.Url">Read this article</a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-footer">
-                            <div class="row justify-content-between mx-3">
-                                <p>Author: <strong>Author Name</strong></p>
-                                <p>Published At : <strong>12.12.2022</strong></p>
+                            <div class="card-footer">
+                                <div class="row justify-content-between mx-3">
+                                    <p>Author: <strong>@article.Author</strong></p>
+                                    <p>Published At : <strong>@article.PublishedAt</strong></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>*@
-                @foreach (var article in Model)
-                    {
-                        <div class="col-8">
-                            <div class="news-card">
-                                <div class="card-header">
-                                    <h4 class="card-title">@article.Title</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div class="img-wrapper">
-                                        <img class="img-fluid"
-                                             src="@article.ImageUrl"
-                                             alt="article image">
-                                    </div>
-                                    <hr>
-                                    <p>
-                                        @article.Description
-                                    </p>
-                                    <div>
-                                        <a href="@article.Url">Read this article</a>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="row justify-content-between mx-3">
-                                        <p>Author: <strong>@article.Author</strong></p>
-                                        <p>Published At : <strong>@article.PublishedAt</strong></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
+                }
 
             </div>
     </div>

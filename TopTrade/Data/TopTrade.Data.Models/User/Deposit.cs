@@ -32,6 +32,6 @@
 
         public virtual ApplicationUser User { get; set; }
 
-        public TransactionStatus TransactionStatus { get; set; }
+        public string TransactionStatus { get; set; }
     }
 }

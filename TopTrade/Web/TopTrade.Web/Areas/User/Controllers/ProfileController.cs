@@ -1,5 +1,6 @@
 ﻿namespace TopTrade.Web.Areas.User.Controllers
 {
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Hosting;
@@ -29,14 +30,30 @@
         [HttpPost]
         public async Task<IActionResult> UploadDocuments(VerificationDocumentsInputModel input)
         {
-            await this.uploadDocumentsService.UploadDocumentsAsync(input, $"{this.environment.WebRootPath}/user/verification-documents");
-            return this.RedirectToAction(nameof(this.Index), "Home");
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            try
+            {
+                await this.uploadDocumentsService.UploadDocumentsAsync(input, userId, $"{this.environment.WebRootPath}/user/verification-documents/{userId}");
+            }
+            catch (System.Exception error)
+            {
+                this.ViewData["Error"] = "Error!";
+                this.ViewData["Message"] = error.Message;
+                return this.View(nameof(this.Index));
+            }
+
+            this.ViewData["Success"] = "Successfully uploaded!";
+            this.ViewData["Message"] = "Wait for approvement";
+
+            return this.View(nameof(this.Index));
         }
 
         [HttpPost]
         public async Task<IActionResult> UploadAvatar(UserAvatarInputModel input)
         {
-            await this.uploadDocumentsService.UploadAvatarAsync(input, $"{this.environment.WebRootPath}/user/profile-images");
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            await this.uploadDocumentsService.UploadAvatarAsync(input, userId, $"{this.environment.WebRootPath}/user/profile-images");
             return this.View(nameof(this.Index));
         }
     }

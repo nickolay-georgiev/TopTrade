@@ -298,6 +298,7 @@ namespace TopTrade.Data.Migrations
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ExecutionTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StockId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -313,16 +314,21 @@ namespace TopTrade.Data.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Trades_Stocks_StockId",
+                        column: x => x.StockId,
+                        principalTable: "Stocks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "VerificationDocuments",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DocumentUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VerificationStatus = table.Column<int>(type: "int", nullable: false),
+                    VerificationStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -352,7 +358,7 @@ namespace TopTrade.Data.Migrations
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CardId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    TransactionStatus = table.Column<int>(type: "int", nullable: false),
+                    TransactionStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -385,7 +391,7 @@ namespace TopTrade.Data.Migrations
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CardId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    TransactionStatus = table.Column<int>(type: "int", nullable: false),
+                    TransactionStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -508,6 +514,11 @@ namespace TopTrade.Data.Migrations
                 name: "IX_Trades_IsDeleted",
                 table: "Trades",
                 column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Trades_StockId",
+                table: "Trades",
+                column: "StockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trades_UserId",

@@ -3,7 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
     using TopTrade.Web.Controllers;
 
-    public class TradeSharesController : BaseApiController
+    public class TradeStockController : BaseApiController
     {
         [HttpPost]
         public string Sell()

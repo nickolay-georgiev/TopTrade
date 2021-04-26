@@ -21,7 +21,7 @@
                                 <!-- logo end -->
                                 <p class="uk-text-lead uk-margin-top uk-margin-remove-bottom">Register your account</p>
                                 <p class="uk-text-small uk-margin-remove-top uk-margin-medium-bottom">Already have an account? <a asp-area="Identity" asp-page="/Account/Login">Log in here</a></p>
-
+                                <div asp-validation-summary="All" class="text-danger"></div>
                                 <!-- login form begin -->
                                 <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="uk-grid uk-form">
                                     <div class="uk-margin-small uk-width-1-1 uk-inline">
@@ -39,9 +39,6 @@
                                         <input asp-for="Input.ConfirmPassword" class="uk-input uk-border-rounded" placeholder="Repeat Password">
                                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span>
                                     </div>
-                                    @*<div class="uk-margin-small uk-width-auto uk-text-small">
-                                        <label><input class="uk-checkbox uk-border-rounded" type="checkbox"> Remember me</label>
-                                    </div>*@
                                     <div class="uk-margin-small uk-width-expand uk-text-small">
                                         <label class="uk-align-right"><a class="uk-link-reset" href="#">Forgot password?</a></label>
                                     </div>
@@ -88,37 +85,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
-    </div>*@
-@*<div class="col-md-6 col-md-offset-2">
-    <section>
-        <h4>Use another service to register.</h4>
-        <hr />
-        @{
-            if ((Model.ExternalLogins?.Count ?? 0) == 0)
-            {
-                <div>
-                    <p>
-                        There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                        for details on setting up this ASP.NET application to support logging in via external services.
-                    </p>
-                </div>
-            }
-            else
-            {
-                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                    <div>
-                        <p>
-                            @foreach (var provider in Model.ExternalLogins)
-                            {
-                                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                            }
-                        </p>
-                    </div>
-                </form>
-            }
-        }
-    </section>
-</div>
+    </div>   
 </div>*@
 
 @section Scripts {

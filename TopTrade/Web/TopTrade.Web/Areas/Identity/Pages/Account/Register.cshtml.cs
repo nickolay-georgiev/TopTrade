@@ -17,6 +17,7 @@
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
     using TopTrade.Data.Models;
+    using TopTrade.Web.Areas.User;
 
     [AllowAnonymous]
     public class RegisterModel : PageModel
@@ -102,7 +103,7 @@
                     else
                     {
                         await this.signInManager.SignInAsync(user, isPersistent: false);
-                        return this.LocalRedirect(returnUrl);
+                        return this.RedirectToAction(nameof(HomeController.Index), "Home", new { area = "User" });
                     }
                 }
 

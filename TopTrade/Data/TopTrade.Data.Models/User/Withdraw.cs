@@ -21,8 +21,8 @@
 
         public string UserId { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
+        public string TransactionStatus { get; set; }
 
-        public TransactionStatus TransactionStatus { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

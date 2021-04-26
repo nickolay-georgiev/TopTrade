@@ -6,10 +6,10 @@
 
     public enum AllowedFileExtensions
     {
-        Jpg = 1,
-        Png = 2,
-        Gif = 3,
-        Tif = 4,
-        Pdf = 5,
+        JPG = 1,
+        PNG = 2,
+        GIF = 3,
+        TIF = 4,
+        PDF = 5,
     }
 }

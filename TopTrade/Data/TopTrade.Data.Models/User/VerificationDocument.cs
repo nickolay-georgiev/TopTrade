@@ -7,11 +7,16 @@
     using TopTrade.Data.Common.Models;
     using TopTrade.Data.Models.User.Enums;
 
-    public class VerificationDocument : BaseDeletableModel<int>
+    public class VerificationDocument : BaseDeletableModel<string>
     {
+        public VerificationDocument()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
         public string DocumentUrl { get; set; }
 
-        public VerificationDocumentStatus VerificationStatus { get; set; }
+        public string VerificationStatus { get; set; }
 
         public string UserId { get; set; }
 

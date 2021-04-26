@@ -23,6 +23,7 @@
                                 <p class="uk-text-lead uk-margin-top uk-margin-remove-bottom">Log into your account</p>
                                 <p class="uk-text-small uk-margin-remove-top uk-margin-medium-bottom">Don't have an account? <a asp-area="Identity" asp-page="/Account/Register">Register here</a></p>
 
+                                <div asp-validation-summary="All" class="text-danger"></div>
                                 <!-- login form begin -->
                                 <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="uk-grid uk-form">
                                     <div class="uk-margin-small uk-width-1-1 uk-inline">
@@ -35,9 +36,6 @@
                                         <input asp-for="Input.Password" class="uk-input uk-border-rounded" placeholder="Password">
                                         <span asp-validation-for="Input.Password" class="text-danger small"></span>
                                     </div>
-                                    @*<div class="uk-margin-small uk-width-auto uk-text-small">
-                                            <label><input class="uk-checkbox uk-border-rounded" type="checkbox"> Remember me</label>
-                                        </div>*@
                                     <div class="uk-margin-small uk-width-expand uk-text-small">
                                         <label class="uk-align-right"><a class="uk-link-reset" href="#">Forgot password?</a></label>
                                     </div>

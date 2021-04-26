@@ -10,7 +10,7 @@ using TopTrade.Data;
 namespace TopTrade.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210425194526_InitialCreate")]
+    [Migration("20210426163311_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -393,8 +393,8 @@ namespace TopTrade.Data.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int>("TransactionStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("TransactionStatus")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -483,6 +483,9 @@ namespace TopTrade.Data.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<int>("StockId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TradeType")
                         .HasColumnType("int");
 
@@ -493,6 +496,8 @@ namespace TopTrade.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
+                    b.HasIndex("StockId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Trades");
@@ -500,10 +505,8 @@ namespace TopTrade.Data.Migrations
 
             modelBuilder.Entity("TopTrade.Data.Models.User.VerificationDocument", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -523,8 +526,8 @@ namespace TopTrade.Data.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("VerificationStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("VerificationStatus")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -607,8 +610,8 @@ namespace TopTrade.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TransactionStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("TransactionStatus")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -716,9 +719,17 @@ namespace TopTrade.Data.Migrations
 
             modelBuilder.Entity("TopTrade.Data.Models.User.Trade", b =>
                 {
+                    b.HasOne("TopTrade.Data.Models.User.Stock", "Stock")
+                        .WithMany("Trades")
+                        .HasForeignKey("StockId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("TopTrade.Data.Models.ApplicationUser", "User")
                         .WithMany("Trades")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Stock");
 
                     b.Navigation("User");
                 });
@@ -789,6 +800,8 @@ namespace TopTrade.Data.Migrations
 
             modelBuilder.Entity("TopTrade.Data.Models.User.Stock", b =>
                 {
+                    b.Navigation("Trades");
+
                     b.Navigation("Users");
 
                     b.Navigation("Watchlists");
