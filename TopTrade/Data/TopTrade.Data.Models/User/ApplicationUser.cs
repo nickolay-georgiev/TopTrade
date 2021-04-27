@@ -47,15 +47,17 @@ namespace TopTrade.Data.Models
 
         public string Country { get; set; }
 
-        public int ZipCode { get; set; }
+        public string ZipCode { get; set; }
+
+        public string AboutMe { get; set; }
 
         public string AvatarUrl { get; set; }
 
         public int? WatchlistId { get; set; }
 
-        public virtual Watchlist Watchlist { get; set; }
+        public string ProfileStatus { get; set; }
 
-        public virtual UserProfileVerificationStatus ProfileStatus { get; set; }
+        public virtual Watchlist Watchlist { get; set; }
 
         public virtual ICollection<Card> Cards { get; set; }
 

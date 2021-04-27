@@ -1,7 +1,7 @@
 ﻿namespace TopTrade.Web
 {
     using System.Reflection;
-
+    using AutoMapper;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -17,6 +17,7 @@
     using TopTrade.Data.Repositories;
     using TopTrade.Data.Seeding;
     using TopTrade.Services.Data;
+    using TopTrade.Services.Data.User;
     using TopTrade.Services.Mapping;
     using TopTrade.Services.Messaging;
     using TopTrade.Services.Stock;
@@ -72,6 +73,7 @@
             services.AddTransient<IAlphaVantageApiClientService, AlphaVantageApiClientService>();
             services.AddTransient<INewsService, NewsService>();
             services.AddTransient<IUploadDocumentsService, UploadDocumentsService>();
+            services.AddTransient<IEditProfileService, EditProfileService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -29,7 +29,7 @@
 
         public async Task<IActionResult> Index()
         {
-            //var getStockByTicker = await this.stockService.GetStockByTicker();
+            //var getStockByTicker = await this.stockService.GetStockTimeSeries();
             //var getStockByTicker1 = await this.stockService.GetStockByTicker1();
             //var searchStock = await this.stockService.SearchStock();
 

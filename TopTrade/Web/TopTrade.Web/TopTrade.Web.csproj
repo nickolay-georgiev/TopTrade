@@ -44,7 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\user\profile-images\" />
-    <Folder Include="wwwroot\user\verification-documents\" />
+    <Folder Include="wwwroot\users\profile-images\" />
+    <Folder Include="wwwroot\users\verification-documents\" />
   </ItemGroup>
 </Project>

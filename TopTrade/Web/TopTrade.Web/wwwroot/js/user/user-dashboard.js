@@ -126,18 +126,21 @@ function configureOrder(event) {
 
 //}
 
-document.querySelector('.card-number').addEventListener('input', function (e) {
-    var cardNumber = this.value.split("-").join("");
-    if (cardNumber.length > 0) {
-        cardNumber = cardNumber.match(new RegExp('.{1,4}', 'g')).join("-");
-    }
-    this.value = cardNumber;
-});
+const cardNumber = document.querySelector('.card-number');
+if (cardNumber) {
+    cardNumber.addEventListener('input', function (e) {
+        var cardNumber = this.value.split("-").join("");
+        if (cardNumber.length > 0) {
+            cardNumber = cardNumber.match(new RegExp('.{1,4}', 'g')).join("-");
+        }
+        this.value = cardNumber;
+    });
+};
 
-document.querySelector('.card-expiry-date').addEventListener('input', function (e) {
-    var expiryDate = this.value;
-    if (expiryDate.length == 2) {
-        expiryDate += ' / ';
-    }
-    this.value = expiryDate;
-});
+//document.querySelector('.card-expiry-date').addEventListener('input', function (e) {
+//    var expiryDate = this.value;
+//    if (expiryDate.length == 2) {
+//        expiryDate += ' / ';
+//    }
+//    this.value = expiryDate;
+//});

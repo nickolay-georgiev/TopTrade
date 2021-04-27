@@ -8,6 +8,11 @@
 
     public class UserAvatarInputModel : IUploadFiles
     {
+        public UserAvatarInputModel()
+        {
+            this.Documents = new List<IFormFile>();
+        }
+
         public IList<IFormFile> Documents { get; set; }
     }
 }

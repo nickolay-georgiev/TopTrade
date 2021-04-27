@@ -1,27 +1,33 @@
-document.querySelector('.upload-documents-btn').addEventListener('click', (event) => {
-    event.preventDefault();
-    const input = document.querySelector('.upload-documents-input');
-    input.addEventListener('change', (event) => {
-        if (event.target.files.length > 0) {
-            document.querySelector('.documents-form').submit();
-        }
+const uploadDocumentBtn = document.querySelector('.upload-documents-btn');
+if (uploadDocumentBtn) {
+    uploadDocumentBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        const input = document.querySelector('.upload-documents-input');
+        input.addEventListener('change', (event) => {
+            if (event.target.files.length > 0) {
+                document.querySelector('.documents-form').submit();
+            }
+        });
+        input.click();
     });
-    input.click();
-});
+};
 
-document.querySelector('.t-close').addEventListener('click', () => {
-    document.querySelector('.toaster-container').style.display = 'none';
-});
+const closeToastMark = document.querySelector('.t-close');
+if (closeToastMark) {
+    closeToastMark.addEventListener('click', () => {
+        document.querySelector('.toaster-container').style.display = 'none';
+    });
+};
 
 const toaster = document.querySelector('.toaster-container');
-setTimeout(function () {
+if (toaster) {
     setTimeout(function () {
-        toaster.style.display = 'none';
-        console.log(1);
-    }, 350);
-}, 5000);
-
-
+        setTimeout(function () {
+            toaster.style.display = 'none';
+            console.log(1);
+        }, 350);
+    }, 5000);
+};
 
 $(function () {
     $('[data-toggle="popover"]').popover()

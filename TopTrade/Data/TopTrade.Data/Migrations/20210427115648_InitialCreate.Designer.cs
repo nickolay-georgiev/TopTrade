@@ -10,7 +10,7 @@ using TopTrade.Data;
 namespace TopTrade.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210426163311_InitialCreate")]
+    [Migration("20210427115648_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -171,6 +171,9 @@ namespace TopTrade.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("AboutMe")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
@@ -241,8 +244,8 @@ namespace TopTrade.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ProfileStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("ProfileStatus")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -260,8 +263,8 @@ namespace TopTrade.Data.Migrations
                     b.Property<int?>("WatchlistId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ZipCode")
-                        .HasColumnType("int");
+                    b.Property<string>("ZipCode")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

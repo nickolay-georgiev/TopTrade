@@ -1,150 +1,151 @@
-﻿@model TopTrade.Web.ViewModels.User.UserAvatarInputModel
+﻿@model TopTrade.Web.ViewModels.User.EditProfileViewModel
 
 @{
     ViewData["Title"] = "User Profile";
     ViewData["PageName"] = "User Profile";
 }
 
-@if (ViewData["Message"] != null)
+@if (TempData["Message"] != null)
 {
-    <partial name="_ToastPartial" view-data="ViewData" />
+    <partial name="_ToastPartial" />
 }
 
-    <div class="content-body profile-wrapper">
-        <partial name="_NavigationPartial" view-data="ViewData">
-            <div class="row">
-                <div class="col-12">
-                    <div class="history-deposit-card">
-                        <div class="card-header d-flex justify-content-between">
-                            <h4 class="card-title">Edit Profile</h4>
-                            <button class="btn btn-info" data-toggle="modal"
-                                    data-target="#profile-verification">
-                                Verify Your Account
-                            </button>
-                        </div>
-                        <div class="content">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="profile-page-card">
-                                        <div class="card-body">
-                                            <form>
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label class="control-label">
-                                                                First Name
-                                                            </label>
-                                                            <input aria-describedby="addon-right addon-left"
-                                                                   type="text" placeholder="First Name"
-                                                                   class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label class="control-label">
-                                                                Middle Name
-                                                            </label>
-                                                            <input aria-describedby="addon-right addon-left"
-                                                                   type="text" placeholder="Last Name"
-                                                                   class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label class="control-label">
-                                                                Last Name
-                                                            </label>
-                                                            <input aria-describedby="addon-right addon-left"
-                                                                   type="text" placeholder="Last Name" class="form-control">
-                                                        </div>
+<div class="content-body profile-wrapper">
+    <partial name="_NavigationPartial" view-data="ViewData">
+        <div class="row">
+            <div class="col-12">
+                <div class="history-deposit-card">
+                    <div class="card-header d-flex justify-content-between">
+                        <h4 class="card-title">Edit Profile</h4>
+                        <button class="btn btn-info" data-toggle="modal"
+                                data-target="#profile-verification">
+                            Verify Your Account
+                        </button>
+                    </div>
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="profile-page-card">
+                                    <div class="card-body">
+                                        <form asp-controller="Profile" asp-action="Edit" method="POST">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label asp-for="FirstName" class="control-label">
+                                                            First Name
+                                                        </label>
+                                                        <input asp-for="FirstName" aria-describedby="addon-right addon-left" placeholder="First Name" class="form-control">
+                                                        <span asp-validation-for="FirstName" class="text-danger small"></span>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label class="control-label">
-                                                                Address
-                                                            </label>
-                                                            <input aria-describedby="addon-right addon-left"
-                                                                   type="text" placeholder="Home Address"
-                                                                   class="form-control">
-                                                        </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label asp-for="MiddleName" class="control-label">
+                                                            *Middle Name <span class="small">(optional)</span>
+                                                        </label>
+                                                        <input asp-for="MiddleName" aria-describedby="addon-right addon-left" placeholder="Middle Name" class="form-control">
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label class="control-label">
-                                                                City
-                                                            </label>
-                                                            <input aria-describedby="addon-right addon-left"
-                                                                   type="text" placeholder="City" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label class="control-label">
-                                                                Country
-                                                            </label>
-                                                            <input aria-describedby="addon-right addon-left"
-                                                                   type="text" placeholder="Country"
-                                                                   class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label class="control-label">
-                                                                Postal Code
-                                                            </label>
-                                                            <input aria-describedby="addon-right addon-left"
-                                                                   type="number" placeholder="ZIP Code"
-                                                                   class="form-control">
-                                                        </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label asp-for="LastName" class="control-label">
+                                                            Last Name
+                                                        </label>
+                                                        <input asp-for="LastName" aria-describedby="addon-right addon-left" placeholder="Last Name" class="form-control">
+                                                        <span asp-validation-for="LastName" class="text-danger small"></span>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label>About Me</label>
-                                                            <textarea rows="5" class="form-control border-input"></textarea>
-                                                        </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label asp-for="Address" class="control-label">
+                                                            Address
+                                                        </label>
+                                                        <input asp-for="Address" aria-describedby="addon-right addon-left" placeholder="Home Address" class="form-control">
+                                                        <span asp-validation-for="Address" class="text-danger small"></span>
                                                     </div>
                                                 </div>
-                                                <div class="text-center">
-                                                    <button type="submit" class="btn btn-info btn-fill float-right">
-                                                        Update Profile
-                                                    </button>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label asp-for="City" class="control-label">
+                                                            City
+                                                        </label>
+                                                        <input asp-for="City" aria-describedby="addon-right addon-left" placeholder="City" class="form-control">
+                                                        <span asp-validation-for="City" class="text-danger small"></span>
+                                                    </div>
                                                 </div>
-                                                <div class="clearfix"></div>
-                                            </form>
-                                        </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label asp-for="Country" class="control-label">
+                                                            Country
+                                                        </label>
+                                                        <input asp-for="Country" aria-describedby="addon-right addon-left" placeholder="Country" class="form-control">
+                                                        <span asp-validation-for="Country" class="text-danger small"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label asp-for="ZipCode" class="control-label">
+                                                            Postal Code
+                                                        </label>
+                                                        <input asp-for="ZipCode" aria-describedby="addon-right addon-left" placeholder="ZIP Code" class="form-control">
+                                                        <span asp-validation-for="ZipCode" class="text-danger small"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label asp-for="AboutMe">*About Me <span class="small">(optional)</span></label>
+                                                        <textarea asp-for="AboutMe" rows="5" class="form-control border-input"></textarea>
+                                                        <span asp-validation-for="AboutMe" class="text-danger small"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-info btn-fill float-right">
+                                                    Update Profile
+                                                </button>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </form>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="profile-page-card card-user">
-                                        <div class="card-image">
-                                            <img src="~/img/avatar-background-img.png" alt="...">
-                                        </div>
-                                        <div class="card-body">
-                                            <form asp-controller="Profile" asp-action="UploadAvatar" method="POST" enctype="multipart/form-data">
-                                                <label asp-for="Documents" class="author d-block">
-                                                    <input asp-for="Documents" type="file" hidden onchange="form.submit()" />
-                                                    <img src="~/img/face-3.jpg"
-                                                         alt="user-avatar" class="avatar border-gray">
-                                                </label>
-                                            </form>
-                                        </div>
-
-                                        <p class="description text-center">
-                                            "Lamborghini Mercy <br>
-                                            Your chick she so thirsty <br>
-                                            I'm in that two seat Lambo"
-                                        </p>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="profile-page-card card-user">
+                                    <div class="card-image">
+                                        <img src="~/img/avatar-background-img.png" alt="user-avatar-image">
                                     </div>
+                                    <div class="card-body">
+                                        <form asp-controller="Profile" asp-action="UploadAvatar" method="POST" enctype="multipart/form-data">
+                                            <label asp-for="UserAvatarInputModel.Documents" class="author d-block">
+                                                <input asp-for="UserAvatarInputModel.Documents" type="file" hidden onchange="form.submit()" />
+                                                @if (string.IsNullOrEmpty(Model.AvatarUrl))
+                                                {
+                                                    <img class="avatar border-gray" src="~/img/default-user-avatar.webp" alt="user-avatar-image">
+                                                }
+                                                else
+                                                {
+                                                    <img class="avatar border-gray" src="@Model.AvatarUrl" alt="user-avatar-image">
+                                                }
+                                            </label>
+                                        </form>
+                                    </div>
+
+                                    <p class="description text-center">
+                                        "Lamborghini Mercy <br>
+                                        Your chick she so thirsty <br>
+                                        I'm in that two seat Lambo"
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-    </div>
+        </div>
+</div>

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Runtime.CompilerServices;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -27,7 +28,7 @@
             this.verificationDocumentRepository = verificationDocumentRepository;
         }
 
-        public async Task UploadDocumentsAsync(VerificationDocumentsInputModel input, string userId, string imagePath)
+        public async Task UploadDocumentsAsync(IUploadFiles input, string userId, string imagePath, [CallerMemberName]string callerName = "")
         {
             this.VerifyDocumentsAreValid(input);
 
@@ -36,40 +37,44 @@
             {
                 var extension = Path.GetExtension(document.FileName).TrimStart('.');
 
-                var currentDocument = new VerificationDocument
+                if (callerName.Equals("UploadDocuments"))
                 {
-                    VerificationStatus = VerificationDocumentStatus.Pending.ToString(),
-                    UserId = userId,
-                };
+                    var currentDocument = new VerificationDocument
+                    {
+                        VerificationStatus = VerificationDocumentStatus.Pending.ToString(),
+                        UserId = userId,
+                    };
 
-                string physicalPath = $"{imagePath}/{currentDocument.Id}.{extension}";
-                currentDocument.DocumentUrl = physicalPath;
-                using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
-                await document.CopyToAsync(fileStream);
-                await this.verificationDocumentRepository.AddAsync(currentDocument);
-            }
+                    string physicalPath = $"{imagePath}/{currentDocument.Id}.{extension}";
+                    currentDocument.DocumentUrl = physicalPath;
 
-            await this.verificationDocumentRepository.SaveChangesAsync();
-        }
+                    using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
+                    await document.CopyToAsync(fileStream);
 
+                    await this.verificationDocumentRepository.AddAsync(currentDocument);
+                    await this.verificationDocumentRepository.SaveChangesAsync();
+                }
+                else if (callerName.Equals("UploadAvatar"))
+                {
+                    var user = await this.userManager.FindByIdAsync(userId);
+                    string physicalPath = $"{imagePath}.{extension}";
+                    user.AvatarUrl = physicalPath;
 
-        public async Task UploadAvatarAsync(UserAvatarInputModel input, string userId, string imagePath)
-        {
-            this.VerifyDocumentsAreValid(input);
+                    using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
+                    await document.CopyToAsync(fileStream);
 
-            foreach (var document in input.Documents)
-            {
-                var extension = Path.GetExtension(document.FileName).TrimStart('.');
-
-                string dbImage = Guid.NewGuid().ToString();
-                string physicalPath = $"{imagePath}/{dbImage}.{extension}";
-                using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
-                await document.CopyToAsync(fileStream);
+                    await this.userManager.UpdateAsync(user);
+                }
             }
         }
 
         private void VerifyDocumentsAreValid(IUploadFiles input)
         {
+            if (input.Documents.Count > 3)
+            {
+                throw new Exception("You can not upload more than 3 documents");
+            }
+
             foreach (var document in input.Documents)
             {
                 var extension = Path.GetExtension(document.FileName).TrimStart('.').ToUpper();
@@ -80,7 +85,7 @@
 
                 if (document.Length > (5 * 1024 * 1024))
                 {
-                    throw new Exception("File size is bigger than 5MB.");
+                    throw new Exception("File size is bigger than 5MB");
                 }
             }
         }

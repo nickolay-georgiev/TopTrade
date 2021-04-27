@@ -1,10 +1,10 @@
-﻿@if (ViewData["Success"] != null)
+﻿@if (TempData["Success"] != null)
 {
     <div class="toaster-container success">
         <div class="toaster success active">
-            <p class="t-title"><i class="fas fa-check mr-2"></i>@ViewData["Success"]</p>
+            <p class="t-title"><i class="fas fa-check mr-2"></i>@TempData["Success"]</p>
             <p class="t-close"><i class="fas fa-times"></i></p>
-            <p class="t-text">@ViewData["Message"]</p>
+            <p class="t-text">@TempData["Message"]</p>
         </div>
     </div>
 }
@@ -12,9 +12,9 @@ else
 {
     <div class="toaster-container error">
         <div class="toaster error active">
-            <p class="t-title"><i class="fas fa-exclamation mr-2"></i>@ViewData["Error"]</p>
+            <p class="t-title"><i class="fas fa-exclamation mr-2"></i>@TempData["Error"]</p>
             <p class="t-close"><i class="fas fa-times"></i></p>
-            <p class="t-text">@ViewData["Message"]</p>
+            <p class="t-text">@TempData["Message"]</p>
         </div>
     </div>
 }

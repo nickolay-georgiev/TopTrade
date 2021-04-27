@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using System.Threading.Tasks;
+
     using AlphaVantage.Net.Common.Intervals;
     using AlphaVantage.Net.Common.Size;
     using AlphaVantage.Net.Core.Client;

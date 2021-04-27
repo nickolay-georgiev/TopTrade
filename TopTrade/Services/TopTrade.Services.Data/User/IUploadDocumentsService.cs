@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -9,8 +10,6 @@
 
     public interface IUploadDocumentsService
     {
-        Task UploadDocumentsAsync(VerificationDocumentsInputModel input, string userId, string imagePath);
-
-        Task UploadAvatarAsync(UserAvatarInputModel input, string userId, string imagePath);
+        Task UploadDocumentsAsync(IUploadFiles input, string userId, string imagePath, [CallerMemberName] string callerName = "");
     }
 }
