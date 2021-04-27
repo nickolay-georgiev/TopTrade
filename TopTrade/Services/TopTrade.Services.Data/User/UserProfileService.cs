@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -10,11 +11,11 @@
     using TopTrade.Services.Data.User.Models;
     using TopTrade.Web.ViewModels.User;
 
-    public class EditProfileService : IEditProfileService
+    public class UserProfileService : IUserProfileService
     {
         private readonly UserManager<ApplicationUser> userManager;
 
-        public EditProfileService(UserManager<ApplicationUser> userManager)
+        public UserProfileService(UserManager<ApplicationUser> userManager)
         {
             this.userManager = userManager;
         }
@@ -33,7 +34,7 @@
             await this.userManager.UpdateAsync(user);
         }
 
-        public UserProfileDto GetUserData(ApplicationUser user)
+        public UserProfileDto GetUserDataProfilePage(ApplicationUser user)
         {
             var userDto = new UserProfileDto
             {
@@ -46,6 +47,22 @@
                 ZipCode = user.ZipCode,
                 AboutMe = user.AboutMe,
                 AvatarUrl = user.AvatarUrl,
+            };
+
+            return userDto;
+        }
+
+        public UserCardDto GetUserDataCardComponent(ApplicationUser user)
+        {
+            var verificationStatus =
+                user.Documents.Any() &&
+                user.Documents.All(d => d.VerificationStatus == "Approved") ? "Verfied" : "Not Verified";
+
+            var userDto = new UserCardDto
+            {
+                AvatarUrl = user.AvatarUrl,
+                Username = user.Email.Split("@")[0],
+                VerificationStatus = verificationStatus,
             };
 
             return userDto;

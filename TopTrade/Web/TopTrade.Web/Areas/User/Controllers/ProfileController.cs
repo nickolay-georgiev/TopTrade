@@ -15,13 +15,13 @@
     public class ProfileController : BaseLoggedUserController
     {
         private readonly IWebHostEnvironment environment;
-        private readonly IEditProfileService editProfileService;
+        private readonly IUserProfileService editProfileService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IUploadDocumentsService uploadDocumentsService;
 
         public ProfileController(
             IWebHostEnvironment environment,
-            IEditProfileService editProfileService,
+            IUserProfileService editProfileService,
             UserManager<ApplicationUser> userManager,
             IUploadDocumentsService uploadDocumentsService)
         {
@@ -34,7 +34,7 @@
         public async Task<IActionResult> Index()
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            var userDto = this.editProfileService.GetUserData(user);
+            var userDto = this.editProfileService.GetUserDataProfilePage(user);
 
             // TODO Remove this when upload to azure
             // var test = userDto.AvatarUrl == null ? "/img/face-3.jpg" : userDto.AvatarUrl.Split("wwwroot")[1];

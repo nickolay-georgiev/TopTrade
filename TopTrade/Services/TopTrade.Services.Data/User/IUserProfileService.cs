@@ -9,10 +9,12 @@
     using TopTrade.Services.Data.User.Models;
     using TopTrade.Web.ViewModels.User;
 
-    public interface IEditProfileService
+    public interface IUserProfileService
     {
         Task EditProfileAsync(ApplicationUser user, EditProfileViewModel input);
 
-        UserProfileDto GetUserData(ApplicationUser user);
+        UserProfileDto GetUserDataProfilePage(ApplicationUser user);
+
+        UserCardDto GetUserDataCardComponent(ApplicationUser user);
     }
 }

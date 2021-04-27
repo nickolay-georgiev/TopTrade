@@ -1,0 +1,27 @@
+﻿@model TopTrade.Services.Data.User.Models.UserCardDto
+
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row no-gutters">
+        <div class="col-md-4">
+            <a class="p-0" asp-area="User" asp-controller="Profile" asp-action="Index">
+                @if (string.IsNullOrEmpty(Model.AvatarUrl))
+                {
+                    <img src="~/img/default-user-avatar.webp" class="card-img ml-3 my-3" alt="user-avatar">
+                }
+                else
+                {
+                    <img class="avatar border-gray" src="@Model.AvatarUrl" alt="user-avatar-image">
+                }
+            </a>
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h6 class="card-title ml-3 text-center">@Model.Username</h6>
+                <h5 class="card-title ml-3 mt-4 text-center verification-status" data-toggle="modal"
+                    data-target="#profile-verification">
+                    @Model.VerificationStatus
+                </h5>
+            </div>
+        </div>
+    </div>
+</div>
