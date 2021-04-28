@@ -18,7 +18,7 @@
         public int Quantity { get; set; }
 
         [Required]
-        [Range(typeof(decimal), "0.01", "79228162514264337593543950335")]
+        [Column(TypeName = "decimal(14, 2)")]
         public decimal Price { get; set; }
 
         public DateTime ExecutionTime { get; set; }

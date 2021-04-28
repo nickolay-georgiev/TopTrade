@@ -1,4 +1,4 @@
-﻿@model  TopTrade.Web.ViewModels.User.UserDashboardViewModel
+﻿@model TopTrade.Web.ViewModels.User.UserDashboardViewModel
 
 @{
     ViewData["Title"] = "User Dashboard Page";
@@ -18,9 +18,11 @@
                         <span class="input-group-prepend search-icon-button">
                             <span class="input-group-text">
                                 <i class="fas fa-search"></i>
+                                <div class="spinner-border text-light spinner" style="display: none;">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
                             </span>
                         </span>
-
                         <input class="form-control border-right-0" placeholder="Search stock">
 
                         <div class="close-search-bar" hidden>
@@ -48,46 +50,49 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <img class="company-logo" src="//logo.clearbit.com/spotify.com" alt="">
-                            <div>
-                                <p class="mb-0 ml-2 text-uppercase font-weight-bold stock-ticker">RR.L</p>
-                                <p class="mb-0 ml-2 small stock-name">Rolls-Royce</p>
-                            </div>
-                        </td>
-                        <td>
-                            <p class="mb-0 ml-2 font-weight-bold stock-price-up">25.00</p>
-                            <p class="mb-0 ml-2 font-weight-bold small stock-price-down">(4.00)&#37</p>
-                        </td>
-                        <td>
-                            <img class="stock-line-chart" src="./img/chart.jpg" alt="">
-                        </td>
-                        <td>
-                            <div class="input-group sell-button order-type-button">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text font-weight-bold" id="btnGroupAddon">S</div>
+                    @foreach (var stock in Model.StockWatchlist)
+                    {
+                        <tr>
+                            <td>
+                                <img class="company-logo" src="//logo.clearbit.com/spotify.com" alt="">
+                                <div>
+                                    <p class="mb-0 ml-2 text-uppercase font-weight-bold stock-ticker">RR.L</p>
+                                    <p class="mb-0 ml-2 small stock-name">Rolls-Royce</p>
                                 </div>
-                                <button class="form-control font-weight-bold price" data-target="#buy-button" data-toggle="modal">10</button>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="input-group buy-button order-type-button">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text font-weight-bold" id="btnGroupAddon">B</div>
+                            </td>
+                            <td>
+                                <p class="mb-0 ml-2 font-weight-bold stock-price-up">25.00</p>
+                                <p class="mb-0 ml-2 font-weight-bold small stock-price-down">(4.00)&#37</p>
+                            </td>
+                            <td>
+                                <img class="stock-line-chart" src="./img/chart.jpg" alt="">
+                            </td>
+                            <td>
+                                <div class="input-group sell-button order-type-button">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text font-weight-bold" id="btnGroupAddon">S</div>
+                                    </div>
+                                    <button class="form-control font-weight-bold price" data-target="#buy-button" data-toggle="modal">10</button>
                                 </div>
-                                <button class="form-control font-weight-bold" data-target="#buy-button"
-                                        data-toggle="modal">
-                                    10
-                                </button>
-                            </div>
-                        </td>
-                        <td>
-                            <span>mdo</span>
-                            <i class="fas fa-ellipsis-v remove-stock-button">
-                            </i>
-                        </td>
-                    </tr>
+                            </td>
+                            <td>
+                                <div class="input-group buy-button order-type-button">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text font-weight-bold" id="btnGroupAddon">B</div>
+                                    </div>
+                                    <button class="form-control font-weight-bold" data-target="#buy-button"
+                                            data-toggle="modal">
+                                        10
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <span>mdo</span>
+                                <i class="fas fa-ellipsis-v remove-stock-button">
+                                </i>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
             <a class="pl-2 text-secondary" href="https://clearbit.com">Logos provided by Clearbit</a>
@@ -97,19 +102,19 @@
     <div class="footer d-flex justify-content-around mb-2">
 
         <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-            <h5>1000.0000</h5>
+            <h5>@Model.Available</h5>
             <span class="small">AVAILABLE</span>
             <i class="fas fa-plus plus-icon"></i>
         </div>
         <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-            <h5>1000.0000</h5>
+            <h5>@Model.TotalAllocated</h5>
             <span class="small">TOTAL ALLOCATED</span>
             <i class="fas fa-plus plus-icon"></i>
 
         </div>
 
         <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-            <h5>1000.0000</h5>
+            <h5>@Model.Profit</h5>
             <span class="small">PROFIT</span>
             <i class="fas fa-equals plus-icon"></i>
 
@@ -117,7 +122,7 @@
 
         <div class="statistics available-amount flex-column d-flex align-items-center"
              data-toggle=" modal" data-target="#remove-stock-modal">
-            <h5>1000.0000</h5>
+            <h5>@Model.Equity</h5>
             <span class="small">EQUITY</span>
         </div>
     </div>

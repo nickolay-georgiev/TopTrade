@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TopTrade.Data.Migrations
 {
-    public partial class InitialCrate : Migration
+    public partial class InitalCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,11 +13,11 @@ namespace TopTrade.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Profit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Available = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalAllocated = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Equity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Profit = table.Column<decimal>(type: "decimal(14,4)", nullable: false),
+                    Available = table.Column<decimal>(type: "decimal(14,4)", nullable: false),
+                    TotalAllocated = table.Column<decimal>(type: "decimal(14,4)", nullable: false),
+                    Equity = table.Column<decimal>(type: "decimal(14,4)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -72,9 +72,6 @@ namespace TopTrade.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     Ticker = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Change = table.Column<double>(type: "float", nullable: false),
-                    ChangePercent = table.Column<double>(type: "float", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -144,7 +141,6 @@ namespace TopTrade.Data.Migrations
                     ProfileStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     WatchlistId = table.Column<int>(type: "int", nullable: true),
                     AccountStatisticId = table.Column<int>(type: "int", nullable: true),
-                    StockId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -170,12 +166,6 @@ namespace TopTrade.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_Stocks_StockId",
-                        column: x => x.StockId,
-                        principalTable: "Stocks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_AspNetUsers_Watchlists_WatchlistId",
                         column: x => x.WatchlistId,
                         principalTable: "Watchlists",
@@ -188,7 +178,12 @@ namespace TopTrade.Data.Migrations
                 columns: table => new
                 {
                     WatchlistId = table.Column<int>(type: "int", nullable: false),
-                    StockId = table.Column<int>(type: "int", nullable: false)
+                    StockId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -324,7 +319,7 @@ namespace TopTrade.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TradeType = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(14,2)", nullable: false),
                     ExecutionTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StockId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
@@ -380,7 +375,7 @@ namespace TopTrade.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
                     Currency = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
                     PaymentMethod = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -415,7 +410,7 @@ namespace TopTrade.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(14,4)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CardId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
@@ -497,11 +492,6 @@ namespace TopTrade.Data.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_StockId",
-                table: "AspNetUsers",
-                column: "StockId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_WatchlistId",
                 table: "AspNetUsers",
                 column: "WatchlistId",
@@ -581,6 +571,11 @@ namespace TopTrade.Data.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
+                name: "IX_WatchlistStocks_IsDeleted",
+                table: "WatchlistStocks",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_WatchlistStocks_StockId",
                 table: "WatchlistStocks",
                 column: "StockId");
@@ -640,6 +635,9 @@ namespace TopTrade.Data.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Stocks");
+
+            migrationBuilder.DropTable(
                 name: "Cards");
 
             migrationBuilder.DropTable(
@@ -647,9 +645,6 @@ namespace TopTrade.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AccountsStatistics");
-
-            migrationBuilder.DropTable(
-                name: "Stocks");
 
             migrationBuilder.DropTable(
                 name: "Watchlists");

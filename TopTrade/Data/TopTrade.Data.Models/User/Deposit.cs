@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
 
     using TopTrade.Data.Common.Models;
@@ -12,6 +13,7 @@
     {
         [Required]
         [Range(10, 50_000)]
+        [Column(TypeName = "decimal(10, 4)")]
         public decimal Amount { get; set; }
 
         [Required]

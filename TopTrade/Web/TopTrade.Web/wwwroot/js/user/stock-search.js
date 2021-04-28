@@ -86,8 +86,9 @@ async function addStockToWatchList(stock) {
             'Content-Type': 'application/json',
             "X-CSRF-TOKEN": token
         },
-        body: JSON.stringify(stock.ticker)
+        body: JSON.stringify(stock)
     });
+
     let searchResult = await response.json();
 
     const logo = stock.logoName;
@@ -154,25 +155,37 @@ function closeSearchBarAndClearSearchResult() {
 }
 
 function activateSpinner() {
-    const spinner = document.createElement('div');
-    spinner.classList.add('spinner-border', 'text-light', 'spinner');
-
-    const span = document.createElement('span');
-    span.classList.add('sr-only');
-    span.textContent = 'Loading...';
-    spinner.appendChild(span);
-
-    document.querySelector('.search-icon-button i').parentElement.appendChild(spinner);
-    document.querySelector('.search-icon-button i').remove();
+    const spinner = document.querySelector('div.spinner').style.display = 'block';
+    const search = document.querySelector('i.fa-search').style.display = 'none';
+   
 }
 
 function removeSpinner() {
-    const span = document.createElement('span');
-    span.classList.add('input-group-prepend', 'search-icon-button');
-    span.innerHTML = ` <span class="input-group-text">
-                                <i class="fas fa-search"></i>
-                            </span>`;
-    const div = document.querySelector('.input-group');
-    div.firstElementChild.remove();
-    div.insertBefore(span, div.firstElementChild);
+    const spinner = document.querySelector('div.spinner').style.display = 'none';
+    const search = document.querySelector('i.fa-search').style.display = 'block';
 }
+
+
+//function activateSpinner() {
+//    const spinner = document.createElement('div');
+//    spinner.classList.add('spinner-border', 'text-light', 'spinner');
+
+//    const span = document.createElement('span');
+//    span.classList.add('sr-only');
+//    span.textContent = 'Loading...';
+//    spinner.appendChild(span);
+
+//    document.querySelector('.search-icon-button i').parentElement.appendChild(spinner);
+//    document.querySelector('.search-icon-button i').remove();
+//}
+
+//function removeSpinner() {
+//    const span = document.createElement('span');
+//    span.classList.add('input-group-prepend', 'search-icon-button');
+//    span.innerHTML = ` <span class="input-group-text">
+//                                <i class="fas fa-search"></i>
+//                            </span>`;
+//    const div = document.querySelector('.input-group');
+//    div.firstElementChild.remove();
+//    div.insertBefore(span, div.firstElementChild);
+//}

@@ -10,8 +10,8 @@ using TopTrade.Data;
 namespace TopTrade.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210428103109_RemoveRelationBetweenUserAndStock")]
-    partial class RemoveRelationBetweenUserAndStock
+    [Migration("20210428174536_InitalCreate")]
+    partial class InitalCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -329,7 +329,7 @@ namespace TopTrade.Data.Migrations
                         .UseIdentityColumn();
 
                     b.Property<decimal>("Available")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(14,4)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -338,7 +338,7 @@ namespace TopTrade.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Equity")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(14,4)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -347,10 +347,10 @@ namespace TopTrade.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Profit")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(14,4)");
 
                     b.Property<decimal>("TotalAllocated")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(14,4)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
@@ -406,7 +406,7 @@ namespace TopTrade.Data.Migrations
                         .UseIdentityColumn();
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(10,4)");
 
                     b.Property<int>("CardId")
                         .HasColumnType("int");
@@ -460,12 +460,6 @@ namespace TopTrade.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<double>("Change")
-                        .HasColumnType("float");
-
-                    b.Property<double>("ChangePercent")
-                        .HasColumnType("float");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -482,9 +476,6 @@ namespace TopTrade.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Ticker")
                         .IsRequired()
@@ -521,7 +512,7 @@ namespace TopTrade.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(14,2)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -618,7 +609,24 @@ namespace TopTrade.Data.Migrations
                     b.Property<int>("StockId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("WatchlistId", "StockId");
+
+                    b.HasIndex("IsDeleted");
 
                     b.HasIndex("StockId");
 
@@ -633,7 +641,7 @@ namespace TopTrade.Data.Migrations
                         .UseIdentityColumn();
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(14,4)");
 
                     b.Property<int>("CardId")
                         .HasColumnType("int");

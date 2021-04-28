@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
 
     using TopTrade.Data.Common.Models;
@@ -10,7 +11,7 @@
 
     public class Withdraw : BaseDeletableModel<int>
     {
-        [Range(typeof(decimal), "50", "79228162514264337593543950335")]
+        [Column(TypeName = "decimal(14, 4)")]
         public decimal Amount { get; set; }
 
         public DateTime Date { get; set; }

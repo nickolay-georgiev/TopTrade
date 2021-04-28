@@ -68,8 +68,8 @@
             {
                 Ticker = stockResult.Symbol,
                 Price = stockResult.Price,
-                Change = stockResult.Change,
-                ChangePercent = stockResult.ChangePercent,
+                Change = (double)stockResult.Change,
+                ChangePercent = (double)stockResult.ChangePercent,
             };
 
             return stock;

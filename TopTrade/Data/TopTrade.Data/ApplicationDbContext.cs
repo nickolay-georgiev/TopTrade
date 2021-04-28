@@ -66,9 +66,9 @@
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<ApplicationUser>()
-              .HasOne(x => x.AccountStatistic)
-              .WithOne(x => x.User)
-              .HasForeignKey<ApplicationUser>(x => x.AccountStatisticId);
+                .HasOne(x => x.AccountStatistic)
+                .WithOne(x => x.User)
+                .HasForeignKey<ApplicationUser>(x => x.AccountStatisticId);
 
             builder.Entity<ApplicationUser>()
                 .HasOne(x => x.Watchlist)
@@ -77,6 +77,16 @@
 
             builder.Entity<WatchlistStocks>()
                 .HasKey(k => new { k.WatchlistId, k.StockId });
+
+            builder.Entity<WatchlistStocks>()
+                .HasOne<Stock>(x => x.Stock)
+                .WithMany(x => x.Watchlists)
+                .HasForeignKey(x => x.StockId);
+
+            builder.Entity<WatchlistStocks>()
+                .HasOne<Watchlist>(x => x.Watchlist)
+                .WithMany(x => x.Stocks)
+                .HasForeignKey(x => x.WatchlistId);
 
             // Needed for Identity models configuration
             base.OnModelCreating(builder);

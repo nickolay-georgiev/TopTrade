@@ -6,7 +6,7 @@
 
     using TopTrade.Data.Common.Models;
 
-    public class WatchlistStocks
+    public class WatchlistStocks : BaseDeletableModel<int>
     {
         public int WatchlistId { get; set; }
 
