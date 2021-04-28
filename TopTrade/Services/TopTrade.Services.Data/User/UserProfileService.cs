@@ -7,17 +7,24 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
+    using TopTrade.Data.Common.Repositories;
     using TopTrade.Data.Models;
+    using TopTrade.Data.Models.User;
+    using TopTrade.Data.Models.User.Enums;
     using TopTrade.Services.Data.User.Models;
     using TopTrade.Web.ViewModels.User;
 
     public class UserProfileService : IUserProfileService
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IDeletableEntityRepository<VerificationDocument> verificationDocumentRepository;
 
-        public UserProfileService(UserManager<ApplicationUser> userManager)
+        public UserProfileService(
+            UserManager<ApplicationUser> userManager,
+            IDeletableEntityRepository<VerificationDocument> verificationDocumentRepository)
         {
             this.userManager = userManager;
+            this.verificationDocumentRepository = verificationDocumentRepository;
         }
 
         public async Task EditProfileAsync(ApplicationUser user, EditProfileViewModel input)
@@ -54,18 +61,31 @@
 
         public UserCardDto GetUserDataCardComponent(ApplicationUser user)
         {
-            var verificationStatus =
-                user.Documents.Any() &&
-                user.Documents.All(d => d.VerificationStatus == "Approved") ? "Verfied" : "Not Verified";
+            string verificationStatus = this.GetUserVerificationStatus(user);
 
-            var userDto = new UserCardDto
+            var userCardDto = new UserCardDto
             {
                 AvatarUrl = user.AvatarUrl,
                 Username = user.Email.Split("@")[0],
                 VerificationStatus = verificationStatus,
             };
 
-            return userDto;
+            return userCardDto;
+        }
+
+        public string GetUserVerificationStatus(ApplicationUser user)
+        {
+            var documents = this.verificationDocumentRepository
+                            .AllAsNoTracking()
+                            .Where(d => d.UserId == user.Id)
+                            .ToList();
+
+            var verificationStatus =
+                documents.Any() &&
+                documents.All(d => d.VerificationStatus == VerificationDocumentStatus.Approved.ToString())
+                ? "Verified" : "Not Verified";
+
+            return verificationStatus;
         }
     }
 }

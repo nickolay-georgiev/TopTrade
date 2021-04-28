@@ -10,8 +10,8 @@ using TopTrade.Data;
 namespace TopTrade.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210427115648_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210428103109_RemoveRelationBetweenUserAndStock")]
+    partial class RemoveRelationBetweenUserAndStock
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -177,6 +177,9 @@ namespace TopTrade.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<int?>("AccountStatisticId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
@@ -250,9 +253,6 @@ namespace TopTrade.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StockId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -268,6 +268,10 @@ namespace TopTrade.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountStatisticId")
+                        .IsUnique()
+                        .HasFilter("[AccountStatisticId] IS NOT NULL");
+
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("NormalizedEmail")
@@ -277,8 +281,6 @@ namespace TopTrade.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("StockId");
 
                     b.HasIndex("WatchlistId")
                         .IsUnique()
@@ -319,6 +321,47 @@ namespace TopTrade.Data.Migrations
                     b.ToTable("Settings");
                 });
 
+            modelBuilder.Entity("TopTrade.Data.Models.User.AccountStatistic", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<decimal>("Available")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Equity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Profit")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalAllocated")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("AccountsStatistics");
+                });
+
             modelBuilder.Entity("TopTrade.Data.Models.User.Card", b =>
                 {
                     b.Property<int>("Id")
@@ -330,9 +373,6 @@ namespace TopTrade.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
@@ -683,13 +723,15 @@ namespace TopTrade.Data.Migrations
 
             modelBuilder.Entity("TopTrade.Data.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("TopTrade.Data.Models.User.Stock", null)
-                        .WithMany("Users")
-                        .HasForeignKey("StockId");
+                    b.HasOne("TopTrade.Data.Models.User.AccountStatistic", "AccountStatistic")
+                        .WithOne("User")
+                        .HasForeignKey("TopTrade.Data.Models.ApplicationUser", "AccountStatisticId");
 
                     b.HasOne("TopTrade.Data.Models.User.Watchlist", "Watchlist")
                         .WithOne("User")
                         .HasForeignKey("TopTrade.Data.Models.ApplicationUser", "WatchlistId");
+
+                    b.Navigation("AccountStatistic");
 
                     b.Navigation("Watchlist");
                 });
@@ -801,11 +843,14 @@ namespace TopTrade.Data.Migrations
                     b.Navigation("Withdraws");
                 });
 
+            modelBuilder.Entity("TopTrade.Data.Models.User.AccountStatistic", b =>
+                {
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("TopTrade.Data.Models.User.Stock", b =>
                 {
                     b.Navigation("Trades");
-
-                    b.Navigation("Users");
 
                     b.Navigation("Watchlists");
                 });

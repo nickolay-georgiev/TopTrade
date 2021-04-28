@@ -16,5 +16,7 @@
         UserProfileDto GetUserDataProfilePage(ApplicationUser user);
 
         UserCardDto GetUserDataCardComponent(ApplicationUser user);
+
+        string GetUserVerificationStatus(ApplicationUser user);
     }
 }

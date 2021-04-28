@@ -74,6 +74,7 @@
             services.AddTransient<INewsService, NewsService>();
             services.AddTransient<IUploadDocumentsService, UploadDocumentsService>();
             services.AddTransient<IUserProfileService, UserProfileService>();
+            services.AddTransient<IUserDashboardService, UserDashboardService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -40,6 +40,8 @@
 
         public DbSet<WatchlistStocks> WatchlistStocks { get; set; }
 
+        public DbSet<AccountStatistic> AccountsStatistics { get; set; }
+
         public DbSet<VerificationDocument> VerificationDocuments { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
@@ -63,6 +65,11 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<ApplicationUser>()
+              .HasOne(x => x.AccountStatistic)
+              .WithOne(x => x.User)
+              .HasForeignKey<ApplicationUser>(x => x.AccountStatisticId);
+
             builder.Entity<ApplicationUser>()
                 .HasOne(x => x.Watchlist)
                 .WithOne(x => x.User)

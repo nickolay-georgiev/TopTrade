@@ -7,21 +7,23 @@
 
     public class DepositCardInputModel
     {
-
-        [Required(ErrorMessage = "Card number can contains only digits")]
-        [RegularExpression("^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$")]
+        [Required]
+        [RegularExpression(
+            "^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$",
+            ErrorMessage = "Card number can contains only digits and must be exact 16 digits long")]
         public string Number { get; set; }
 
-        [Required(ErrorMessage = "Card expiration date can contains only digits")]
-        [RegularExpression("^[0-1][0-9] / [2-9][0-9]$")]
-        public string ExpirationDate { get; set; }
-
         [Required]
+        [StringLength(20, MinimumLength = 1, ErrorMessage = "First name can not be more that 20 characters long")]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
+        [StringLength(20, MinimumLength = 0, ErrorMessage = "Middle name can not be more that 20 characters long")]
         public string MiddleName { get; set; }
 
         [Required]
+        [StringLength(20, MinimumLength = 1, ErrorMessage = "Last name can not be more that 20 characters long")]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
     }
 }

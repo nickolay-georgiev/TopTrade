@@ -4,6 +4,7 @@ namespace TopTrade.Data.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
+
     using Microsoft.AspNetCore.Identity;
     using TopTrade.Data.Common.Models;
     using TopTrade.Data.Models.User;
@@ -53,11 +54,15 @@ namespace TopTrade.Data.Models
 
         public string AvatarUrl { get; set; }
 
-        public int? WatchlistId { get; set; }
-
         public string ProfileStatus { get; set; }
 
+        public int? WatchlistId { get; set; }
+
         public virtual Watchlist Watchlist { get; set; }
+
+        public int? AccountStatisticId { get; set; }
+
+        public virtual AccountStatistic AccountStatistic { get; set; }
 
         public virtual ICollection<Card> Cards { get; set; }
 

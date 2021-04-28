@@ -7,19 +7,20 @@
 
     using Microsoft.AspNetCore.Mvc;
     using TopTrade.Web.Controllers;
+    using TopTrade.Web.ViewModels.User.ViewComponents;
 
-    public class DepositController : BaseApiController
+    public class DepositController : BaseLoggedUserController
     {
-        [HttpGet]
-        public string Test()
-        {
-            return "Deposit Get Wokrs";
-        }
-
         [HttpPost]
-        public object Test1(object test)
+        public object MakeDeposit(DepositModalInputModel input)
         {
-            return "Deposit Post Wokrs";
+            //this.TempData["Error"] = "Error!";
+            //this.TempData["Message"] = "Invalid Data!";
+
+            this.TempData["Success"] = "Success!";
+            this.TempData["Message"] = "Your account balance was updated!";
+
+            return this.RedirectToAction("Index", "Home");
         }
     }
 }

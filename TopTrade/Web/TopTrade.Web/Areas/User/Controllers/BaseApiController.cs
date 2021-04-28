@@ -5,10 +5,12 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Route("api/[controller]/[action]")]
+    [Authorize]
     [ApiController]
+    [Route("api/[controller]/[action]")]
     public class BaseApiController : Controller
     {
     }

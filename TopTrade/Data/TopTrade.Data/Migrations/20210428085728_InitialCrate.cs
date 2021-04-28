@@ -3,10 +3,31 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TopTrade.Data.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialCrate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AccountsStatistics",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Profit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Available = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalAllocated = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Equity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AccountsStatistics", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -120,8 +141,9 @@ namespace TopTrade.Data.Migrations
                     ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AboutMe = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AvatarUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WatchlistId = table.Column<int>(type: "int", nullable: true),
                     ProfileStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WatchlistId = table.Column<int>(type: "int", nullable: true),
+                    AccountStatisticId = table.Column<int>(type: "int", nullable: true),
                     StockId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -141,6 +163,12 @@ namespace TopTrade.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_AccountsStatistics_AccountStatisticId",
+                        column: x => x.AccountStatisticId,
+                        principalTable: "AccountsStatistics",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_Stocks_StockId",
                         column: x => x.StockId,
@@ -271,7 +299,6 @@ namespace TopTrade.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Number = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
-                    ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -416,6 +443,11 @@ namespace TopTrade.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AccountsStatistics_IsDeleted",
+                table: "AccountsStatistics",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
@@ -451,6 +483,13 @@ namespace TopTrade.Data.Migrations
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_AccountStatisticId",
+                table: "AspNetUsers",
+                column: "AccountStatisticId",
+                unique: true,
+                filter: "[AccountStatisticId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_IsDeleted",
@@ -605,6 +644,9 @@ namespace TopTrade.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "AccountsStatistics");
 
             migrationBuilder.DropTable(
                 name: "Stocks");

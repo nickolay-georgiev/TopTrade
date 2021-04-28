@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TopTrade.Data;
 
 namespace TopTrade.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210428085728_InitialCrate")]
+    partial class InitialCrate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,6 +253,9 @@ namespace TopTrade.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("StockId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -279,6 +284,8 @@ namespace TopTrade.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("StockId");
 
                     b.HasIndex("WatchlistId")
                         .IsUnique()
@@ -350,8 +357,8 @@ namespace TopTrade.Data.Migrations
                     b.Property<decimal>("TotalAllocated")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -725,6 +732,10 @@ namespace TopTrade.Data.Migrations
                         .WithOne("User")
                         .HasForeignKey("TopTrade.Data.Models.ApplicationUser", "AccountStatisticId");
 
+                    b.HasOne("TopTrade.Data.Models.User.Stock", null)
+                        .WithMany("Users")
+                        .HasForeignKey("StockId");
+
                     b.HasOne("TopTrade.Data.Models.User.Watchlist", "Watchlist")
                         .WithOne("User")
                         .HasForeignKey("TopTrade.Data.Models.ApplicationUser", "WatchlistId");
@@ -849,6 +860,8 @@ namespace TopTrade.Data.Migrations
             modelBuilder.Entity("TopTrade.Data.Models.User.Stock", b =>
                 {
                     b.Navigation("Trades");
+
+                    b.Navigation("Users");
 
                     b.Navigation("Watchlists");
                 });

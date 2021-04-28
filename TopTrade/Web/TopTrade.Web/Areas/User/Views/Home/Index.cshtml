@@ -1,7 +1,13 @@
-﻿@{
+﻿@model  TopTrade.Web.ViewModels.User.UserDashboardViewModel
+
+@{
     ViewData["Title"] = "User Dashboard Page";
 }
 
+@if (TempData["Message"] != null)
+{
+    <partial name="_ToastPartial" />
+}
 
 <div class="content-container">
     <div class="col remove-grow">
@@ -88,8 +94,6 @@
         </div>
     </div>
 
-
-
     <div class="footer d-flex justify-content-around mb-2">
 
         <div class="statistics available-amount flex-column d-flex align-items-center border-right">
@@ -119,9 +123,7 @@
     </div>
 </div>
 
-
-
-<div class="modal fade" id="buy-button" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="buy-button" tabindex="-1" role="dialog" aria-labelledby="trade-stock-modal"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

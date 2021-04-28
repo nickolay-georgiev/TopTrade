@@ -14,17 +14,16 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form asp-action="MakeDeposit" method="POST">
+                    <form asp-controller="Deposit" asp-action="MakeDeposit" method="POST">
                         <div class="row align-items-end justify-content-between">
                             <div class="form-group col col-md-8 pr-1">
                                 <label asp-for="@Model.Amount" class="small">Amount</label>
                                 <input asp-for="@Model.Amount" class="form-control deposit-amount">
                             </div>
                             <div class="form-group col col-md-4 pl-1">
-                                @*<label></label>*@
                                 <input type="text" class="form-control text-center" placeholder="USD" disabled>
                             </div>
-                            <span asp-validation-for="@Model.Amount" class="text-danger error-message"></span>
+                            <span asp-validation-for="@Model.Amount" class="text-danger error-message ml-4"></span>
                         </div>
 
                         <div class="form-group">
@@ -51,13 +50,12 @@
 
                         <div class="row">
                             <div class="form-group col pr-1">
-                                <input asp-for="@Model.Card.ExpirationDate" class="form-control text-secondary card-expiry-date" placeholder="MM / YY"
-                                       maxlength="7">
-                                <span asp-validation-for="@Model.Card.ExpirationDate" class="text-danger error-message"></span>
+                                <input class="form-control text-secondary card-expiry-date" placeholder="MM / YY"
+                                       maxlength="7" disabled>
                             </div>
                             <div class="form-group col pl-1">
-                                <input class="form-control text-secondary card-cvv-number"
-                                       maxlength="3">
+                                <input class="form-control text-secondary card-cvv-number" placeholder="CVV"
+                                       maxlength="3" disabled>
                             </div>
                         </div>
 
@@ -73,9 +71,9 @@
                                 <div class="form-group col-md-4 pl-0 mb-0">
                                     <input asp-for="@Model.Card.LastName" class="form-control text-secondary card-last-name">
                                 </div>
-                                <span asp-validation-for="@Model.Card.FirstName" class="text-danger error-message"></span>
-                                <span asp-validation-for="@Model.Card.MiddleName" class="text-danger error-message"></span>
-                                <span asp-validation-for="@Model.Card.LastName" class="text-danger error-message"></span>
+                                <span asp-validation-for="@Model.Card.FirstName" class="text-danger error-message ml-3"></span>
+                                <span asp-validation-for="@Model.Card.MiddleName" class="text-danger error-message ml-3"></span>
+                                <span asp-validation-for="@Model.Card.LastName" class="text-danger error-message ml-3"></span>
                             </div>
                             <p class="small text-secondary"> * This card should belong to you and be in your name. </p>
                         </div>
