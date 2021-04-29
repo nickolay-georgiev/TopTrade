@@ -1,6 +1,6 @@
 ﻿document.querySelector('.search-icon-button').addEventListener('click', stockSearch);
 document.querySelector('div.close-search-bar').addEventListener('click', closeSearchBarAndClearSearchResult);
-const token = document.querySelector('[name=__RequestVerificationToken]').value
+const token = document.querySelector('[name=__RequestVerificationToken]').value;
 
 async function stockSearch() {
     const searchMenu = document.querySelector('div.search-bar div.form-group');
@@ -10,7 +10,7 @@ async function stockSearch() {
 
     activateSpinner();
     closeSearchBarAndClearSearchResult();
-    const response = await fetch('api/stockSearch/list', {
+    const response = await fetch('api/stock/searchList', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -82,7 +82,7 @@ async function stockSearch() {
 async function addStockToWatchList(stock) {
 
     stock.name = stock.logoName;
-    const response = await fetch('api/stockSearch/stock', {
+    const response = await fetch('api/stock/searchStock', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

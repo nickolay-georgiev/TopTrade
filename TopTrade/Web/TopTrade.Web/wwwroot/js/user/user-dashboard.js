@@ -72,6 +72,7 @@ function configureOrder(event) {
     [...document.querySelectorAll('.order-stock-ticker')].forEach(x => {
         x.textContent = stockTicker;
     });
+
     stockQuantity.addEventListener('input', (e) => {
         const quantity = Number(e.target.value);
         if (quantity < 0) { return };
@@ -87,11 +88,55 @@ function configureOrder(event) {
 
         const orderDetailsQuantity = document.querySelector('.order-details-quantity');
         orderDetailsQuantity.textContent = quantity;
+
         if (quantity == 0) { executeOrderButton.disabled = true; }
+
+        const userAvailableFunds = Number(document.querySelector('.available-amount > h5').textContent);
+        const error = document.querySelector('.trade-error');
+        if (userAvailableFunds < totalPrice) {
+            error.removeAttribute('hidden');
+            error.textContent = `Deposit $${(totalPrice - userAvailableFunds).toFixed(2)} in order to set this order`;
+            executeOrderButton.disabled = true;
+        } else {
+            error.hidden = true;
+        }
+
+        executeOrderButton.addEventListener('click', async (event) => {
+            event.preventDefault();
+            const token = document.querySelector('[name=__RequestVerificationToken]').value;
+            const endpoint = orderType.toLowerCase() === 'b' ? 'buy' : 'sell';
+
+            const tradeDetails = {
+                price: Number(orderDetailsPrice.textContent),
+                quantity: quantity,
+                ticker: stockTicker,
+                tradeType: endpoint
+            };
+
+            const response = await fetch(`api/stock/${endpoint}`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "X-CSRF-TOKEN": token
+                },
+                body: JSON.stringify(tradeDetails)
+            });
+
+            let result = await response.json();
+
+            if (response.ok) {
+                document.querySelector('.available-funds').textContent = result.available;
+                document.querySelector('.allocated-funds').textContent = result.totalAllocated;
+                document.querySelector('.profit-funds').textContent = result.profit;
+                document.querySelector('.equity-funds').textContent = result.equity;
+                document.querySelector('.close').click();
+            }
+        });
     })
 
-    inputPrice.placeholder = `${stockPrice.toFixed(2)}`
-}
+    inputPrice.placeholder = `${stockPrice.toFixed(2)}`;
+};
 
 
 //document.querySelector('.make-deposit-button').addEventListener('click', makeDeposit);

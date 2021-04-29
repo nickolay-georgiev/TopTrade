@@ -6,7 +6,7 @@
 
     public enum TradeType
     {
-        Buy = 1,
-        Sell = 2,
+        BUY = 1,
+        SELL = 2,
     }
 }

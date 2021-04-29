@@ -5,12 +5,15 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
     using TopTrade.Data.Common.Repositories;
     using TopTrade.Data.Models;
     using TopTrade.Data.Models.User;
     using TopTrade.Data.Models.User.Enums;
     using TopTrade.Web.ViewModels.User;
+    using TopTrade.Web.ViewModels.User.Profile;
+    using TopTrade.Web.ViewModels.User.Stock;
     using TopTrade.Web.ViewModels.User.ViewComponents;
 
     public class UserDashboardService : IUserDashboardService
@@ -18,6 +21,7 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IDeletableEntityRepository<Card> cardRepository;
         private readonly IDeletableEntityRepository<Stock> stockRepository;
+        private readonly IDeletableEntityRepository<Trade> tradeRepository;
         private readonly IDeletableEntityRepository<Deposit> depositRepository;
         private readonly IDeletableEntityRepository<Watchlist> watchlistRepository;
         private readonly IDeletableEntityRepository<AccountStatistic> accountStatisticRepository;
@@ -27,6 +31,7 @@
             UserManager<ApplicationUser> userManager,
             IDeletableEntityRepository<Card> cardRepository,
             IDeletableEntityRepository<Stock> stockRepository,
+            IDeletableEntityRepository<Trade> tradeRepository,
             IDeletableEntityRepository<Deposit> depositRepository,
             IDeletableEntityRepository<Watchlist> watchlistRepository,
             IDeletableEntityRepository<AccountStatistic> accountStatisticRepository,
@@ -34,6 +39,7 @@
         {
             this.userManager = userManager;
             this.stockRepository = stockRepository;
+            this.tradeRepository = tradeRepository;
             this.cardRepository = cardRepository;
             this.depositRepository = depositRepository;
             this.watchlistRepository = watchlistRepository;
@@ -69,7 +75,7 @@
                     Profit = x.Profit,
                     Available = x.Available,
                     TotalAllocated = x.TotalAllocated,
-                    Equity = x.Equity,
+                    Equity = x.Profit + x.Available + x.TotalAllocated,
                     StockWatchlist = userWatchlistStocks,
                 }).FirstOrDefault();
 
@@ -81,7 +87,6 @@
             var initialStatistic = new AccountStatistic { UserId = user.Id };
             var initialWatchlist = new Watchlist { UserId = user.Id };
 
-            //user.Deposits = new List<Deposit>();
             user.AccountStatistic = initialStatistic;
             user.Watchlist = initialWatchlist;
 
@@ -164,6 +169,58 @@
 
             this.accountStatisticRepository.Update(currentUserAccoutStatistic);
             await this.accountStatisticRepository.SaveChangesAsync();
+        }
+
+        public async Task<UserStatisticViewModel> Trade(StockTradeDetailsInputModel input, string userId)
+        {
+            var account = this.accountStatisticRepository
+                .All()
+                .Where(x => x.UserId == userId)
+                .FirstOrDefault();
+
+            var totalPrice = input.Quantity * input.Price;
+
+            if (account.Available < totalPrice)
+            {
+                throw new ArgumentException("Insuffisient funds to process this order");
+            }
+
+            account.Available -= totalPrice;
+            account.TotalAllocated += totalPrice;
+
+            this.accountStatisticRepository.Update(account);
+            await this.accountStatisticRepository.SaveChangesAsync();
+
+            var stock = this.stockRepository
+                .All()
+                .Where(x => x.Ticker == input.Ticker)
+                .FirstOrDefault();
+
+            if (!Enum.IsDefined(typeof(TradeType), input.TradeType.ToUpper()))
+            {
+                throw new InvalidOperationException("Something goes wrong... please try again");
+            }
+
+            var trade = new Trade
+            {
+                Quantity = input.Quantity,
+                Price = input.Price,
+                UserId = userId,
+                StockId = 1,
+                TradeType = input.TradeType.ToUpper(),
+            };
+
+            await this.tradeRepository.AddAsync(trade);
+            await this.tradeRepository.SaveChangesAsync();
+
+            var resultViewModel = new UserStatisticViewModel
+            {
+                Available = account.Available,
+                TotalAllocated = account.TotalAllocated,
+                Profit = account.Profit,
+            };
+
+            return resultViewModel;
         }
     }
 }

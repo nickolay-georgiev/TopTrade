@@ -55,9 +55,14 @@
                         <tr>
                             <td>
                                 <img class="company-logo" src="//logo.clearbit.com/@(stock.Name).com" alt="">
-                                <div>
-                                    <p class="mb-0 ml-2 text-uppercase font-weight-bold stock-ticker">@stock.Ticker</p>
-                                    <p class="mb-0 ml-2 small stock-name">@stock.Name</p>
+                                <div class="d-flex justify-content-between align-items-center w-100">
+                                    <div>
+                                        <p class="mb-0 ml-2 text-uppercase font-weight-bold stock-ticker">@stock.Ticker</p>
+                                        <p class="mb-0 ml-2 small stock-name">@stock.Name</p>
+                                    </div>
+                                    <div class="open-position-icon">
+                                        <i class="fas fa-chart-pie"></i>
+                                    </div>
                                 </div>
                             </td>
                             <td>
@@ -102,19 +107,19 @@
     <div class="footer d-flex justify-content-around mb-2">
 
         <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-            <h5>@Model.Available.ToString("f2")</h5>
+            <h5 class="available-funds">@Model.Available.ToString("f2")</h5>
             <span class="small">AVAILABLE</span>
             <i class="fas fa-plus plus-icon"></i>
         </div>
         <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-            <h5>@Model.TotalAllocated.ToString("f2")</h5>
+            <h5 class="allocated-funds">@Model.TotalAllocated.ToString("f2")</h5>
             <span class="small">TOTAL ALLOCATED</span>
             <i class="fas fa-plus plus-icon"></i>
 
         </div>
 
         <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-            <h5>@Model.Profit.ToString("f2")</h5>
+            <h5 class="profit-funds">@Model.Profit.ToString("f2")</h5>
             <span class="small">PROFIT</span>
             <i class="fas fa-equals plus-icon"></i>
 
@@ -122,78 +127,170 @@
 
         <div class="statistics available-amount flex-column d-flex align-items-center"
              data-toggle=" modal" data-target="#remove-stock-modal">
-            <h5>@Model.Equity.ToString("f2")</h5>
+            <h5 class="equity-funds">@Model.Equity.ToString("f2")</h5>
             <span class="small">EQUITY</span>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="buy-button" tabindex="-1" role="dialog" aria-labelledby="trade-stock-modal"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-info">
-                <div class="text-center w-100">
-                    <button class="btn btn-secondary px-5 ml-5 order-sell-btn order-type-button configure-order-button">SELL</button>
-                    <button class="btn btn-secondary px-5 order-buy-btn order-type-button configure-order-button">BUY</button>
+    @*<div class="site-content">
+                <div class="col table-div">
+                    <table class="table watchlist-table">
+                        <thead class="watchlist-table-header">
+                            <tr>
+                                <th scope="col small">TICKERS</th>
+                                <th scope="col">CHANGE</th>
+                                <th scope="col">CHART</th>
+                                <th scope="col">SELL</th>
+                                <th scope="col">BUY</th>
+                                <th scope="col">SENTIMENT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <img class="company-logo" src="//logo.clearbit.com/amazon.com" alt="">
+                                    <div>
+                                        <p class="mb-0 ml-2 text-uppercase font-weight-bold stock-ticker">Amzn</p>
+                                        <p class="mb-0 ml-2 small stock-name">Amazon</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class="mb-0 ml-2 font-weight-bold stock-price-up">13</p>
+                                    <p class="mb-0 ml-2 font-weight-bold small stock-price-down">(22)&#37</p>
+                                </td>
+                                <td>
+                                    <img class="stock-line-chart" src="./img/chart.jpg" alt="">
+                                </td>
+                                <td>
+                                    <div class="input-group sell-button order-type-button">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text font-weight-bold" id="btnGroupAddon">S</div>
+                                        </div>
+                                        <button class="form-control font-weight-bold price" data-target="#buy-button" data-toggle="modal">50</button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group buy-button order-type-button">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text font-weight-bold" id="btnGroupAddon">B</div>
+                                        </div>
+                                        <button class="form-control font-weight-bold" data-target="#buy-button"
+                                                data-toggle="modal">
+                                            10
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span>mdo</span>
+                                    <i class="fas fa-ellipsis-v remove-stock-button">
+                                    </i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a class="pl-2 text-secondary" href="https://clearbit.com">Logos provided by Clearbit</a>
                 </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="text-light close-buy-sell-modal">&times;</span>
-                </button>
             </div>
-            <div class="modal-body pb-0">
-                <div class="stock-buy">
-                    <div class="d-flex mb-3">
-                        <img class="company-logo order-company-logo" src="//logo.clearbit.com/spotify.com" alt="">
-                        <div>
-                            <p class="mb-0 ml-2 text-uppercase font-weight-bold te">
-                                <span class="text-secondary order-type">
-                                    BUY
-                                </span>
-                                <span class="order-stock-ticker"></span>
-                            </p>
-                            <p class="mb-0 ml-2 small order-stock-name">Rolls-Royce</p>
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend"> <span class="input-group-text">Price</span> </div>
-                        <input type="text" class="form-control input-stock-price" placeholder="0.02323476" readonly="">
-                        <div class="input-group-append"> <span class="input-group-text">USD</span> </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend"> <span class="input-group-text">Quantity</span> </div>
-                        <input id="test" type="number" class="form-control stock-quantity">
-                        <div class="input-group-append"> <span class="input-group-text">Shares</span> </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend"> <span class="input-group-text">Total</span> </div>
-                        <input type="text" class="form-control total-amount" readonly="" placeholder="">
-                        <div class="input-group-append"> <span class="input-group-text">Amount</span> </div>
-                    </div>
-                    <div class="text-center mt-5 mb-3 crypt-up">
-                        <p>
-                            You are going to
-                            <span class="font-weight-bold h5 order-type text-uppercase">
-                                BUY
-                            </span>
-                            <span class="font-weight-bold h5 order-details-quantity">
-                                0
-                            </span>
-                            <span class="font-weight-bold h5 order-stock-ticker">RR.</span> shares for
-                        </p>
-                        <h4>$ <span class="order-details-price">0.00</span></h4>
-                    </div>
+
+            <div class="footer d-flex justify-content-around mb-2">
+
+                <div class="statistics available-amount flex-column d-flex align-items-center border-right">
+                    <h5>100</h5>
+                    <span class="small">AVAILABLE</span>
+                    <i class="fas fa-plus plus-icon"></i>
                 </div>
-            </div>
-            <div class="text-center mb-4">
-                <hr>
-                <button type="button" disabled class="btn btn-info px-5 py-3 execute-order-button"><span class="h5 order-type text-uppercase">BUY</span> <span class="order-stock-ticker h5">RR.</span></button>
+                <div class="statistics available-amount flex-column d-flex align-items-center border-right">
+                    <h5>100</h5>
+                    <span class="small">TOTAL ALLOCATED</span>
+                    <i class="fas fa-plus plus-icon"></i>
+
+                </div>
+
+                <div class="statistics available-amount flex-column d-flex align-items-center border-right">
+                    <h5>100</h5>
+                    <span class="small">PROFIT</span>
+                    <i class="fas fa-equals plus-icon"></i>
+
+                </div>
+
+                <div class="statistics available-amount flex-column d-flex align-items-center"
+                     data-toggle=" modal" data-target="#remove-stock-modal">
+                    <h5>100</h5>
+                    <span class="small">EQUITY</span>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    *@
 
-@section Scripts {
-    <script src="~/js/user/user-dashboard.js" type="text/javascript"></script>
-    <script src="~/js/user/stock-search.js" type="text/javascript"></script>
-}
+    <div class="modal fade trade-stock-modal" id="buy-button" tabindex="-1" role="dialog" aria-labelledby="trade-stock-modal"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form method="post">
+                <div class="modal-content">
+                    <div class="modal-header bg-info">
+                        <div class="text-center w-100">
+                            <button class="btn btn-secondary px-5 ml-5 order-sell-btn order-type-button configure-order-button">SELL</button>
+                            <button class="btn btn-secondary px-5 order-buy-btn order-type-button configure-order-button">BUY</button>
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="text-light close-buy-sell-modal">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body pb-0">
+                        <div class="stock-buy">
+                            <div class="d-flex mb-3">
+                                <img class="company-logo order-company-logo" src="//logo.clearbit.com/spotify.com" alt="">
+                                <div>
+                                    <p class="mb-0 ml-2 text-uppercase font-weight-bold te">
+                                        <span class="text-secondary order-type">
+                                            BUY
+                                        </span>
+                                        <span class="order-stock-ticker"></span>
+                                    </p>
+                                    <p class="mb-0 ml-2 small order-stock-name">Rolls-Royce</p>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend"> <span class="input-group-text">Price</span> </div>
+                                <input type="text" class="form-control input-stock-price" placeholder="0.02323476" readonly="">
+                                <div class="input-group-append"> <span class="input-group-text">USD</span> </div>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-prepend"> <span class="input-group-text">Quantity</span> </div>
+                                <input id="test" type="number" class="form-control stock-quantity">
+                                <div class="input-group-append"> <span class="input-group-text">Shares</span> </div>
+                            </div>
+                            <p class="trade-error mt-0 text-danger text-center" hidden>Error</p>
+                            <div class="input-group my-3">
+                                <div class="input-group-prepend"> <span class="input-group-text">Total</span> </div>
+                                <input type="text" class="form-control total-amount" readonly="" placeholder="">
+                                <div class="input-group-append"> <span class="input-group-text">Amount</span> </div>
+                            </div>
+                            <div class="text-center mt-5 mb-3 crypt-up">
+                                <p>
+                                    You are going to
+                                    <span class="font-weight-bold h5 order-type text-uppercase">
+                                        BUY
+                                    </span>
+                                    <span class="font-weight-bold h5 order-details-quantity">
+                                        0
+                                    </span>
+                                    <span class="font-weight-bold h5 order-stock-ticker">RR.</span> shares for
+                                </p>
+                                <h4>$ <span class="order-details-price">0.00</span></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mb-4">
+                        <hr>
+                        <button type="button" disabled class="btn btn-info px-5 py-3 execute-order-button"><span class="h5 order-type text-uppercase">BUY</span> <span class="order-stock-ticker h5">RR.</span></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script src="~/js/user/user-dashboard.js" type="text/javascript"></script>
+        <script src="~/js/user/stock-search.js" type="text/javascript"></script>
+    }

@@ -36,8 +36,12 @@
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var userData = await this.userDashboardService.GetUserDataAsync(userId);
-
             return this.View(userData);
         }
+
+        //public IActionResult Index()
+        //{
+        //    return this.View();
+        //}
     }
 }

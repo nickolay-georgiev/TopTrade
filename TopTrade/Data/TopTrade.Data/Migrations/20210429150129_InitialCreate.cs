@@ -13,10 +13,10 @@ namespace TopTrade.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Profit = table.Column<decimal>(type: "decimal(14,4)", nullable: false),
-                    Available = table.Column<decimal>(type: "decimal(14,4)", nullable: false),
-                    TotalAllocated = table.Column<decimal>(type: "decimal(14,4)", nullable: false),
-                    Equity = table.Column<decimal>(type: "decimal(14,4)", nullable: false),
+                    Profit = table.Column<decimal>(type: "decimal(14,2)", nullable: false),
+                    Available = table.Column<decimal>(type: "decimal(14,2)", nullable: false),
+                    TotalAllocated = table.Column<decimal>(type: "decimal(14,2)", nullable: false),
+                    Equity = table.Column<decimal>(type: "decimal(14,2)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -317,10 +317,9 @@ namespace TopTrade.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TradeType = table.Column<int>(type: "int", nullable: false),
+                    TradeType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(14,2)", nullable: false),
-                    ExecutionTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StockId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),

@@ -1,5 +1,6 @@
 ﻿namespace TopTrade.Web.Areas.User.Controllers
 {
+    using System;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -9,13 +10,14 @@
     using TopTrade.Services.Data.User;
     using TopTrade.Web.Controllers;
     using TopTrade.Web.ViewModels.User;
+    using TopTrade.Web.ViewModels.User.Stock;
 
-    public class StockSearchController : BaseApiController
+    public class StockController : BaseApiController
     {
         private readonly IAlphaVantageApiClientService stockService;
         private readonly IUserDashboardService userDashboardService;
 
-        public StockSearchController(
+        public StockController(
             IAlphaVantageApiClientService stockService,
             IUserDashboardService userDashboardService)
         {
@@ -24,23 +26,54 @@
         }
 
         [HttpPost]
-        [ActionName("list")]
+        [ActionName("searchList")]
         public async Task<ActionResult<StockSearchResultViewModel[]>> StockSearch([FromBody] string stockNameOrTicker)
         {
             return await this.stockService.SearchStockBySymbol(stockNameOrTicker);
         }
 
         [HttpPost]
-        [ActionName("stock")]
+        [ActionName("searchStock")]
         public async Task<ActionResult<StockViewModel>> GetStockByTicker(StockSearchResultViewModel stock)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var stockData = await this.stockService.GetStockByTicker(stock.Ticker);
 
-            //var stockData = await this.stockService.GetStockByTicker(stockTicker);
-
             await this.userDashboardService.UpdateUserWatchlistAsync(stock, userId);
             return stockData;
+        }
+
+
+        [HttpPost]
+        [ActionName("sell")]
+        public async Task<ActionResult> SellStock(StockTradeDetailsInputModel input)
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            try
+            {
+                var resultViewModel = await this.userDashboardService.Trade(input, userId);
+                return this.Ok(resultViewModel);
+            }
+            catch (Exception error)
+            {
+                return this.Json(error.Message);
+            }
+        }
+
+        [HttpPost]
+        [ActionName("buy")]
+        public async Task<ActionResult> BuyStock(StockTradeDetailsInputModel input)
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            try
+            {
+                var resultViewModel = await this.userDashboardService.Trade(input, userId);
+                return this.Ok(resultViewModel);
+            }
+            catch (Exception error)
+            {
+                return this.Json(error.Message);
+            }
         }
     }
 }

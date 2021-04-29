@@ -24,11 +24,18 @@
         public async Task<IActionResult> MakeDeposit(DepositModalInputModel input)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            await this.userDashboardService.UpdateUserAccountAsync(input, userId);
 
+            try
+            {
+                await this.userDashboardService.UpdateUserAccountAsync(input, userId);
+            }
+            catch (Exception error)
+            {
+                this.TempData["Error"] = "Error!";
+                this.TempData["Message"] = error.Message;
 
-            //this.TempData["Error"] = "Error!";
-            //this.TempData["Message"] = "Invalid Data!";
+                return this.RedirectToAction("Index", "Home");
+            }
 
             this.TempData["Success"] = "Success!";
             this.TempData["Message"] = "Your account balance was updated!";

@@ -327,7 +327,7 @@ namespace TopTrade.Data.Migrations
                         .UseIdentityColumn();
 
                     b.Property<decimal>("Available")
-                        .HasColumnType("decimal(14,4)");
+                        .HasColumnType("decimal(14,2)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -336,7 +336,7 @@ namespace TopTrade.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Equity")
-                        .HasColumnType("decimal(14,4)");
+                        .HasColumnType("decimal(14,2)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -345,10 +345,10 @@ namespace TopTrade.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Profit")
-                        .HasColumnType("decimal(14,4)");
+                        .HasColumnType("decimal(14,2)");
 
                     b.Property<decimal>("TotalAllocated")
-                        .HasColumnType("decimal(14,4)");
+                        .HasColumnType("decimal(14,2)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
@@ -497,9 +497,6 @@ namespace TopTrade.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ExecutionTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -515,8 +512,8 @@ namespace TopTrade.Data.Migrations
                     b.Property<int>("StockId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TradeType")
-                        .HasColumnType("int");
+                    b.Property<string>("TradeType")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");

@@ -41,27 +41,6 @@
             return stocks;
         }
 
-        //public async Task<SearchStockViewModel> SearchStockBySymbol(string stockNameOrTicker)
-        //{
-        //    using var client = new AlphaVantageClient(this.configuration.GetSection(GlobalConstants.AlphaVantageApiKey).Value);
-        //    using var stocksClient = client.Stocks();
-        //    var searchListResult = await stocksClient.SearchSymbolAsync(stockNameOrTicker);
-        //    var topMatchResult = searchListResult.FirstOrDefault(x => x.Region == GlobalConstants.StockSearchRegion);
-        //    var stockTicker = topMatchResult.Symbol;
-        //    var stockData = await stocksClient.GetGlobalQuoteAsync(stockTicker);
-
-        //    var stock = new SearchStockViewModel
-        //    {
-        //        Name = topMatchResult.Name,
-        //        Ticker = stockData.Symbol,
-        //        Price = stockData.Price,
-        //        Change = stockData.Change,
-        //        ChangePercent = stockData.ChangePercent,
-        //    };
-
-        //    return stock;
-        //}
-
         public async Task<StockViewModel> GetStockByTicker(string stockTicker)
         {
             using var client = new AlphaVantageClient("AYEDU2WZ2YC86XC0");
