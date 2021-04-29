@@ -1,9 +1,5 @@
 ﻿namespace TopTrade.Data.Models.User.Enums
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     public enum TransactionStatus
     {
         Completed = 1,         // The payment has been completed, and the funds have been added successfully to your account balance.

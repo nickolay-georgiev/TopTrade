@@ -6,6 +6,8 @@ async function stockSearch() {
     const searchMenu = document.querySelector('div.search-bar div.form-group');
     const inputValue = searchMenu.querySelector('input').value;
 
+    if (!inputValue) { return };
+
     activateSpinner();
     closeSearchBarAndClearSearchResult();
     const response = await fetch('api/stockSearch/list', {
@@ -79,6 +81,7 @@ async function stockSearch() {
 
 async function addStockToWatchList(stock) {
 
+    stock.name = stock.logoName;
     const response = await fetch('api/stockSearch/stock', {
         method: 'POST',
         headers: {
@@ -157,7 +160,7 @@ function closeSearchBarAndClearSearchResult() {
 function activateSpinner() {
     const spinner = document.querySelector('div.spinner').style.display = 'block';
     const search = document.querySelector('i.fa-search').style.display = 'none';
-   
+
 }
 
 function removeSpinner() {

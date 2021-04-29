@@ -26,7 +26,11 @@
             using var client = new AlphaVantageClient(this.configuration.GetSection(GlobalConstants.AlphaVantageApiKey).Value);
             using var stocksClient = client.Stocks();
             var searchListResult = await stocksClient.SearchSymbolAsync(stockNameOrTicker);
-            var topMatchResult = searchListResult.Where(x => x.Region == GlobalConstants.StockSearchRegion).Take(5).ToList();
+
+            var topMatchResult = searchListResult
+                .Where(x => x.Region == GlobalConstants.StockSearchRegion)
+                .Take(5)
+                .ToList();
 
             var stocks = topMatchResult.Select(x => new StockSearchResultViewModel
             {

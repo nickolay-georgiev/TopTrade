@@ -16,6 +16,6 @@
 
         public int UserId { get; set; }
 
-        public ICollection<StockWatchlistViewModel> StockWatchlist { get; set; } = new List<StockWatchlistViewModel>();
+        public ICollection<StockViewModel> StockWatchlist { get; set; } = new List<StockViewModel>();
     }
 }

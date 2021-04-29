@@ -136,11 +136,3 @@ if (cardNumber) {
         this.value = cardNumber;
     });
 };
-
-//document.querySelector('.card-expiry-date').addEventListener('input', function (e) {
-//    var expiryDate = this.value;
-//    if (expiryDate.length == 2) {
-//        expiryDate += ' / ';
-//    }
-//    this.value = expiryDate;
-//});

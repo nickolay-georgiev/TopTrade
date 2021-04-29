@@ -32,29 +32,15 @@
 
         [HttpPost]
         [ActionName("stock")]
-        public async Task<ActionResult<StockViewModel>> GetStockByTicker(Model stock)
+        public async Task<ActionResult<StockViewModel>> GetStockByTicker(StockSearchResultViewModel stock)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var stockData = await this.stockService.GetStockByTicker(stock.Ticker);
 
-
-            var test = new StockViewModel
-            {
-                Ticker = stock.Ticker,
-                Name = stock.LogoName,
-            };
-
             //var stockData = await this.stockService.GetStockByTicker(stockTicker);
 
-            await this.userDashboardService.UpdateUserWatchlistAsync(test, userId);
+            await this.userDashboardService.UpdateUserWatchlistAsync(stock, userId);
             return stockData;
         }
-    }
-
-    public class Model
-    {
-        public string LogoName { get; set; }
-
-        public string Ticker { get; set; }
     }
 }

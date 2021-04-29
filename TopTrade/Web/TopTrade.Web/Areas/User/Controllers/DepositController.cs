@@ -3,17 +3,30 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using TopTrade.Services.Data.User;
     using TopTrade.Web.Controllers;
     using TopTrade.Web.ViewModels.User.ViewComponents;
 
     public class DepositController : BaseLoggedUserController
     {
-        [HttpPost]
-        public object MakeDeposit(DepositModalInputModel input)
+        private readonly IUserDashboardService userDashboardService;
+
+        public DepositController(IUserDashboardService userDashboardService)
         {
+            this.userDashboardService = userDashboardService;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> MakeDeposit(DepositModalInputModel input)
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            await this.userDashboardService.UpdateUserAccountAsync(input, userId);
+
+
             //this.TempData["Error"] = "Error!";
             //this.TempData["Message"] = "Invalid Data!";
 

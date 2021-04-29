@@ -54,15 +54,15 @@
                     {
                         <tr>
                             <td>
-                                <img class="company-logo" src="//logo.clearbit.com/spotify.com" alt="">
+                                <img class="company-logo" src="//logo.clearbit.com/@(stock.Name).com" alt="">
                                 <div>
-                                    <p class="mb-0 ml-2 text-uppercase font-weight-bold stock-ticker">RR.L</p>
-                                    <p class="mb-0 ml-2 small stock-name">Rolls-Royce</p>
+                                    <p class="mb-0 ml-2 text-uppercase font-weight-bold stock-ticker">@stock.Ticker</p>
+                                    <p class="mb-0 ml-2 small stock-name">@stock.Name</p>
                                 </div>
                             </td>
                             <td>
-                                <p class="mb-0 ml-2 font-weight-bold stock-price-up">25.00</p>
-                                <p class="mb-0 ml-2 font-weight-bold small stock-price-down">(4.00)&#37</p>
+                                <p class="mb-0 ml-2 font-weight-bold stock-price-up">@stock.Change.ToString("f2")</p>
+                                <p class="mb-0 ml-2 font-weight-bold small stock-price-down">(@stock.ChangePercent.ToString("f2"))&#37</p>
                             </td>
                             <td>
                                 <img class="stock-line-chart" src="./img/chart.jpg" alt="">
@@ -72,7 +72,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text font-weight-bold" id="btnGroupAddon">S</div>
                                     </div>
-                                    <button class="form-control font-weight-bold price" data-target="#buy-button" data-toggle="modal">10</button>
+                                    <button class="form-control font-weight-bold price" data-target="#buy-button" data-toggle="modal">@(stock.Price.ToString("f2"))</button>
                                 </div>
                             </td>
                             <td>
@@ -82,7 +82,7 @@
                                     </div>
                                     <button class="form-control font-weight-bold" data-target="#buy-button"
                                             data-toggle="modal">
-                                        10
+                                        @stock.Price.ToString("f2")
                                     </button>
                                 </div>
                             </td>
@@ -102,19 +102,19 @@
     <div class="footer d-flex justify-content-around mb-2">
 
         <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-            <h5>@Model.Available</h5>
+            <h5>@Model.Available.ToString("f2")</h5>
             <span class="small">AVAILABLE</span>
             <i class="fas fa-plus plus-icon"></i>
         </div>
         <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-            <h5>@Model.TotalAllocated</h5>
+            <h5>@Model.TotalAllocated.ToString("f2")</h5>
             <span class="small">TOTAL ALLOCATED</span>
             <i class="fas fa-plus plus-icon"></i>
 
         </div>
 
         <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-            <h5>@Model.Profit</h5>
+            <h5>@Model.Profit.ToString("f2")</h5>
             <span class="small">PROFIT</span>
             <i class="fas fa-equals plus-icon"></i>
 
@@ -122,7 +122,7 @@
 
         <div class="statistics available-amount flex-column d-flex align-items-center"
              data-toggle=" modal" data-target="#remove-stock-modal">
-            <h5>@Model.Equity</h5>
+            <h5>@Model.Equity.ToString("f2")</h5>
             <span class="small">EQUITY</span>
         </div>
     </div>

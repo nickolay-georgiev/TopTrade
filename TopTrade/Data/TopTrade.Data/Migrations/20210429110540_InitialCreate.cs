@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TopTrade.Data.Migrations
 {
-    public partial class InitalCreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -378,7 +378,6 @@ namespace TopTrade.Data.Migrations
                     Amount = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
                     Currency = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
                     PaymentMethod = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CardId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     TransactionStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),

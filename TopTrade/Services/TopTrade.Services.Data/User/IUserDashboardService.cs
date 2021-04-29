@@ -7,13 +7,16 @@
 
     using TopTrade.Data.Models;
     using TopTrade.Web.ViewModels.User;
+    using TopTrade.Web.ViewModels.User.ViewComponents;
 
     public interface IUserDashboardService
     {
-        UserDashboardViewModel GetUserData(string userId);
+        Task<UserDashboardViewModel> GetUserDataAsync(string userId);
 
-        Task PopulateDataAsync(ApplicationUser user);
+        Task InitializeUserCollectionsAsync(ApplicationUser user);
 
-        Task UpdateUserWatchlistAsync(StockViewModel stock, string userId);
+        Task UpdateUserWatchlistAsync(StockSearchResultViewModel stock, string userId);
+
+        Task UpdateUserAccountAsync(DepositModalInputModel input, string userId);
     }
 }

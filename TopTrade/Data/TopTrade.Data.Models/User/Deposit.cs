@@ -24,8 +24,6 @@
         [StringLength(30, MinimumLength = 1)]
         public string PaymentMethod { get; set; }
 
-        public DateTime Date { get; set; }
-
         public int CardId { get; set; }
 
         public virtual Card Card { get; set; }

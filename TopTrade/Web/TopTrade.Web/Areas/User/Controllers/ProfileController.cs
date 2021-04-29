@@ -37,8 +37,7 @@
             var userDto = this.editProfileService.GetUserDataProfilePage(user);
 
             // TODO Remove this when upload to azure
-            // var test = userDto.AvatarUrl == null ? "/img/face-3.jpg" : userDto.AvatarUrl.Split("wwwroot")[1];
-            var test = userDto.AvatarUrl;
+            var test = userDto.AvatarUrl == null ? "/img/face-3.jpg" : userDto.AvatarUrl.Split("wwwroot")[1];
 
             var userInputModel = new EditProfileViewModel
             {

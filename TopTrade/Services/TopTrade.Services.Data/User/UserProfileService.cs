@@ -63,9 +63,13 @@
         {
             string verificationStatus = this.GetUserVerificationStatus(user);
 
+            // TODO Remove this when upload to azure
+            var test = user.AvatarUrl == null ? "/img/face-3.jpg" : user.AvatarUrl.Split("wwwroot")[1];
+
             var userCardDto = new UserCardDto
             {
-                AvatarUrl = user.AvatarUrl,
+                //AvatarUrl = user.AvatarUrl,
+                AvatarUrl = test,
                 Username = user.Email.Split("@")[0],
                 VerificationStatus = verificationStatus,
             };

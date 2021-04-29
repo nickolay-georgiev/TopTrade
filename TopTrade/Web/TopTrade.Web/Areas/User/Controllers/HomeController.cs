@@ -32,16 +32,12 @@
             this.userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var userData = this.userDashboardService.GetUserData(userId);
+            var userData = await this.userDashboardService.GetUserDataAsync(userId);
 
             return this.View(userData);
         }
     }
 }
-
-//  var getStockByTicker = await this.stockService.GetStockTimeSeries();
-//  var getStockByTicker1 = await this.stockService.GetStockByTicker1();
-//  var searchStock = await this.stockService.SearchStock();

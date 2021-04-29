@@ -85,7 +85,7 @@
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
                 {
-                    await this.userDashboardService.PopulateDataAsync(user);
+                    await this.userDashboardService.InitializeUserCollectionsAsync(user);
                     this.logger.LogInformation("User created a new account with password.");
 
                     var code = await this.userManager.GenerateEmailConfirmationTokenAsync(user);

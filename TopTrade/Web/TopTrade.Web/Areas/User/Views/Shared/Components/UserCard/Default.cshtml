@@ -6,11 +6,11 @@
             <a class="p-0" asp-area="User" asp-controller="Profile" asp-action="Index">
                 @if (string.IsNullOrEmpty(Model.AvatarUrl))
                 {
-                    <img src="~/img/default-user-avatar.webp" class="card-img ml-3 my-3" alt="user-avatar">
+                    <img  class="card-img ml-3 my-3" src="~/img/default-user-avatar.webp" alt="user-avatar">
                 }
                 else
                 {
-                    <img class="avatar border-gray" src="@Model.AvatarUrl" alt="user-avatar-image">
+                    <img class="card-img ml-3 my-3" src="@Model.AvatarUrl" alt="user-avatar-image">
                 }
             </a>
         </div>
