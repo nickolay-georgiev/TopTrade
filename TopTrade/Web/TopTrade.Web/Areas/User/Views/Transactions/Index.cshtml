@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<TopTrade.Web.ViewModels.User.Stock.TradeHistoryViewModel>
+
+@{
     ViewData["Title"] = "Transactions Page";
     ViewData["PageName"] = "Transactions";
 }
@@ -30,233 +32,38 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="Trans-id">#14342</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="trans-type success">Buy</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="amount">
-                                                            <i class="la la-bitcoin"></i>0.586
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="price">119.12</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="usd">979.78</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="fee">0.2</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="status badge badge-success badge-pill badge-sm">Completed</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="time">04.40 am</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="Trans-id">#14321</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="trans-type danger">Sell</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="amount">
-                                                            <i class="la la-viacoin"></i>1.386
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="price">134.12</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="usd">346.23</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="fee">0.2</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="status badge badge-danger badge-pill badge-sm">Cancel</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="time">03.50 pm</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="Trans-id">#23531</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="trans-type success">Buy</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="amount">
-                                                            <i class="la la-gg-circle"></i>0.231
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="price">124.12</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="usd">456.23</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="fee">0.2</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="status badge badge-success badge-pill badge-sm">Completed</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="time">12.23 pm</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="Trans-id">#12463</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="trans-type success">Buy</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="amount">
-                                                            <i class="la la-bitcoin"></i>0.231
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="price">231.12</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="usd">346.34</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="fee">0.2</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="status badge badge-secondary badge-pill badge-sm">Pending</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="time">02.12 pm</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="Trans-id">#12431</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="trans-type danger">Sell</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="amount">
-                                                            <i class="la la-bitcoin"></i>2.945
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="price">431.12</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="usd">125.12</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="fee">0.2</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="status badge badge-danger badge-pill badge-sm">Cancel</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="time">10.00 am</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="Trans-id">#12532</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="trans-type danger">Sell</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="amount">
-                                                            <i class="la la-gg-circle"></i>0.235
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="price">215.34</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="usd">236.12</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="fee">0.2</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="status badge badge-secondary badge-pill badge-sm">Pending</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="time">08.22 am</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="Trans-id">#23165</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="trans-type success">Buy</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="amount">
-                                                            <i class="la la-bitcoin"></i>2.346
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="price">235.12</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="usd">332.23</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="fee">0.2</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="status badge badge-success badge-pill badge-sm">Completed</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="time">12.43 am</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="Trans-id">#63423</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="trans-type danger">Sell</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="amount">
-                                                            <i class="la la-viacoin"></i>3.213
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="price">456.12</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="usd">231.53</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="fee">0.2</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="status badge badge-secondary badge-pill badge-sm">Pending</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="time">11.21 am</div>
-                                                    </td>
-                                                </tr>
-
-
-
+                                                @foreach (var trade in Model)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <div class="Trans-id">#@trade.Id</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="trans-type success font-weight-bold">
+                                                            <span custom-color>@trade.TradeType</span></div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="amount">
+                                                                <i class="la la-bitcoin"></i>@trade.Quantity
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="price">@trade.Price</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="usd">@trade.TotalPrice</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="fee">0.2</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="status badge badge-success badge-pill badge-sm">Completed</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="time">@trade.CreatedOn</div>
+                                                        </td>
+                                                    </tr>
+                                                }
                                             </tbody>
                                         </table>
                                     </div>

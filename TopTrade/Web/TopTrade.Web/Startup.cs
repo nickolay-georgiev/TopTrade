@@ -75,6 +75,7 @@
             services.AddTransient<IUploadDocumentsService, UploadDocumentsService>();
             services.AddTransient<IUserProfileService, UserProfileService>();
             services.AddTransient<IUserDashboardService, UserDashboardService>();
+            services.AddTransient<ITradeService, TradeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

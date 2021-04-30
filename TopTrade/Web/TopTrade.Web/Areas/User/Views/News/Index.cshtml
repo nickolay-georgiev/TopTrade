@@ -36,9 +36,18 @@
                             </div>
                             <div class="card-body">
                                 <div class="img-wrapper">
-                                    <img class="img-fluid"
-                                         src="@article.ImageUrl"
-                                         alt="article image">
+                                    @if (article.ImageUrl == null)
+                                    {
+                                        <img class="img-fluid"
+                                             src="~/img/avatar-background-img.png"
+                                             alt="article image">
+                                    }
+                                    else
+                                    {
+                                        <img class="img-fluid"
+                                             src="@article.ImageUrl"
+                                             alt="article image">
+                                    }
                                 </div>
                                 <hr>
                                 <p>
