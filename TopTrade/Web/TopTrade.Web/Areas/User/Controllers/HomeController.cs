@@ -38,10 +38,5 @@
             var userData = await this.userDashboardService.GetUserDataAsync(userId);
             return this.View(userData);
         }
-
-        //public IActionResult Index()
-        //{
-        //    return this.View();
-        //}
     }
 }

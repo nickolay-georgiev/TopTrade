@@ -8,6 +8,6 @@
 
     public interface ITradeService
     {
-        IEnumerable<TradeHistoryViewModel> GetTradeHistory(string userId, int page, int itemsPerPage);
+        TradeHistoryViewModel GetTradeHistory(string userId, int page, int itemsPerPage);
     }
 }

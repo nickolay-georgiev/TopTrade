@@ -4,6 +4,9 @@
 
 .content-body {
     position: relative;
+}
+
+.news-wrapper {
     margin-top: 2rem;
 }
 

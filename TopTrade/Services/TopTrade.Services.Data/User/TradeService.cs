@@ -1,10 +1,7 @@
 ﻿namespace TopTrade.Services.Data.User
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     using TopTrade.Data.Common.Repositories;
     using TopTrade.Data.Models.User;
@@ -20,23 +17,23 @@
             this.tradeRepository = tradeRepository;
         }
 
-        public IEnumerable<TradeHistoryViewModel> GetTradeHistory(string userId, int page, int itemsPerPage = 8)
+        public TradeHistoryViewModel GetTradeHistory(string userId, int pageNumber, int itemsPerPage = 8)
         {
-            var historyViewModel = new TradeHistoryViewModel();
+            var historyViewModel = new TradeHistoryViewModel
+            {
+                ItemsPerPage = itemsPerPage,
+                PageNumber = pageNumber,
+                TradesCount = this.tradeRepository.AllAsNoTracking().Where(x => x.UserId == userId).Count(),
+            };
 
-            var userTrades = this.tradeRepository
+            historyViewModel.Trades = this.tradeRepository
                 .AllAsNoTracking()
                 .Where(x => x.UserId == userId)
-                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
-                .To<TradeHistoryViewModel>()
+                .Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage)
+                .To<TradeInHistoryViewModel>()
                 .ToList();
 
-            if (userTrades == null)
-            {
-
-            }
-
-            return userTrades;
+            return historyViewModel;
         }
     }
 }

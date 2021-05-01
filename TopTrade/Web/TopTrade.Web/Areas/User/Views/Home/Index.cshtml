@@ -34,7 +34,6 @@
             </form>
         </div>
         <h5 class="watchlist-header font-weight-light p-3 bg-white">My Watchlist</h5>
-        <span custom-color>1500</span>
     </div>
 
     <div class="site-content">
@@ -62,13 +61,15 @@
                                         <p class="mb-0 ml-2 small stock-name">@stock.Name</p>
                                     </div>
                                     <div class="open-position-icon">
-                                        <i class="fas fa-chart-pie"></i>
+                                        <a asp-area="User" asp-controller="Portfolio" asp-action="Index">
+                                            <i class="fas fa-chart-pie"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </td>
                             <td>
-                                <p class="mb-0 ml-2 font-weight-bold stock-price-up">@stock.Change.ToString("f2")</p>
-                                <p class="mb-0 ml-2 font-weight-bold small stock-price-down">(@stock.ChangePercent.ToString("f2"))&#37</p>
+                                <p class="mb-0 ml-2 font-weight-bold stock-price-up"><span custom-color>@stock.Change.ToString("f2")</span></p>
+                                <p class="mb-0 ml-2 font-weight-bold small stock-price-down"><span custom-color>@stock.Change.ToString("f2")</span></p>
                             </td>
                             <td>
                                 <img class="stock-line-chart" src="./img/chart.jpg" alt="">
@@ -108,19 +109,19 @@
     <div class="footer d-flex justify-content-around mb-2">
 
         <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-            <h5 class="available-funds">@Model.Available.ToString("f2")</h5>
+            <h5 class="available-funds">$@Model.Available.ToString("f2")</h5>
             <span class="small">AVAILABLE</span>
             <i class="fas fa-plus plus-icon"></i>
         </div>
         <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-            <h5 class="allocated-funds">@Model.TotalAllocated.ToString("f2")</h5>
+            <h5 class="allocated-funds">$@Model.TotalAllocated.ToString("f2")</h5>
             <span class="small">TOTAL ALLOCATED</span>
             <i class="fas fa-plus plus-icon"></i>
 
         </div>
 
         <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-            <h5 class="profit-funds">@Model.Profit.ToString("f2")</h5>
+            <h5 class="profit-funds"><span custom-color>$@Model.Profit.ToString("f2")</span></h5>
             <span class="small">PROFIT</span>
             <i class="fas fa-equals plus-icon"></i>
 
@@ -128,7 +129,7 @@
 
         <div class="statistics available-amount flex-column d-flex align-items-center"
              data-toggle=" modal" data-target="#remove-stock-modal">
-            <h5 class="equity-funds">@Model.Equity.ToString("f2")</h5>
+            <h5 class="equity-funds">$@Model.Equity.ToString("f2")</h5>
             <span class="small">EQUITY</span>
         </div>
     </div>
@@ -271,7 +272,7 @@
                                 <p>
                                     You are going to
                                     <span class="font-weight-bold h5 order-type text-uppercase">
-                                        BUY
+                                        <span custom-color>BUY</span>
                                     </span>
                                     <span class="font-weight-bold h5 order-details-quantity">
                                         0

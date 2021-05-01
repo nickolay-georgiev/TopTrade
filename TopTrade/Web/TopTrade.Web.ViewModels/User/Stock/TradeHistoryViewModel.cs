@@ -8,27 +8,8 @@
     using TopTrade.Data.Models.User;
     using TopTrade.Services.Mapping;
 
-    public class TradeHistoryViewModel : IMapFrom<Trade>, IHaveCustomMappings
+    public class TradeHistoryViewModel : PagingViewModel
     {
-        public int Id { get; set; }
-
-        public string TradeType { get; set; }
-
-        public int Quantity { get; set; }
-
-        public decimal Price { get; set; }
-
-        public string StockName { get; set; }
-
-        public DateTime CreatedOn { get; set; }
-
-        public decimal TotalPrice => this.Price * this.Quantity;
-
-        public void CreateMappings(IProfileExpression configuration)
-        {
-            configuration.CreateMap<Trade, TradeHistoryViewModel>()
-               .ForMember(x => x.StockName, opt =>
-                   opt.MapFrom(x => x.Stock.Name));
-        }
+        public IEnumerable<TradeInHistoryViewModel> Trades { get; set; }
     }
 }

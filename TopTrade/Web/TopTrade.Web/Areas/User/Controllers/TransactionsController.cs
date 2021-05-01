@@ -19,19 +19,22 @@
             this.tradeService = tradeService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult All(int id = 1)
         {
+            if (id <= 0)
+            {
+                return this.NotFound();
+            }
 
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-            //if (id <= 0)
-            //{
-            //    return this.NotFound();
-            //}
-
             const int ItemsPerPage = 8;
 
-            var viewModel = this.tradeService.GetTradeHistory(userId, 1, ItemsPerPage);
+            var viewModel = this.tradeService.GetTradeHistory(userId, id, ItemsPerPage);
+
+            if (id > viewModel.PagesCount)
+            {
+                return this.NotFound();
+            }
 
             return this.View(viewModel);
         }

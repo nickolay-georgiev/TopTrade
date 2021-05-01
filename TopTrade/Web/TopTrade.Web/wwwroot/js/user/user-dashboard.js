@@ -91,7 +91,8 @@ function configureOrder(event) {
 
         if (quantity == 0) { executeOrderButton.disabled = true; }
 
-        const userAvailableFunds = Number(document.querySelector('.available-amount > h5').textContent);
+        const userAvailableFunds = Number(document.querySelector('.available-amount > h5')
+            .textContent.substring(1));
         const error = document.querySelector('.trade-error');
         if (userAvailableFunds < totalPrice) {
             error.removeAttribute('hidden');

@@ -10,7 +10,7 @@
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             var textContent = await output.GetChildContentAsync();
-            var textContentAsString = textContent.GetContent().Trim();
+            var textContentAsString = textContent.GetContent().Replace("$", string.Empty).Trim();
 
             decimal amount;
             var isDecimal = decimal.TryParse(textContentAsString, out amount);
