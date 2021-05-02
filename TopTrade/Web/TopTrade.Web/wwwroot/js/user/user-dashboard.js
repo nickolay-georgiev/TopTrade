@@ -139,39 +139,6 @@ function configureOrder(event) {
     inputPrice.placeholder = `${stockPrice.toFixed(2)}`;
 };
 
-
-//document.querySelector('.make-deposit-button').addEventListener('click', makeDeposit);
-
-//function makeDeposit(event) {
-//    event.preventDefault();
-
-//    const depositAmount = document.querySelector('.deposit-amount').value.trim();
-//    const cardNumber = document.querySelector('.card-number').value;
-//    const cardExpiryDate = document.querySelector('.card-expiry-date').value;
-//    const cardCvvNumber = document.querySelector('.card-cvv-number').value;
-//    const cardFirstName = document.querySelector('.card-first-name').value.trim();
-//    const cardMiddleName = document.querySelector('.card-middle-name').value.trim();
-//    const cardLastName = document.querySelector('.card-last-name').value.trim();
-//    const token = document.querySelector('[name=__RequestVerificationToken]').value
-
-//    var card = {
-//        depositAmount, cardNumber, cardExpiryDate, cardCvvNumber, cardFirstName, cardMiddleName, cardLastName
-//    }
-
-//    fetch('api/deposit', {
-//        method: 'POST',
-//        headers: {
-//            'Accept': 'application/json',
-//            'Content-Type': 'application/json',
-//            "X-CSRF-TOKEN": token
-//        },
-//        body: JSON.stringify(card)
-//    }).then(res => {
-//        console.log(res);
-//    })
-
-//}
-
 const cardNumber = document.querySelector('.card-number');
 if (cardNumber) {
     cardNumber.addEventListener('input', function (e) {
@@ -182,3 +149,15 @@ if (cardNumber) {
         this.value = cardNumber;
     });
 };
+
+document.querySelector('.desired-amount').addEventListener('input', (event) => {
+    var desiredAmount = Number(event.target.value);
+    var withdrawableAmount = Number(document.querySelector('#withdraw-modal form>input').value);
+    var errorSpan = document.querySelector('p.withdraw-error-message');
+    if (desiredAmount > withdrawableAmount) {
+        errorSpan.textContent = `You can withdraw up to ${(withdrawableAmount.toFixed(2))}`
+        errorSpan.hidden = false;
+    } else {
+        errorSpan.hidden = true;
+    }
+});

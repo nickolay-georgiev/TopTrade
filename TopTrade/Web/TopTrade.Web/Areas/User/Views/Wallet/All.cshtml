@@ -1,4 +1,6 @@
-﻿@{
+﻿@model TopTrade.Web.ViewModels.User.Profile.WalletHistoryViewModel
+
+@{
     ViewData["Title"] = "Wallet History Page";
     ViewData["PageName"] = "Wallet History";
 }
@@ -55,12 +57,12 @@
                                                                     aria-controls="DataTables_Table_0" rowspan="1"
                                                                     colspan="1"
                                                                     aria-label="Coin: activate to sort column ascending"
-                                                                    style="width: 217px;">Coin</th>
+                                                                    style="width: 217px;">Amount</th>
                                                                 <th class="sorting" tabindex="0"
                                                                     aria-controls="DataTables_Table_0" rowspan="1"
                                                                     colspan="1"
                                                                     aria-label="Volume: activate to sort column ascending"
-                                                                    style="width: 193px;">Volume</th>
+                                                                    style="width: 193px;">Card Number</th>
                                                                 <th class="sorting" tabindex="0"
                                                                     aria-controls="DataTables_Table_0" rowspan="1"
                                                                     colspan="1"
@@ -69,114 +71,27 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr role="row" class="odd">
-                                                                <td class="align-middle sorting_1">
-                                                                    <div class="date">02/12/2018</div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="coin">
-                                                                        <i class="cc BTC warning"></i>Bitcoin
-                                                                    </div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="volume">0.725.00</div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="status badge badge-success badge-pill badge-sm">
-                                                                        Completed
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr role="row" class="even">
-                                                                <td class="align-middle sorting_1">
-                                                                    <div class="date">05/30/2018</div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="coin">
-                                                                        <i class="cc LTC info"></i>Litecoin
-                                                                    </div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="volume">0.134.00</div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="status badge badge-danger badge-pill badge-sm">
-                                                                        Cancel
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr role="row" class="odd">
-                                                                <td class="align-middle sorting_1">
-                                                                    <div class="date">06/02/2021</div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="coin">
-                                                                        <i class="cc DASH primary"></i>DASH
-                                                                    </div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="volume">0.124.00</div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="status badge badge-success badge-pill badge-sm">
-                                                                        Completed
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr role="row" class="even">
-                                                                <td class="align-middle sorting_1">
-                                                                    <div class="date">06/27/2019</div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="coin">
-                                                                        <i class="cc NEO success"></i>NEO
-                                                                    </div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="volume">1.345.00</div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="status badge badge-secondary badge-pill badge-sm">
-                                                                        Pending
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr role="row" class="odd">
-                                                                <td class="align-middle sorting_1">
-                                                                    <div class="date">08/11/2022</div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="coin">
-                                                                        <i class="cc LTC info"></i>Litecoin
-                                                                    </div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="volume">0.123.00</div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="status badge badge-success badge-pill badge-sm">
-                                                                        Completed
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr role="row" class="even">
-                                                                <td class="align-middle sorting_1">
-                                                                    <div class="date">12/10/2020</div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="coin">
-                                                                        <i class="cc DASH primary"></i>DASH
-                                                                    </div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="volume">0.755.00</div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="status badge badge-secondary badge-pill badge-sm">
-                                                                        Pending
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                            @foreach (var deposit in Model.Deposits)
+                                                            {
+                                                                <tr role="row" class="odd">
+                                                                    <td class="align-middle sorting_1">
+                                                                        <div class="date">@deposit.CreatedOn</div>
+                                                                    </td>
+                                                                    <td class="align-middle">
+                                                                        <div class="coin">
+                                                                            <i class="cc BTC warning"></i>@deposit.Amount
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="align-middle">
+                                                                        <div class="volume">@deposit.CardNumber</div>
+                                                                    </td>
+                                                                    <td class="align-middle">
+                                                                        <div class="status badge badge-success badge-pill badge-sm">
+                                                                            @deposit.TransactionStatus
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            }
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -188,41 +103,7 @@
                                                         Showing 1 to 6 of 6 entries
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-12 col-md-7">
-                                                    <div class="dataTables_paginate paging_full_numbers">
-                                                        <ul class="pagination justify-content-end">
-                                                            <li class="paginate_button page-item first disabled"
-                                                                id="DataTables_Table_0_first">
-                                                                <a href="#"
-                                                                   aria-controls="DataTables_Table_0" data-dt-idx="0"
-                                                                   tabindex="0" class="page-link">First</a>
-                                                            </li>
-                                                            <li class="paginate_button page-item previous disabled"
-                                                                id="DataTables_Table_0_previous">
-                                                                <a href="#"
-                                                                   aria-controls="DataTables_Table_0" data-dt-idx="1"
-                                                                   tabindex="0" class="page-link">Previous</a>
-                                                            </li>
-                                                            <li class="paginate_button page-item active">
-                                                                <a href="#"
-                                                                   aria-controls="DataTables_Table_0" data-dt-idx="2"
-                                                                   tabindex="0" class="page-link">1</a>
-                                                            </li>
-                                                            <li class="paginate_button page-item next disabled"
-                                                                id="DataTables_Table_0_next">
-                                                                <a href="#"
-                                                                   aria-controls="DataTables_Table_0" data-dt-idx="3"
-                                                                   tabindex="0" class="page-link">Next</a>
-                                                            </li>
-                                                            <li class="paginate_button page-item last disabled"
-                                                                id="DataTables_Table_0_last">
-                                                                <a href="#"
-                                                                   aria-controls="DataTables_Table_0" data-dt-idx="4"
-                                                                   tabindex="0" class="page-link">Last</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
+                                                <partial name="_PagingPartial" model="@Model.DepositsPaging" />
                                             </div>
                                         </div>
                                     </div>
@@ -297,97 +178,43 @@
                                                                     colspan="1"
                                                                     aria-label="Status: activate to sort column ascending"
                                                                     style="width: 126px;">Status</th>
+                                                                <th class="sorting" tabindex="0"
+                                                                    aria-controls="DataTables_Table_1" rowspan="1"
+                                                                    colspan="1"
+                                                                    aria-label="Status: activate to sort column ascending"
+                                                                    style="width: 126px;">Method</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-
-
-
-
+                                                            @foreach (var withdraw in Model.Withdraws)
+                                                            {
                                                             <tr role="row" class="odd">
                                                                 <td class="align-middle sorting_1">
-                                                                    <div class="date">02/10/2017</div>
+                                                                    <div class="date">@withdraw.CreatedOn</div>
                                                                 </td>
                                                                 <td class="align-middle">
                                                                     <div class="coin">
-                                                                        <i class="cc BTC warning"></i>Bitcoin
+                                                                        <i class="cc BTC warning"></i>@withdraw.Amount
                                                                     </div>
                                                                 </td>
                                                                 <td class="align-middle">
-                                                                    <div class="volume">0.4345.00</div>
+                                                                    <div class="volume">@withdraw.Currency</div>
                                                                 </td>
                                                                 <td class="align-middle receiver">
-                                                                    BTC Wallet - #23412
+                                                                    @withdraw.CardNumber
                                                                 </td>
                                                                 <td class="align-middle">
                                                                     <div class="status badge badge-success badge-pill badge-sm">
-                                                                        Completed
+                                                                        @withdraw.TransactionStatus
                                                                     </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr role="row" class="even">
-                                                                <td class="align-middle sorting_1">
-                                                                    <div class="date">02/12/2018</div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="coin">
-                                                                        <i class="cc LTC info"></i>Litecoin
-                                                                    </div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="volume">0.1235.00</div>
-                                                                </td>
-                                                                <td class="align-middle receiver">
-                                                                    Bank - 2043********951
                                                                 </td>
                                                                 <td class="align-middle">
                                                                     <div class="status badge badge-success badge-pill badge-sm">
-                                                                        Completed
+                                                                        @withdraw.PaymentMethod
                                                                     </div>
                                                                 </td>
                                                             </tr>
-                                                            <tr role="row" class="odd">
-                                                                <td class="align-middle sorting_1">
-                                                                    <div class="date">07/10/2020</div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="coin">
-                                                                        <i class="cc DASH primary"></i>DASH
-                                                                    </div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="volume">1.234.00</div>
-                                                                </td>
-                                                                <td class="align-middle receiver">
-                                                                    Bank - 2043********342
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="status badge badge-danger badge-pill badge-sm">
-                                                                        Cancel
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr role="row" class="even">
-                                                                <td class="align-middle sorting_1">
-                                                                    <div class="date">07/12/2020</div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="coin">
-                                                                        <i class="cc NEO success"></i>NEO
-                                                                    </div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="volume">0.550</div>
-                                                                </td>
-                                                                <td class="align-middle receiver">
-                                                                    NEO Wallet - #14342
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="status badge badge-secondary badge-pill badge-sm">
-                                                                        Pending
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                            }
                                                         </tbody>
                                                     </table>
                                                 </div>

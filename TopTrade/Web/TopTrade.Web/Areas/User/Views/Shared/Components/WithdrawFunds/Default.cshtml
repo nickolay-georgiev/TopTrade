@@ -1,4 +1,5 @@
-﻿
+﻿@model TopTrade.Web.ViewModels.User.Profile.WithdrawViewModel
+
 <div class="modal fade" id="withdraw-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -10,43 +11,39 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form asp-action="MakeDeposit" method="POST">
+                <form asp-controller="Home" asp-action="WithdrawFunds" method="POST">
+                    <input asp-for="@Model.Available" hidden />
                     <div class="mb-3 mx-4 pl-2">
                         <div class="row align-items-end justify-content-center mb-5 ml-1 mt-3">
+                            <p class="text-danger withdraw-error-message text-start" hidden></p>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text bg-light" id="basic-addon1">$</span>
                                 </div>
-                                <input type="text" class="form-control bg-light border-left-0" aria-describedby="basic-addon1">
+                                <input asp-for="Amount" class="form-control bg-light border-left-0 desired-amount">
                             </div>
                         </div>
                         <div class="d-flex justify-content-between mb-4 px-3">
                             <h5 class="text-left font-weight-light ">Withdrawable Balance</h5>
-                            <h5><strong class="text-success">$ 0.00</strong></h5>
+                            <h5><strong class="text-success available-amount">$ @Model.Available</strong></h5>
                         </div>
                         <div class="bg-light border py-4 px-3">
                             <div class="d-flex justify-content-between">
                                 <div class="d-flex poppover-info" data-container="body" data-toggle="popover"
-                                       data-content="This number represents' the total worth of your real funds including invested and non invested funds + unrealized P&L. Please note that realized profits and losses (generated profits / losses upon closing trade) will be first reflected in your cash equity.">
-                                    <h5 class="text-left font-weight-light" >Total Equity</h5>
+                                     data-content="This number represents' the total worth of your real funds including invested and non invested funds + unrealized P&L. Please note that realized profits and losses (generated profits / losses upon closing trade) will be first reflected in your cash equity.">
+                                    <h5 class="text-left font-weight-light">Total Equity</h5>
                                     <i class="fas fa-info-circle text-info info-icon pl-1"></i>
                                 </div>
-                                <h5><strong>$ 0.00</strong></h5>
+                                <h5><strong>$ @Model.Equity</strong></h5>
 
                             </div>
                         </div>
-                        <p class="mt-5 text-secondary mb-1">Your funds will be send to one of these accounts</p>
+                        <p class="mt-5 mr-3 text-right text-secondary mb-1">Your funds will be send to one of these accounts</p>
                         <div class="d-flex">
                             <div class="d-flex card-logo-div">
                                 <img class="img-fluid px-2" src="~/img/visa-logo.svg" />
                             </div>
-                            <select class="form-control" name="cars" id="cars">
-                                <option value="volvo">Volvo</option>
-                                <option value="saab">Saab</option>
-                                <option value="mercedes">Mercedes</option>
-                                <option value="audi">Audi</option>
-                            </select>
-                            @*  <select asp-for="CategoryId" class="form-control" asp-items="categoryItems"></select>*@
+                            <select asp-for="@Model.Card" class="form-control" asp-items="@(new SelectList(Model.Cards))"></select>
                         </div>
                         <div class="d-flex justify-content-center mt-5">
                             <button type="submit" class="btn btn-info withdraw-button px-5 py-2">Withdraw</button>

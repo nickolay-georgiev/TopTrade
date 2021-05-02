@@ -1,20 +1,16 @@
 ﻿namespace TopTrade.Web.Areas.User
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using TopTrade.Data.Models;
     using TopTrade.Services.Data;
     using TopTrade.Services.Data.User;
     using TopTrade.Web.Areas.User.Controllers;
-    using TopTrade.Web.Controllers;
-    using TopTrade.Web.ViewModels.User.ViewComponents;
+    using TopTrade.Web.ViewModels.User.Profile;
 
     public class HomeController : BaseLoggedUserController
     {
@@ -37,6 +33,28 @@
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var userData = await this.userDashboardService.GetUserDataAsync(userId);
             return this.View(userData);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> WithdrawFunds(WithdrawInputModel input)
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            try
+            {
+                await this.userDashboardService.AcceptWithdrawRequest(input, userId);
+            }
+            catch (Exception error)
+            {
+                this.TempData["Error"] = "Error!";
+                this.TempData["Message"] = error.Message;
+                return this.RedirectToAction(nameof(this.Index));
+            }
+
+            this.TempData["Success"] = "Success!";
+            this.TempData["Message"] = "Your withdraw request was sent";
+
+            return this.RedirectToAction(nameof(this.Index));
         }
     }
 }

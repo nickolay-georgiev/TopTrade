@@ -23,12 +23,13 @@
             {
                 ItemsPerPage = itemsPerPage,
                 PageNumber = pageNumber,
-                TradesCount = this.tradeRepository.AllAsNoTracking().Where(x => x.UserId == userId).Count(),
+                DataCount = this.tradeRepository.AllAsNoTracking().Where(x => x.UserId == userId).Count(),
             };
 
             historyViewModel.Trades = this.tradeRepository
                 .AllAsNoTracking()
                 .Where(x => x.UserId == userId)
+                .OrderByDescending(x => x.CreatedOn)
                 .Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage)
                 .To<TradeInHistoryViewModel>()
                 .ToList();

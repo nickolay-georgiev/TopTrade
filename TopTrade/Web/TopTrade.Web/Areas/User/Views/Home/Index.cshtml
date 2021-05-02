@@ -69,7 +69,7 @@
                             </td>
                             <td>
                                 <p class="mb-0 ml-2 font-weight-bold stock-price-up"><span custom-color>@stock.Change.ToString("f2")</span></p>
-                                <p class="mb-0 ml-2 font-weight-bold small stock-price-down"><span custom-color>@stock.Change.ToString("f2")</span></p>
+                                <p class="mb-0 ml-2 font-weight-bold small stock-price-down"><span custom-color>(@stock.ChangePercent.ToString("f2")%)</span></p>
                             </td>
                             <td>
                                 <img class="stock-line-chart" src="./img/chart.jpg" alt="">

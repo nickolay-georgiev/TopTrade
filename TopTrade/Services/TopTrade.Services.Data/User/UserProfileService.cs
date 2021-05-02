@@ -12,19 +12,27 @@
     using TopTrade.Data.Models.User;
     using TopTrade.Data.Models.User.Enums;
     using TopTrade.Services.Data.User.Models;
+    using TopTrade.Services.Mapping;
     using TopTrade.Web.ViewModels.User;
+    using TopTrade.Web.ViewModels.User.Profile;
 
     public class UserProfileService : IUserProfileService
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IDeletableEntityRepository<VerificationDocument> verificationDocumentRepository;
+        private readonly IDeletableEntityRepository<Deposit> depositRepository;
+        private readonly IDeletableEntityRepository<Withdraw> withdrawRepository;
 
         public UserProfileService(
             UserManager<ApplicationUser> userManager,
-            IDeletableEntityRepository<VerificationDocument> verificationDocumentRepository)
+            IDeletableEntityRepository<VerificationDocument> verificationDocumentRepository,
+            IDeletableEntityRepository<Deposit> depositRepository,
+            IDeletableEntityRepository<Withdraw> withdrawRepository)
         {
             this.userManager = userManager;
             this.verificationDocumentRepository = verificationDocumentRepository;
+            this.depositRepository = depositRepository;
+            this.withdrawRepository = withdrawRepository;
         }
 
         public async Task EditProfileAsync(ApplicationUser user, EditProfileViewModel input)
@@ -90,6 +98,45 @@
                 ? "Verified" : "Not Verified";
 
             return verificationStatus;
+        }
+
+        public WalletHistoryViewModel GetWalletHitoryData(string userId, int pageNumber, int itemsPerPage = 8)
+        {
+            var depositsViewModel = this.depositRepository
+                .AllAsNoTracking()
+                .Where(x => x.UserId == userId)
+                .OrderByDescending(x => x.CreatedOn)
+                .Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage)
+                .To<DepositInWalletHistoryViewModel>()
+                .ToList();
+
+            var withdrawsViewModel = this.withdrawRepository
+               .AllAsNoTracking()
+               .Where(x => x.UserId == userId)
+               .OrderByDescending(x => x.CreatedOn)
+               .Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage)
+               .To<WithdrawInWalletHistoryViewModel>()
+               .ToList();
+
+            var walletHistoryViewModel = new WalletHistoryViewModel
+            {
+                DepositsPaging = new PagingViewModel
+                {
+                    ItemsPerPage = itemsPerPage,
+                    PageNumber = pageNumber,
+                    DataCount = this.depositRepository.AllAsNoTracking().Where(x => x.UserId == userId).Count(),
+                },
+                Deposits = depositsViewModel,
+                WithdrawPaging = new PagingViewModel
+                {
+                    ItemsPerPage = itemsPerPage,
+                    PageNumber = pageNumber,
+                    DataCount = this.withdrawRepository.AllAsNoTracking().Where(x => x.UserId == userId).Count(),
+                },
+                Withdraws = withdrawsViewModel,
+            };
+
+            return walletHistoryViewModel;
         }
     }
 }

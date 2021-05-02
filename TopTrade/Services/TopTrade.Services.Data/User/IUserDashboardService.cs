@@ -22,5 +22,9 @@
         Task UpdateUserAccountAsync(DepositModalInputModel input, string userId);
 
         Task<UserStatisticViewModel> Trade(StockTradeDetailsInputModel input, string userId);
+
+        WithdrawViewModel GetAvailableUserWithdrawData(string userId);
+
+        Task AcceptWithdrawRequest(WithdrawInputModel input, string userId);
     }
 }

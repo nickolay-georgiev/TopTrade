@@ -11,10 +11,8 @@
 
     public class Withdraw : BaseDeletableModel<int>
     {
-        [Column(TypeName = "decimal(14, 4)")]
+        [Column(TypeName = "decimal(14, 2)")]
         public decimal Amount { get; set; }
-
-        public DateTime Date { get; set; }
 
         public int CardId { get; set; }
 

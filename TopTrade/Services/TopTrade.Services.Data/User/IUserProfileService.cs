@@ -8,6 +8,7 @@
     using TopTrade.Data.Models;
     using TopTrade.Services.Data.User.Models;
     using TopTrade.Web.ViewModels.User;
+    using TopTrade.Web.ViewModels.User.Profile;
 
     public interface IUserProfileService
     {
@@ -18,5 +19,7 @@
         UserCardDto GetUserDataCardComponent(ApplicationUser user);
 
         string GetUserVerificationStatus(ApplicationUser user);
+
+        WalletHistoryViewModel GetWalletHitoryData(string userId, int pageNumber, int itemsPerPage = 8);
     }
 }

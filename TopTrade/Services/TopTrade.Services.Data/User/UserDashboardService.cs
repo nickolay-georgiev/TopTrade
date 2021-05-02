@@ -11,6 +11,7 @@
     using TopTrade.Data.Models;
     using TopTrade.Data.Models.User;
     using TopTrade.Data.Models.User.Enums;
+    using TopTrade.Services.Mapping;
     using TopTrade.Web.ViewModels.User;
     using TopTrade.Web.ViewModels.User.Profile;
     using TopTrade.Web.ViewModels.User.Stock;
@@ -24,6 +25,7 @@
         private readonly IDeletableEntityRepository<Trade> tradeRepository;
         private readonly IDeletableEntityRepository<Deposit> depositRepository;
         private readonly IDeletableEntityRepository<Watchlist> watchlistRepository;
+        private readonly IDeletableEntityRepository<Withdraw> withdrawRepository;
         private readonly IDeletableEntityRepository<AccountStatistic> accountStatisticRepository;
         private readonly IAlphaVantageApiClientService stockService;
 
@@ -34,6 +36,7 @@
             IDeletableEntityRepository<Trade> tradeRepository,
             IDeletableEntityRepository<Deposit> depositRepository,
             IDeletableEntityRepository<Watchlist> watchlistRepository,
+            IDeletableEntityRepository<Withdraw> withdrawRepository,
             IDeletableEntityRepository<AccountStatistic> accountStatisticRepository,
             IAlphaVantageApiClientService stockService)
         {
@@ -43,6 +46,7 @@
             this.cardRepository = cardRepository;
             this.depositRepository = depositRepository;
             this.watchlistRepository = watchlistRepository;
+            this.withdrawRepository = withdrawRepository;
             this.accountStatisticRepository = accountStatisticRepository;
             this.stockService = stockService;
         }
@@ -127,6 +131,7 @@
 
         public async Task UpdateUserAccountAsync(DepositModalInputModel input, string userId)
         {
+            // TODO remove this split and check db
             var currentCardNumber = input.Card.Number.Replace("-", "");
 
             var card = this.cardRepository
@@ -221,6 +226,41 @@
             };
 
             return resultViewModel;
+        }
+
+        public WithdrawViewModel GetAvailableUserWithdrawData(string userId)
+        {
+            var withdrawViewModel = this.accountStatisticRepository
+                .AllAsNoTracking()
+                .Where(x => x.UserId == userId)
+                .To<WithdrawViewModel>()
+                .FirstOrDefault();
+
+            return withdrawViewModel;
+        }
+
+        public async Task AcceptWithdrawRequest(WithdrawInputModel input, string userId)
+        {
+            if (input.Available < input.Amount)
+            {
+                throw new InvalidOperationException($"You can withdraw up to ${input.Available}");
+            }
+
+            var card = this.cardRepository
+                .AllAsNoTracking()
+                .Where(x => x.UserId == userId && x.Number == input.Card)
+                .FirstOrDefault();
+
+            var withdraw = new Withdraw
+            {
+                Amount = input.Amount,
+                UserId = userId,
+                CardId = card.Id,
+                TransactionStatus = TransactionStatus.Pending.ToString(),
+            };
+
+            await this.withdrawRepository.AddAsync(withdraw);
+            await this.withdrawRepository.SaveChangesAsync();
         }
     }
 }
