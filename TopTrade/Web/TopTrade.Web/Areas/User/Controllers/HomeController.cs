@@ -40,6 +40,13 @@
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData["Error"] = "Error!";
+                this.TempData["Message"] = "All fields are required";
+                return this.RedirectToAction(nameof(this.Index));
+            }
+
             try
             {
                 await this.userDashboardService.AcceptWithdrawRequest(input, userId);

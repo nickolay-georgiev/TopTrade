@@ -75,7 +75,7 @@
                                                             {
                                                                 <tr role="row" class="odd">
                                                                     <td class="align-middle sorting_1">
-                                                                        <div class="date">@deposit.CreatedOn</div>
+                                                                        <div class="date">@deposit.CreatedOn.ToLocalTime()</div>
                                                                     </td>
                                                                     <td class="align-middle">
                                                                         <div class="coin">
@@ -86,7 +86,7 @@
                                                                         <div class="volume">@deposit.CardNumber</div>
                                                                     </td>
                                                                     <td class="align-middle">
-                                                                        <div class="status badge badge-success badge-pill badge-sm">
+                                                                        <div custom-badge>
                                                                             @deposit.TransactionStatus
                                                                         </div>
                                                                     </td>
@@ -96,13 +96,7 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-sm-12 col-md-5">
-                                                    <div class="dataTables_info" id="DataTables_Table_0_info"
-                                                         role="status" aria-live="polite">
-                                                        Showing 1 to 6 of 6 entries
-                                                    </div>
-                                                </div>
+                                            <div class="row d-flex justify-content-end">
                                                 <partial name="_PagingPartial" model="@Model.DepositsPaging" />
                                             </div>
                                         </div>
@@ -162,106 +156,55 @@
                                                                     aria-controls="DataTables_Table_1" rowspan="1"
                                                                     colspan="1"
                                                                     aria-label="Coin: activate to sort column ascending"
-                                                                    style="width: 138px;">Coin</th>
+                                                                    style="width: 138px;">Amount</th>
                                                                 <th class="sorting" tabindex="0"
                                                                     aria-controls="DataTables_Table_1" rowspan="1"
                                                                     colspan="1"
                                                                     aria-label="Volume: activate to sort column ascending"
-                                                                    style="width: 121px;">Volume</th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="DataTables_Table_1" rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="Receiver: activate to sort column ascending"
-                                                                    style="width: 264px;">Receiver</th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="DataTables_Table_1" rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="Status: activate to sort column ascending"
-                                                                    style="width: 126px;">Status</th>
+                                                                    style="width: 121px;">Card Number</th>
                                                                 <th class="sorting" tabindex="0"
                                                                     aria-controls="DataTables_Table_1" rowspan="1"
                                                                     colspan="1"
                                                                     aria-label="Status: activate to sort column ascending"
                                                                     style="width: 126px;">Method</th>
+                                                                <th class="sorting" tabindex="0"
+                                                                    aria-controls="DataTables_Table_1" rowspan="1"
+                                                                    colspan="1"
+                                                                    aria-label="Status: activate to sort column ascending"
+                                                                    style="width: 126px;">Status</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @foreach (var withdraw in Model.Withdraws)
                                                             {
-                                                            <tr role="row" class="odd">
-                                                                <td class="align-middle sorting_1">
-                                                                    <div class="date">@withdraw.CreatedOn</div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="coin">
-                                                                        <i class="cc BTC warning"></i>@withdraw.Amount
-                                                                    </div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="volume">@withdraw.Currency</div>
-                                                                </td>
-                                                                <td class="align-middle receiver">
-                                                                    @withdraw.CardNumber
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="status badge badge-success badge-pill badge-sm">
-                                                                        @withdraw.TransactionStatus
-                                                                    </div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="status badge badge-success badge-pill badge-sm">
-                                                                        @withdraw.PaymentMethod
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                                <tr role="row" class="odd">
+                                                                    <td class="align-middle sorting_1">
+                                                                        <div class="date">@withdraw.CreatedOn.ToLocalTime()</div>
+                                                                    </td>
+                                                                    <td class="align-middle">
+                                                                        <div class="coin">
+                                                                            <i class="cc BTC warning"></i>$@withdraw.Amount
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="align-middle receiver">
+                                                                        @withdraw.CardNumber
+                                                                    </td>
+                                                                    <td class="align-middle receiver">
+                                                                        Credit\Debit Card
+                                                                    </td>
+                                                                    <td class="align-middle">
+                                                                        <div custom-badge>
+                                                                            @withdraw.TransactionStatus
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
                                                             }
                                                         </tbody>
                                                     </table>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-sm-12 col-md-5">
-                                                    <div class="dataTables_info" id="DataTables_Table_1_info"
-                                                         role="status" aria-live="polite">
-                                                        Showing 1 to 4 of 4 entries
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-md-7">
-                                                    <div class="dataTables_paginate paging_full_numbers"
-                                                         id="DataTables_Table_1_paginate">
-                                                        <ul class="pagination justify-content-end">
-                                                            <li class="paginate_button page-item first disabled"
-                                                                id="DataTables_Table_1_first">
-                                                                <a href="#"
-                                                                   aria-controls="DataTables_Table_1" data-dt-idx="0"
-                                                                   tabindex="0" class="page-link">First</a>
-                                                            </li>
-                                                            <li class="paginate_button page-item previous disabled"
-                                                                id="DataTables_Table_1_previous">
-                                                                <a href="#"
-                                                                   aria-controls="DataTables_Table_1" data-dt-idx="1"
-                                                                   tabindex="0" class="page-link">Previous</a>
-                                                            </li>
-                                                            <li class="paginate_button page-item active">
-                                                                <a href="#"
-                                                                   aria-controls="DataTables_Table_1" data-dt-idx="2"
-                                                                   tabindex="0" class="page-link">1</a>
-                                                            </li>
-                                                            <li class="paginate_button page-item next disabled"
-                                                                id="DataTables_Table_1_next">
-                                                                <a href="#"
-                                                                   aria-controls="DataTables_Table_1" data-dt-idx="3"
-                                                                   tabindex="0" class="page-link">Next</a>
-                                                            </li>
-                                                            <li class="paginate_button page-item last disabled"
-                                                                id="DataTables_Table_1_last">
-                                                                <a href="#"
-                                                                   aria-controls="DataTables_Table_1" data-dt-idx="4"
-                                                                   tabindex="0" class="page-link">Last</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
+                                            <div class="row d-flex justify-content-end">
+                                                <partial name="_PagingPartial" model="@Model.WithdrawPaging" />
                                             </div>
                                         </div>
                                     </div>

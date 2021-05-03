@@ -96,15 +96,14 @@ async function addStockToWatchList(stock) {
 
     const logo = stock.logoName;
     const ticker = searchResult.ticker;
-    const companyName = stock.name.split(/[ .]+/)[0];
+    const companyName = stock.logoName;
     const changeInCash = searchResult.change;
     const changeInPercents = searchResult.changePercent;
     const chart = './img/chart.jpg';
     const sellPrice = searchResult.price;
     const buyPrice = searchResult.price * 1.005;
 
-    // const i = document.createElement('i');
-    // i.classList.add('fas', 'fa-ellipsis-v', 'remove-stock-button');
+    var color = 0 > changeInCash ? 'stock-price-down' : 'stock-price-up';
 
     const trContent = `
               <td>
@@ -115,8 +114,8 @@ async function addStockToWatchList(stock) {
                   </div>
               </td>
               <td>
-                  <p class="mb-0 ml-2 font-weight-bold stock-price-up">${changeInCash.toFixed(2)}</p>
-                  <p class="mb-0 ml-2 font-weight-bold small stock-price-down">(${changeInPercents.toFixed(2)})&#37</p>
+                  <p class="mb-0 ml-2 font-weight-bold ${color}">${changeInCash.toFixed(2)}</p>
+                  <p class="mb-0 ml-2 font-weight-bold small ${color}">(${changeInPercents.toFixed(2)})&#37</p>
               </td>
               <td>
                   <img class="stock-line-chart" src="${chart}" alt="">
@@ -147,7 +146,136 @@ async function addStockToWatchList(stock) {
     tr.innerHTML = trContent;
     tr.lastElementChild.lastElementChild.addEventListener('click', showRemoveStockButton);
     document.querySelector('tbody').appendChild(tr);
-}
+
+    [...tr.querySelectorAll('.order-type-button')].forEach(x => {
+        x.addEventListener('click', configureOrder);
+    });
+};
+
+[...document.querySelectorAll('.order-type-button')].forEach(x => {
+    x.addEventListener('click', configureOrder);
+});
+
+function configureOrder(event) {
+    event.preventDefault();
+    let stockPrice;
+    const inputPrice = document.querySelector('.input-stock-price');
+    const totalAmount = document.querySelector('.total-amount');
+    const stockQuantity = document.querySelector('.stock-quantity');
+    const stockTicker = document.querySelector('.stock-ticker').textContent;
+    const stockName = document.querySelector('.stock-name').textContent;
+    const companyLogo = document.querySelector('.company-logo').src;
+
+    const orderStockName = document.querySelector('.order-stock-name');
+    orderStockName.textContent = stockName;
+
+    let test = document.querySelector('.price').textContent;
+
+    let orderType;
+    if (event.target.classList.contains('configure-order-button')) {
+        orderType = event.target.textContent[0].toLowerCase();
+        if (isNaN(event.target.textContent)) {
+            stockPrice = Number(event.target.parentElement.parentElement.nextElementSibling.querySelector('.input-stock-price').placeholder);
+        } else {
+            stockPrice = Number(document.querySelector('.price').textContent);
+        }
+    } else {
+        orderType = event.target.previousElementSibling.firstElementChild.textContent;
+        stockPrice = Number(event.target.textContent);
+    }
+
+    if (orderType.toLowerCase() == 'b') {
+        [...document.querySelectorAll('.order-type')].forEach(x => {
+            x.textContent = 'buy';
+        });
+        document.querySelector(".order-buy-btn").classList.add('active');
+        document.querySelector(".order-sell-btn").classList.remove('active');
+    } else {
+        [...document.querySelectorAll('.order-type')].forEach(x => {
+            x.textContent = 'sell';
+        });
+        document.querySelector(".order-sell-btn").classList.add('active');
+        document.querySelector(".order-buy-btn").classList.remove('active');
+    }
+
+    document.querySelector('.order-company-logo').src = companyLogo;
+    var currentQuantity = document.querySelector('.stock-quantity').value;
+    if (!currentQuantity) {
+        currentQuantity.value = 0;
+    };
+
+    document.querySelector('.total-amount').placeholder = currentQuantity * stockPrice;
+    document.querySelector('span.order-details-price').textContent = currentQuantity * stockPrice;
+
+    [...document.querySelectorAll('.order-stock-ticker')].forEach(x => {
+        x.textContent = stockTicker;
+    });
+
+    stockQuantity.addEventListener('input', (e) => {
+        const quantity = Number(e.target.value);
+        if (quantity < 0) { return };
+
+        const executeOrderButton = document.querySelector('.execute-order-button');
+        executeOrderButton.removeAttribute('disabled');
+
+        const totalPrice = stockPrice * quantity;
+        totalAmount.placeholder = `$ ${totalPrice.toFixed(2)}`
+
+        const orderDetailsPrice = document.querySelector('span.order-details-price');
+        orderDetailsPrice.textContent = `${totalPrice.toFixed(2)}`;
+
+        const orderDetailsQuantity = document.querySelector('.order-details-quantity');
+        orderDetailsQuantity.textContent = quantity;
+
+        if (quantity == 0) { executeOrderButton.disabled = true; }
+
+        const userAvailableFunds = Number(document.querySelector('.available-amount > h5')
+            .textContent.substring(1));
+        const error = document.querySelector('.trade-error');
+        if (userAvailableFunds < totalPrice) {
+            error.removeAttribute('hidden');
+            error.textContent = `Deposit $${(totalPrice - userAvailableFunds).toFixed(2)} in order to set this order`;
+            executeOrderButton.disabled = true;
+        } else {
+            error.hidden = true;
+        }
+
+        executeOrderButton.addEventListener('click', async (event) => {
+            event.preventDefault();
+            const token = document.querySelector('[name=__RequestVerificationToken]').value;
+            const endpoint = orderType.toLowerCase() === 'b' ? 'buy' : 'sell';
+
+            const tradeDetails = {
+                price: Number(orderDetailsPrice.textContent),
+                quantity: quantity,
+                ticker: stockTicker,
+                tradeType: endpoint
+            };
+
+            const response = await fetch(`api/stock/${endpoint}`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "X-CSRF-TOKEN": token
+                },
+                body: JSON.stringify(tradeDetails)
+            });
+
+            let result = await response.json();
+
+            if (response.ok) {
+                document.querySelector('.available-funds').textContent = result.available;
+                document.querySelector('.allocated-funds').textContent = result.totalAllocated;
+                document.querySelector('.profit-funds span').textContent = `$${result.profit.toFixed(2)}`;
+                document.querySelector('.equity-funds').textContent = result.equity;
+                document.querySelector('.close').click();
+            }
+        });
+    })
+
+    inputPrice.placeholder = `${stockPrice.toFixed(2)}`;
+};
 
 function closeSearchBarAndClearSearchResult() {
     const searchMenu = document.querySelector('div.search-bar div.form-group');
@@ -167,28 +295,3 @@ function removeSpinner() {
     const spinner = document.querySelector('div.spinner').style.display = 'none';
     const search = document.querySelector('i.fa-search').style.display = 'block';
 }
-
-
-//function activateSpinner() {
-//    const spinner = document.createElement('div');
-//    spinner.classList.add('spinner-border', 'text-light', 'spinner');
-
-//    const span = document.createElement('span');
-//    span.classList.add('sr-only');
-//    span.textContent = 'Loading...';
-//    spinner.appendChild(span);
-
-//    document.querySelector('.search-icon-button i').parentElement.appendChild(spinner);
-//    document.querySelector('.search-icon-button i').remove();
-//}
-
-//function removeSpinner() {
-//    const span = document.createElement('span');
-//    span.classList.add('input-group-prepend', 'search-icon-button');
-//    span.innerHTML = ` <span class="input-group-text">
-//                                <i class="fas fa-search"></i>
-//                            </span>`;
-//    const div = document.querySelector('.input-group');
-//    div.firstElementChild.remove();
-//    div.insertBefore(span, div.firstElementChild);
-//}

@@ -24,9 +24,50 @@ if (toaster) {
     setTimeout(function () {
         setTimeout(function () {
             toaster.style.display = 'none';
-            console.log(1);
         }, 350);
     }, 5000);
+};
+
+document.querySelector('.withdraw-button').addEventListener('click', (e) => {
+    e.preventDefault();
+    const errorSpan = document.querySelector('p.withdraw-error-message');
+    const desiredAmount = Number(document.querySelector('.desired-amount').value);
+    if (desiredAmount == 0) {
+        errorSpan.textContent = "Please enter a valid amount";
+        errorSpan.hidden = false;
+        e.target.disabled = true;
+    } else {
+        errorSpan.hidden = true;
+        e.target.disabled = false;
+        document.querySelector('#withdraw-modal form').submit();
+    }
+});
+
+document.querySelector('.desired-amount').addEventListener('keyup', (event) => {
+    const desiredAmount = Number(event.target.value);
+    const withdrawableAmount = Number(document.querySelector('#withdraw-modal form>input').value);
+    const errorSpan = document.querySelector('p.withdraw-error-message');
+    const submitWithdrawRequestBtn = document.querySelector('#withdraw-modal form button');
+
+    if (desiredAmount > withdrawableAmount) {
+        errorSpan.textContent = `You can withdraw up to ${(withdrawableAmount.toFixed(2))}`
+        errorSpan.hidden = false;
+        submitWithdrawRequestBtn.disabled = true;
+    } else {
+        errorSpan.hidden = true;
+        submitWithdrawRequestBtn.disabled = false;
+    }
+});
+
+const cardNumber = document.querySelector('.card-number');
+if (cardNumber) {
+    cardNumber.addEventListener('input', function (e) {
+        var cardNumber = this.value.split("-").join("");
+        if (cardNumber.length > 0) {
+            cardNumber = cardNumber.match(new RegExp('.{1,4}', 'g')).join("-");
+        }
+        this.value = cardNumber;
+    });
 };
 
 $(function () {

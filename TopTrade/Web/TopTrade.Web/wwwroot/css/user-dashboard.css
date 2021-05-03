@@ -3,6 +3,11 @@ button:focus {
     box-shadow: none !important;
 }
 
+button:disabled {
+    cursor: not-allowed;
+}
+
+
 .sidebar-container {
     position: fixed;
     width: 18rem;

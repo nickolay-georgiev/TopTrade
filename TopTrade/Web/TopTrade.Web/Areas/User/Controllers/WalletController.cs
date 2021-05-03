@@ -22,7 +22,7 @@
         public IActionResult All(int id = 1)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            int itemPerPage = 1;
+            int itemPerPage = 8;
 
             var walletDataViewModel = this.profileService.GetWalletHitoryData(userId, id, itemPerPage);
             return this.View(walletDataViewModel);

@@ -25,7 +25,6 @@
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var user = await this.userManager.GetUserAsync((ClaimsPrincipal)this.User);
-
             var withdrawViewModel = this.userDashboardService.GetAvailableUserWithdrawData(user.Id);
             return this.View(withdrawViewModel);
         }

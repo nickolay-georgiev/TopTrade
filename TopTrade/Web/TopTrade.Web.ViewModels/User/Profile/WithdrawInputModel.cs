@@ -5,10 +5,14 @@
 
     public class WithdrawInputModel : IValidatableObject
     {
+        [Required]
+        [Range(typeof(decimal), "1", "99999999999999")]
         public decimal Amount { get; set; }
 
+        [Required]
         public decimal Available { get; set; }
 
+        [Required]
         public string Card { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
