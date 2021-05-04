@@ -4,7 +4,7 @@ const token = document.querySelector('[name=__RequestVerificationToken]').value;
 
 async function stockSearch() {
     const searchMenu = document.querySelector('div.search-bar div.form-group');
-    const inputValue = searchMenu.querySelector('input').value;
+    const inputValue = searchMenu.querySelector('input').value.trim();
 
     if (!inputValue) { return };
 
@@ -17,7 +17,7 @@ async function stockSearch() {
             'Content-Type': 'application/json',
             "X-CSRF-TOKEN": token
         },
-        body: JSON.stringify(inputValue)
+        body: JSON.stringify({ ticker: inputValue })
     });
 
     let searchResult = await response.json();
@@ -103,7 +103,7 @@ async function addStockToWatchList(stock) {
     const buyPrice = searchResult.price * 1.005;
 
     var color = 0 > changeInCash ? 'stock-price-down' : 'stock-price-up';
-    
+
     const trContent = `
               <td>
                   <img class="company-logo" src="//logo.clearbit.com/${logo}.com" alt="">
@@ -139,16 +139,31 @@ async function addStockToWatchList(stock) {
                   </div>
               </td>
               <td>
-                  <span>mdo</span>
-                  <i class="fas fa-ellipsis-v remove-stock-button"></i>
-              </td>`
+                 <div class="row">
+                     <div class="col-10">
+                         <p class="mb-0 total-buyers">90% <span class="small">BUYING</span></p>
+                         <div class="progress h-50">
+                             <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="@stock.BuyPercent" aria-valuemin="0" aria-valuemax="100"></div>
+                             <div class="progress-bar bg-danger" role="progressbar" style="width: 30%" aria-valuenow="@(100 - stock.BuyPercent)" aria-valuemin="0" aria-valuemax="100"></div>
+                         </div>
+                     </div>
+                     <div class="position-relative">
+                         <i class="fas fa-ellipsis-v remove-stock-button">
+                         </i>
+                         <div class="remove-stock position-absolute" hidden>
+                             <button class="btn btn-light">Remove</button>
+                         </div>
+                     </div>
+                 </div>
+             </td>`
 
     const tr = document.createElement('tr');
     tr.innerHTML = trContent;
 
+    await getBuyPercent(ticker, tr);
     generateChart(dataset, tr);
 
-    tr.lastElementChild.lastElementChild.addEventListener('click', showRemoveStockButton);
+    tr.querySelector('i.remove-stock-button').addEventListener('click', showRemoveStockButton);
     document.querySelector('tbody').appendChild(tr);
 
     [...tr.querySelectorAll('.order-type-button')].forEach(x => {
@@ -233,8 +248,7 @@ function configureOrder(event) {
 
         if (quantity == 0) { executeOrderButton.disabled = true; }
 
-        const userAvailableFunds = Number(document.querySelector('.available-amount > h5')
-            .textContent.substring(1));
+        const userAvailableFunds = Number(document.querySelector('.available-amount > h5 > span').textContent);
         const error = document.querySelector('.trade-error');
         if (userAvailableFunds < totalPrice) {
             error.removeAttribute('hidden');
@@ -246,11 +260,10 @@ function configureOrder(event) {
 
         executeOrderButton.addEventListener('click', async (event) => {
             event.preventDefault();
-            const token = document.querySelector('[name=__RequestVerificationToken]').value;
-            const endpoint = orderType.toLowerCase() === 'b' ? 'buy' : 'sell';
+            const endpoint = executeOrderButton.firstElementChild.textContent;
 
             const tradeDetails = {
-                price: Number(orderDetailsPrice.textContent),
+                price: Number(inputPrice.placeholder),
                 quantity: quantity,
                 ticker: stockTicker,
                 tradeType: endpoint
@@ -274,6 +287,15 @@ function configureOrder(event) {
                 document.querySelector('.profit-funds span').textContent = `$${result.profit.toFixed(2)}`;
                 document.querySelector('.equity-funds').textContent = result.equity;
                 document.querySelector('.close').click();
+
+                const htmlElement = [...document.querySelectorAll('tbody tr')].reduce((acc, value) => {
+                    var currentTicker = value.querySelector('.stock-ticker').textContent;
+                    if (currentTicker == stockTicker) {
+                        return acc.push(value);
+                    }
+                });
+
+                getBuyPercent(stockTicker, htmlElement);
             }
         });
     })
@@ -351,4 +373,30 @@ function generateChart(dataset, selector) {
             },
         },
     });
+}
+
+async function getBuyPercent(ticker, htmlElement) {
+
+    const response = await fetch(`api/stock/buyPercent`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "X-CSRF-TOKEN": token
+        },
+        body: JSON.stringify({ ticker })
+    });
+
+    if (response.ok) {
+
+        const result = await response.json();
+
+        htmlElement.querySelector('.total-buyers').innerHTML = `${result.totalBuyPercentTrades}% <span class="small">BUYING</span>`;
+
+        htmlElement.querySelector('div.progress-bar.bg-success').style.width = `${result.totalBuyPercentTrades}%`;
+        htmlElement.querySelector('div.progress-bar.bg-success').setAttribute('aria-valuenow', `${result.totalBuyPercentTrades}`);
+
+        htmlElement.querySelector('div.progress-bar.bg-danger').style.width = `${100 - result.totalBuyPercentTrades}%`;
+        htmlElement.querySelector('div.progress-bar.bg-danger').setAttribute('aria-valuenow', `${100 - result.totalBuyPercentTrades}`);
+    }
 }

@@ -252,7 +252,6 @@ form.search-from > div.form-group {
 .remove-stock-button {
     position: relative;
     color: lightgray;
-    margin-left: 2rem;
     cursor: pointer;
 }
 
@@ -410,7 +409,12 @@ div.card-logo-div {
     width: 4rem;
 }
 
+div.remove-stock {
+    top: 2rem;
+    right: 0;
+}
+
 canvas {
     width: 150px !important;
-    height:55px !important;
+    height: 55px !important;
 }

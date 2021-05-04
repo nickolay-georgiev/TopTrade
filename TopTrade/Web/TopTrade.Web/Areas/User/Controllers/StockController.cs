@@ -4,7 +4,6 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
 
-    using AlphaVantage.Net.Stocks;
     using Microsoft.AspNetCore.Mvc;
     using TopTrade.Services.Data;
     using TopTrade.Services.Data.User;
@@ -27,9 +26,9 @@
 
         [HttpPost]
         [ActionName("searchList")]
-        public async Task<ActionResult<StockSearchResultViewModel[]>> StockSearch([FromBody] string stockNameOrTicker)
+        public async Task<ActionResult<StockSearchResultViewModel[]>> StockSearch(StockTickerInputModel input)
         {
-            return await this.stockService.SearchStockBySymbol(stockNameOrTicker);
+            return await this.stockService.SearchStockBySymbol(input.Ticker);
         }
 
         [HttpPost]
@@ -75,12 +74,48 @@
             }
         }
 
-        //[HttpPost]
-        //[ActionName("chart")]
-        //public async Task<IActionResult> GetData(StockTradeDetailsInputModel input)
-        //{
-        //    var data = await this.stockService.GetStockTimeSeries();
-        //    return this.Json(data);
-        //}
+        [HttpPost]
+        [ActionName("remove")]
+        public async Task<IActionResult> RemoveStock(StockTickerInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
+
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            try
+            {
+                await this.userDashboardService.RemoveStockFromWatchlistAsync(input.Ticker, userId);
+                return this.Ok();
+
+            }
+            catch (Exception)
+            {
+                return this.BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [ActionName("buyPercent")]
+        public ActionResult<StockBuyPercentTradesViewModel> GetBuyPercent(StockTickerInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
+
+            try
+            {
+                var stockBuyPercentViewModel = this.userDashboardService.GetStockBuyPercentTrades(input.Ticker);
+                return this.Ok(stockBuyPercentViewModel);
+
+            }
+            catch (Exception)
+            {
+                return this.BadRequest();
+            }
+        }
     }
 }

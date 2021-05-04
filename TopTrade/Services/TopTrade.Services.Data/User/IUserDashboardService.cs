@@ -26,5 +26,9 @@
         WithdrawViewModel GetAvailableUserWithdrawData(string userId);
 
         Task AcceptWithdrawRequest(WithdrawInputModel input, string userId);
+
+        Task RemoveStockFromWatchlistAsync(string input, string userId);
+
+        StockBuyPercentTradesViewModel GetStockBuyPercentTrades(string ticker);
     }
 }

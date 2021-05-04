@@ -2,28 +2,37 @@
     .forEach(x => x.addEventListener('click', showRemoveStockButton));
 
 function showRemoveStockButton(event) {
-    if (event.target.tagName.toLowerCase() === 'i'
-        && event.target.childElementCount > 0) {
-        [...event.target.children].forEach(x => x.remove());
-        return;
+    const hiddenDiv = event.target.nextElementSibling;
+
+    if (hiddenDiv.hidden) {
+        hiddenDiv.hidden = false;
+    } else {
+        hiddenDiv.hidden = true;
     }
-    if (event.target.tagName.toLowerCase() === 'div') { return };
 
-    const div = document.createElement('div');
-    div.classList.add('remove-stock-div');
-
-    const span = document.createElement('span');
-    span.textContent = 'Remove';
-
-    div.appendChild(span);
-    event.target.appendChild(div);
-
-    div.addEventListener('click', removeStockButton);
+    const removeButton = hiddenDiv.firstElementChild;
+    removeButton.addEventListener('click', removeStockButton);
 }
 
-function removeStockButton() {
-    //TODO write functionality to remove stock from watchlist
-    this.parentElement.parentElement.parentElement.remove();
+async function removeStockButton() {
+    var stockToRemove =
+        this.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector('.stock-ticker').textContent;
+    const token = document.querySelector('[name=__RequestVerificationToken]').value;
+
+    const response = await fetch('api/stock/remove', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "X-CSRF-TOKEN": token
+        },
+        body: JSON.stringify({ ticker: stockToRemove })
+    });
+
+    if (!response.ok) {
+        let searchResult = await response.json();
+    }
+    this.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
 }
 
 

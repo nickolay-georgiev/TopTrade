@@ -65,10 +65,13 @@
 
             foreach (var stock in userWatchlistStocks)
             {
+                var totalTrades = this.GetStockBuyPercentTrades(stock.Ticker);
                 var stockData = await this.stockService.GetStockByTicker(stock.Ticker);
+
                 stock.Change = stockData.Change;
                 stock.ChangePercent = stockData.ChangePercent;
                 stock.Price = stockData.Price;
+                stock.BuyPercent = totalTrades.TotalBuyPercentTrades;
             }
 
             var userAccountStatistic = this.accountStatisticRepository
@@ -217,7 +220,7 @@
                 Quantity = input.Quantity,
                 Price = input.Price,
                 UserId = userId,
-                StockId = 1,
+                StockId = stock.Id,
                 TradeType = input.TradeType.ToUpper(),
             };
 
@@ -267,6 +270,51 @@
 
             await this.withdrawRepository.AddAsync(withdraw);
             await this.withdrawRepository.SaveChangesAsync();
+        }
+
+        public async Task RemoveStockFromWatchlistAsync(string input, string userId)
+        {
+            var currentStock = this.stockRepository
+               .All()
+               .FirstOrDefault(x => x.Ticker == input);
+
+            var watchlist = this.watchlistRepository
+                .All()
+                .FirstOrDefault(x => x.UserId == userId);
+
+            var watchlistStocks = this.watchlistRepository
+                .All()
+                .SelectMany(x => x.Stocks)
+                .FirstOrDefault(x => x.StockId == currentStock.Id && x.WatchlistId == watchlist.Id);
+
+            watchlist.Stocks.Remove(watchlistStocks);
+
+            this.watchlistRepository.Update(watchlist);
+            await this.watchlistRepository.SaveChangesAsync();
+        }
+
+        public StockBuyPercentTradesViewModel GetStockBuyPercentTrades(string ticker)
+        {
+            //var stock = this.stockRepository
+            //    .AllAsNoTracking()
+            //    .FirstOrDefault(x => x.Ticker == ticker);
+
+            double totalBuyTrades = this.tradeRepository
+                   .AllAsNoTracking()
+                   .Where(x => x.Stock.Ticker == ticker && x.TradeType == "BUY")
+                   .Count();
+
+            double totalSellTrades = this.tradeRepository
+                .AllAsNoTracking()
+                .Where(x => x.Stock.Ticker == ticker && x.TradeType == "SELL")
+                .Count();
+
+            double totalTrades = totalBuyTrades + totalSellTrades;
+            totalTrades = totalTrades == 0 ? 1 : totalTrades;
+
+            int buyTrades = (int)Math.Round((totalBuyTrades / totalTrades) * 100);
+
+            return new StockBuyPercentTradesViewModel { TotalBuyPercentTrades = buyTrades };
         }
     }
 }
