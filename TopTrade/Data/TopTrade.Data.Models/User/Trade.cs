@@ -11,8 +11,6 @@
 
     public class Trade : BaseDeletableModel<int>
     {
-        public string TradeType { get; set; }
-
         [Required]
         [Range(1, int.MaxValue)]
         public int Quantity { get; set; }
@@ -20,6 +18,10 @@
         [Required]
         [Column(TypeName = "decimal(14, 2)")]
         public decimal Price { get; set; }
+
+        public string TradeStatus { get; set; }
+
+        public string TradeType { get; set; }
 
         public int StockId { get; set; }
 

@@ -129,7 +129,7 @@
             <i class="fas fa-plus plus-icon"></i>
         </div>
         <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-            <h5 class="allocated-funds">$@Model.TotalAllocated.ToString("f2")</h5>
+            <h5 class="allocated-funds">$<span>@Model.TotalAllocated.ToString("f2")</span></h5>
             <span class="small">TOTAL ALLOCATED</span>
             <i class="fas fa-plus plus-icon"></i>
 
@@ -144,7 +144,7 @@
 
         <div class="statistics available-amount flex-column d-flex align-items-center"
              data-toggle=" modal" data-target="#remove-stock-modal">
-            <h5 class="equity-funds">$@Model.Equity.ToString("f2")</h5>
+            <h5 class="equity-funds">$<span>@Model.Equity.ToString("f2")</span></h5>
             <span class="small">EQUITY</span>
         </div>
     </div>

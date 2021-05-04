@@ -199,6 +199,11 @@
                 throw new ArgumentException("Insuffisient funds to process this order");
             }
 
+            if (!Enum.IsDefined(typeof(TradeType), input.TradeType.ToUpper()))
+            {
+                throw new InvalidOperationException("Something goes wrong... please try again");
+            }
+
             account.Available -= totalPrice;
             account.TotalAllocated += totalPrice;
 
@@ -210,11 +215,6 @@
                 .Where(x => x.Ticker == input.Ticker)
                 .FirstOrDefault();
 
-            if (!Enum.IsDefined(typeof(TradeType), input.TradeType.ToUpper()))
-            {
-                throw new InvalidOperationException("Something goes wrong... please try again");
-            }
-
             var trade = new Trade
             {
                 Quantity = input.Quantity,
@@ -222,6 +222,7 @@
                 UserId = userId,
                 StockId = stock.Id,
                 TradeType = input.TradeType.ToUpper(),
+                TradeStatus = TradeStatus.OPEN.ToString(),
             };
 
             await this.tradeRepository.AddAsync(trade);
@@ -295,18 +296,14 @@
 
         public StockBuyPercentTradesViewModel GetStockBuyPercentTrades(string ticker)
         {
-            //var stock = this.stockRepository
-            //    .AllAsNoTracking()
-            //    .FirstOrDefault(x => x.Ticker == ticker);
-
             double totalBuyTrades = this.tradeRepository
                    .AllAsNoTracking()
-                   .Where(x => x.Stock.Ticker == ticker && x.TradeType == "BUY")
+                   .Where(x => x.Stock.Ticker == ticker && x.TradeType == TradeType.BUY.ToString())
                    .Count();
 
             double totalSellTrades = this.tradeRepository
                 .AllAsNoTracking()
-                .Where(x => x.Stock.Ticker == ticker && x.TradeType == "SELL")
+                .Where(x => x.Stock.Ticker == ticker && x.TradeType == TradeType.SELL.ToString())
                 .Count();
 
             double totalTrades = totalBuyTrades + totalSellTrades;
