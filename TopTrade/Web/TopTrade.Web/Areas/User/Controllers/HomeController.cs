@@ -35,6 +35,11 @@
             return this.View(userData);
         }
 
+        //public async Task<IActionResult> Index()
+        //{
+        //    return this.View();
+        //}
+
         [HttpPost]
         public async Task<IActionResult> WithdrawFunds(WithdrawInputModel input)
         {

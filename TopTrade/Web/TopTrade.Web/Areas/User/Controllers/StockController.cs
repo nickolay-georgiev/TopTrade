@@ -37,16 +37,15 @@
         public async Task<ActionResult<StockViewModel>> GetStockByTicker(StockSearchResultViewModel stock)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            await this.userDashboardService.UpdateUserWatchlistAsync(stock, userId);
             var stockData = await this.stockService.GetStockByTicker(stock.Ticker);
 
-            await this.userDashboardService.UpdateUserWatchlistAsync(stock, userId);
-            return stockData;
+            return this.Ok(stockData);
         }
-
 
         [HttpPost]
         [ActionName("sell")]
-        public async Task<ActionResult> SellStock(StockTradeDetailsInputModel input)
+        public async Task<IActionResult> SellStock(StockTradeDetailsInputModel input)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             try
@@ -62,7 +61,7 @@
 
         [HttpPost]
         [ActionName("buy")]
-        public async Task<ActionResult> BuyStock(StockTradeDetailsInputModel input)
+        public async Task<IActionResult> BuyStock(StockTradeDetailsInputModel input)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             try
@@ -75,5 +74,13 @@
                 return this.Json(error.Message);
             }
         }
+
+        //[HttpPost]
+        //[ActionName("chart")]
+        //public async Task<IActionResult> GetData(StockTradeDetailsInputModel input)
+        //{
+        //    var data = await this.stockService.GetStockTimeSeries();
+        //    return this.Json(data);
+        //}
     }
 }

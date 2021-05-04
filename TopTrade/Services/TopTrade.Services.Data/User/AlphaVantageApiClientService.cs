@@ -1,5 +1,6 @@
 ﻿namespace TopTrade.Services.Data
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -47,22 +48,28 @@
             using var stocksClient = client.Stocks();
 
             var stockResult = await stocksClient.GetGlobalQuoteAsync(stockTicker);
+            //var stockTimeSeries = await stocksClient
+            //    .GetTimeSeriesAsync(stockTicker, Interval.Daily, OutputSize.Compact, isAdjusted: true);
+
+            //var dataset = stockTimeSeries.DataPoints.Select(x => x.ClosingPrice).ToList();
+
             var stock = new StockViewModel
             {
                 Ticker = stockResult.Symbol,
                 Price = stockResult.Price,
                 Change = (double)stockResult.Change,
                 ChangePercent = (double)stockResult.ChangePercent,
+                DataSet = new List<decimal> { 1, 2, 3, 4, 5, 6 },
             };
 
             return stock;
         }
 
-        public async Task<StockTimeSeries> GetStockTimeSeries()
+        public async Task<StockTimeSeries> GetStockTimeSeries(string stockTicker)
         {
             using var client = new AlphaVantageClient("AYEDU2WZ2YC86XC0");
             using var stocksClient = client.Stocks();
-            return await stocksClient.GetTimeSeriesAsync("AAPL", Interval.Daily, OutputSize.Compact, isAdjusted: true);
+            return await stocksClient.GetTimeSeriesAsync(stockTicker, Interval.Daily, OutputSize.Compact, isAdjusted: true);
         }
     }
 }

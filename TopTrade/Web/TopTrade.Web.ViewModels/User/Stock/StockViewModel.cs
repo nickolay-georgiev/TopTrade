@@ -15,5 +15,7 @@
         public double Change { get; set; }
 
         public double ChangePercent { get; set; }
+
+        public ICollection<decimal> DataSet { get; set; }
     }
 }

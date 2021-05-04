@@ -12,6 +12,6 @@
 
         Task<StockViewModel> GetStockByTicker(string stockTicker);
 
-        Task<StockTimeSeries> GetStockTimeSeries();
+        Task<StockTimeSeries> GetStockTimeSeries(string stockTicker);
     }
 }

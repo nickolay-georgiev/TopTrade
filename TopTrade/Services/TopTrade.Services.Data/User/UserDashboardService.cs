@@ -101,8 +101,7 @@
         {
             var currentStock = this.stockRepository
                 .All()
-                .Where(x => x.Ticker == stock.Ticker)
-                .FirstOrDefault();
+                .FirstOrDefault(x => x.Ticker == stock.Ticker);
 
             if (currentStock == null)
             {
@@ -116,14 +115,21 @@
                 await this.stockRepository.SaveChangesAsync();
             }
 
-            var watchlist = this.watchlistRepository
+            var watchlistStock = this.watchlistRepository
                 .All()
                 .Where(x => x.UserId == userId)
-                .FirstOrDefault();
+                .SelectMany(x => x.Stocks)
+                .ToList();
 
-            if (watchlist.Stocks.All(x => x.Stock.Ticker != stock.Ticker))
+            if (watchlistStock.All(x => x.StockId != currentStock.Id))
             {
-                watchlist.Stocks.Add(new WatchlistStocks { StockId = currentStock.Id });
+                var watchlist = this.watchlistRepository
+                    .All()
+                    .FirstOrDefault(x => x.UserId == userId);
+
+                watchlist.Stocks
+                    .Add(new WatchlistStocks { StockId = currentStock.Id });
+
                 this.watchlistRepository.Update(watchlist);
                 await this.watchlistRepository.SaveChangesAsync();
             }

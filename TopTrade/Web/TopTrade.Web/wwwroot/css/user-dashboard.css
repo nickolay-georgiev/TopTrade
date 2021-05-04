@@ -409,3 +409,8 @@ div.poppover-info {
 div.card-logo-div {
     width: 4rem;
 }
+
+canvas {
+    width: 150px !important;
+    height:55px !important;
+}

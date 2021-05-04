@@ -24,7 +24,6 @@ async function stockSearch() {
 
     searchResult.map(stock => {
         stock.logoName = stock.name.split(/[ .]+/)[0];
-        console.log(searchResult)
 
         const closeSearchBarIcon = document.querySelector('div.close-search-bar');
         closeSearchBarIcon.removeAttribute("hidden");
@@ -94,17 +93,17 @@ async function addStockToWatchList(stock) {
 
     let searchResult = await response.json();
 
+    const dataset = searchResult.dataSet;
     const logo = stock.logoName;
     const ticker = searchResult.ticker;
     const companyName = stock.logoName;
     const changeInCash = searchResult.change;
     const changeInPercents = searchResult.changePercent;
-    const chart = './img/chart.jpg';
     const sellPrice = searchResult.price;
     const buyPrice = searchResult.price * 1.005;
 
     var color = 0 > changeInCash ? 'stock-price-down' : 'stock-price-up';
-
+    
     const trContent = `
               <td>
                   <img class="company-logo" src="//logo.clearbit.com/${logo}.com" alt="">
@@ -117,8 +116,10 @@ async function addStockToWatchList(stock) {
                   <p class="mb-0 ml-2 font-weight-bold ${color}">${changeInCash.toFixed(2)}</p>
                   <p class="mb-0 ml-2 font-weight-bold small ${color}">(${changeInPercents.toFixed(2)})&#37</p>
               </td>
-              <td>
-                  <img class="stock-line-chart" src="${chart}" alt="">
+              <td style="width: 230px">
+                  <div class="stock-chart">
+                       <canvas id="line"></canvas>
+                  </div>
               </td>
               <td>
                   <div class="input-group sell-button order-type-button">
@@ -144,6 +145,9 @@ async function addStockToWatchList(stock) {
 
     const tr = document.createElement('tr');
     tr.innerHTML = trContent;
+
+    generateChart(dataset, tr);
+
     tr.lastElementChild.lastElementChild.addEventListener('click', showRemoveStockButton);
     document.querySelector('tbody').appendChild(tr);
 
@@ -280,7 +284,6 @@ function configureOrder(event) {
 function closeSearchBarAndClearSearchResult() {
     const searchMenu = document.querySelector('div.search-bar div.form-group');
     const closeSearchBarIcon = document.querySelector('div.close-search-bar');
-    console.log(searchMenu);
     [...searchMenu.children].slice(1).forEach(x => x.remove());
     closeSearchBarIcon.setAttribute('hidden', true);
 }
@@ -294,4 +297,58 @@ function activateSpinner() {
 function removeSpinner() {
     const spinner = document.querySelector('div.spinner').style.display = 'none';
     const search = document.querySelector('i.fa-search').style.display = 'block';
+}
+
+
+function generateChart(dataset, selector) {
+
+    var ctx = selector.querySelector('#line').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",],
+            datasets: [{
+                backgroundColor: 'lightblue',
+                data: dataset,
+                pointRadius: 0,
+            }]
+        },
+        options: {
+            plugins: {
+                elements: {
+                    point: {
+                        radius: 0
+                    }
+                },
+                legend: {
+                    display: false
+                },
+                datalabels: {
+                    display: false,
+                },
+                hidden: true,
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        display: false
+                    },
+                    gridLines: {
+                        display: false,
+                    },
+                }],
+                xAxes: [{
+                    ticks: {
+                        display: false
+                    },
+                    gridLines: {
+                        display: false,
+                    },
+                }],
+            },
+            legend: {
+                display: false
+            },
+        },
+    });
 }
