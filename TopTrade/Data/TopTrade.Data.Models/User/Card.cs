@@ -10,7 +10,7 @@
     public class Card : BaseDeletableModel<int>
     {
         [Required]
-        [StringLength(16, MinimumLength = 16)]
+        [StringLength(19, MinimumLength = 19)]
         public string Number { get; set; }
 
         public string UserId { get; set; }

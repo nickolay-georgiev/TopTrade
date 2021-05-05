@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
@@ -67,11 +66,16 @@
             {
                 var totalTrades = this.GetStockBuyPercentTrades(stock.Ticker);
                 var stockData = await this.stockService.GetStockByTicker(stock.Ticker);
+                var tradeStatus = this.tradeRepository.AllAsNoTracking()
+                    .FirstOrDefault(x => x.UserId == userId && x.Stock.Ticker == stock.Ticker)
+                    .TradeStatus;
 
                 stock.Change = stockData.Change;
                 stock.ChangePercent = stockData.ChangePercent;
                 stock.Price = stockData.Price;
                 stock.BuyPercent = totalTrades.TotalBuyPercentTrades;
+                stock.TradeStatus = tradeStatus;
+                stock.LogoName = string.Join(string.Empty, stock.Name.Split(new char[] { ' ', '.' })[0]);
             }
 
             var userAccountStatistic = this.accountStatisticRepository
@@ -141,7 +145,11 @@
         public async Task UpdateUserAccountAsync(DepositModalInputModel input, string userId)
         {
             // TODO remove this split and check db
-            var currentCardNumber = input.Card.Number.Replace("-", "");
+            var currentCardNumber = input.Card.Number;
+
+            currentCardNumber =
+                currentCardNumber.Substring(0, 4) + '-' + new string('*', 4) + '-' + new string('*', 4) +
+                currentCardNumber.Substring(currentCardNumber.Length - 4, 4);
 
             var card = this.cardRepository
                 .All()
@@ -312,6 +320,17 @@
             int buyTrades = (int)Math.Round((totalBuyTrades / totalTrades) * 100);
 
             return new StockBuyPercentTradesViewModel { TotalBuyPercentTrades = buyTrades };
+        }
+
+        public ICollection<UserPortfolioVewModel> GetPortoflio(string userId)
+        {
+            var trades = this.tradeRepository
+                .AllAsNoTracking()
+                .Where(x => x.UserId == userId && x.TradeStatus == TradeStatus.OPEN.ToString())
+                .To<UserPortfolioVewModel>()
+                .ToList();
+
+            return trades;
         }
     }
 }

@@ -381,8 +381,8 @@ namespace TopTrade.Data.Migrations
 
                     b.Property<string>("Number")
                         .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
+                        .HasMaxLength(19)
+                        .HasColumnType("nvarchar(19)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");

@@ -18,6 +18,10 @@
 
         public int BuyPercent { get; set; }
 
+        public string TradeStatus { get; set; }
+
+        public string LogoName { get; set; }
+
         public ICollection<decimal> DataSet { get; set; }
     }
 }

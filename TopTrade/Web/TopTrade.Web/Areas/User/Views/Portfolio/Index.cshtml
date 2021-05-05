@@ -1,1 +1,87 @@
-﻿<h1>works</h1>
+﻿@model ICollection<TopTrade.Web.ViewModels.User.Profile.UserPortfolioVewModel>
+
+@{
+    ViewData["Title"] = "Portfolio page";
+    ViewData["PageName"] = "Portfolio";
+}
+
+<div class="content-container">
+    <partial name="_NavigationPartial" view-data="ViewData">
+        <div class="site-content mt-3">
+            <div class="col table-div">
+                <table class="table watchlist-table table-striped">
+                    <thead class="watchlist-table-header">
+                        <tr>
+                            <th scope="col">STOCK NAME</th>
+                            <th scope="col">QUANTITY</th>
+                            <th scope="col">PRICE</th>
+                            <th scope="col">INVESTED</th>
+                            <th scope="col">P/L($)</th>
+                            <th scope="col">CLOSE TRADE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr></tr>
+                        @foreach (var stock in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <img class="company-logo" src="//logo.clearbit.com/@(stock.Logo).com" alt="">
+                                    <div>
+                                        <p class="mb-0 ml-2 text-uppercase font-weight-bold stock-ticker">@stock.StockTicker</p>
+                                        <p class="mb-0 ml-2 small stock-name">@stock.StockName</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class="mb-0 ml-4">@stock.Quantity</p>
+                                    <p class="mb-0 ml-2 font-weight-bold small text-secondary">@stock.TradeType</p>
+                                </td>
+                                <td>
+                                    <p class="m-0">$@stock.Price</p>
+                                </td>
+                                <td>
+                                    <p class="m-0">$@stock.TotalInvested</p>
+                                </td>
+                                <td>
+                                    <p class="mb-0 ml-2 font-weight-bold"><span custom-color>$13</span></p>
+                                    <p class="mb-0 ml-2 font-weight-bold small stock-price-down">(22)&#37</p>
+                                </td>
+                                <td style="width: 200px">
+                                    <button type="button" class="blink_me">Close</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a class="pl-2 text-secondary" href="https://clearbit.com">Logos provided by Clearbit</a>
+            </div>
+        </div>
+
+        <div class="footer d-flex justify-content-around mb-2">
+
+            <div class="statistics available-amount flex-column d-flex align-items-center border-right">
+                <h5 class="available-funds">$<span>@Model.Available.ToString("f2")</span></h5>
+                <span class="small">AVAILABLE</span>
+                <i class="fas fa-plus plus-icon"></i>
+            </div>
+            <div class="statistics available-amount flex-column d-flex align-items-center border-right">
+                <h5 class="allocated-funds">$<span>@Model.TotalAllocated.ToString("f2")</span></h5>
+                <span class="small">TOTAL ALLOCATED</span>
+                <i class="fas fa-plus plus-icon"></i>
+
+            </div>
+
+            <div class="statistics available-amount flex-column d-flex align-items-center border-right">
+                <h5 class="profit-funds"><span custom-color>$@Model.Profit.ToString("f2")</span></h5>
+                <span class="small">PROFIT</span>
+                <i class="fas fa-equals plus-icon"></i>
+
+            </div>
+
+            <div class="statistics available-amount flex-column d-flex align-items-center"
+                 data-toggle=" modal" data-target="#remove-stock-modal">
+                <h5 class="equity-funds">$<span>@Model.Equity.ToString("f2")</span></h5>
+                <span class="small">EQUITY</span>
+            </div>
+        </div>
+</div>

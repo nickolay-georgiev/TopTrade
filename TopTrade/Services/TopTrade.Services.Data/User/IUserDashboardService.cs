@@ -30,5 +30,7 @@
         Task RemoveStockFromWatchlistAsync(string input, string userId);
 
         StockBuyPercentTradesViewModel GetStockBuyPercentTrades(string ticker);
+
+        ICollection<UserPortfolioVewModel> GetPortoflio(string userId);
     }
 }

@@ -17,7 +17,8 @@
       "wwwroot/css/wallet-history.css",
       "wwwroot/css/transactions.css",
       "wwwroot/css/news-page.css",
-      "wwwroot/css/user-profile.css"
+      "wwwroot/css/user-profile.css",
+      "wwwroot/css/user-portfolio.css"
     ]
   },
   {

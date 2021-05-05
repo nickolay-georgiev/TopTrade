@@ -412,6 +412,7 @@ div.card-logo-div {
 div.remove-stock {
     top: 2rem;
     right: 0;
+    z-index: 9999;
 }
 
 canvas {
