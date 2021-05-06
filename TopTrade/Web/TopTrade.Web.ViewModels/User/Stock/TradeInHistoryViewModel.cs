@@ -14,13 +14,15 @@
 
         public int Quantity { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal OpenPrice { get; set; }
+
+        public decimal ClosePrice { get; set; }
 
         public string StockName { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
-        public decimal TotalPrice => this.Price * this.Quantity;
+        public decimal TotalPrice => this.OpenPrice * this.Quantity;
 
         public void CreateMappings(IProfileExpression configuration)
         {

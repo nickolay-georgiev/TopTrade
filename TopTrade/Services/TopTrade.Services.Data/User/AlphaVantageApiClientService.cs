@@ -57,8 +57,8 @@
             {
                 Ticker = stockResult.Symbol,
                 Price = stockResult.Price,
-                Change = (double)stockResult.Change,
-                ChangePercent = (double)stockResult.ChangePercent,
+                Change = stockResult.Change,
+                ChangePercent = stockResult.ChangePercent,
                 DataSet = new List<decimal> { 1, 2, 3, 4, 5, 6 },
             };
 

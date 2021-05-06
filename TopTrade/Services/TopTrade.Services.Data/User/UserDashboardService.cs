@@ -81,16 +81,16 @@
             var userAccountStatistic = this.accountStatisticRepository
                 .AllAsNoTracking()
                 .Where(x => x.UserId == userId)
-                .Select(x => new UserDashboardViewModel
-                {
-                    Profit = x.Profit,
-                    Available = x.Available,
-                    TotalAllocated = x.TotalAllocated,
-                    Equity = x.Profit + x.Available + x.TotalAllocated,
-                    StockWatchlist = userWatchlistStocks,
-                }).FirstOrDefault();
+                .To<UserStatisticViewModel>()
+                .FirstOrDefault();
 
-            return userAccountStatistic;
+            var dashboardViewModel = new UserDashboardViewModel
+            {
+                StockWatchlist = userWatchlistStocks,
+                UserStatistic = userAccountStatistic,
+            };
+
+            return dashboardViewModel;
         }
 
         public async Task InitializeUserCollectionsAsync(ApplicationUser user)
@@ -226,7 +226,7 @@
             var trade = new Trade
             {
                 Quantity = input.Quantity,
-                Price = input.Price,
+                OpenPrice = input.Price,
                 UserId = userId,
                 StockId = stock.Id,
                 TradeType = input.TradeType.ToUpper(),
@@ -259,7 +259,7 @@
 
         public async Task AcceptWithdrawRequest(WithdrawInputModel input, string userId)
         {
-            if (input.Available < input.Amount)
+            if (input.Available < input.DesiredAmount)
             {
                 throw new InvalidOperationException($"You can withdraw up to ${input.Available}");
             }
@@ -271,7 +271,7 @@
 
             var withdraw = new Withdraw
             {
-                Amount = input.Amount,
+                Amount = input.DesiredAmount,
                 UserId = userId,
                 CardId = card.Id,
                 TransactionStatus = TransactionStatus.Pending.ToString(),
@@ -322,15 +322,91 @@
             return new StockBuyPercentTradesViewModel { TotalBuyPercentTrades = buyTrades };
         }
 
-        public ICollection<UserPortfolioVewModel> GetPortoflio(string userId)
+        public async Task<UserPortfolioVewModel> GetPortoflioAsync(string userId)
         {
             var trades = this.tradeRepository
                 .AllAsNoTracking()
                 .Where(x => x.UserId == userId && x.TradeStatus == TradeStatus.OPEN.ToString())
-                .To<UserPortfolioVewModel>()
+                .To<TradeInPortfolioViewModel>()
                 .ToList();
 
-            return trades;
+            foreach (var trade in trades)
+            {
+                var stockData = await this.stockService.GetStockByTicker(trade.StockTicker);
+                trade.CurrentPrice = stockData.Price;
+            }
+
+            var userStatistic = this.accountStatisticRepository
+                .AllAsNoTracking()
+                .Where(x => x.UserId == userId)
+                .To<UserStatisticViewModel>()
+                .FirstOrDefault();
+
+            var portfolioVewModel = new UserPortfolioVewModel
+            {
+                Trades = trades,
+                UserStatistic = userStatistic,
+            };
+
+            return portfolioVewModel;
+        }
+
+        public async Task CloseTradeAsync(int id, CloseTradeInputModel input, string userId)
+        {
+            var trade = this.tradeRepository
+                .AllAsNoTracking()
+                .FirstOrDefault(x => x.Id == id);
+
+            if (trade == null)
+            {
+                throw new ArgumentNullException("Invalid trade id");
+            }
+
+            trade.TradeStatus = TradeStatus.CLOSE.ToString();
+            this.tradeRepository.Update(trade);
+            await this.tradeRepository.SaveChangesAsync();
+
+            var accountStatistic = this.accountStatisticRepository
+                .All()
+                .FirstOrDefault(x => x.UserId == userId);
+
+            var tradeOpenPriceTotal = trade.OpenPrice * trade.Quantity;
+            var tradeClosePriceTotal = input.CurrentPrice * trade.Quantity;
+
+            var profitAsAbs = Math.Abs(tradeClosePriceTotal - tradeOpenPriceTotal);
+            if (trade.TradeType == TradeType.BUY.ToString())
+            {
+                var profit = tradeClosePriceTotal - tradeOpenPriceTotal;
+                accountStatistic.Available += profit + tradeOpenPriceTotal;
+
+                if (profit < 0)
+                {
+                    accountStatistic.Profit += profitAsAbs;
+                }
+                else
+                {
+                    accountStatistic.Profit -= profitAsAbs;
+                }
+            }
+            else
+            {
+                var profit = tradeOpenPriceTotal - tradeClosePriceTotal;
+                accountStatistic.Available += profit + tradeOpenPriceTotal;
+
+                if (profit < 0)
+                {
+                    accountStatistic.Profit += profitAsAbs;
+                }
+                else
+                {
+                    accountStatistic.Profit -= profitAsAbs;
+                }
+            }
+
+            accountStatistic.TotalAllocated -= trade.OpenPrice * trade.Quantity;
+
+            this.accountStatisticRepository.Update(accountStatistic);
+            await this.accountStatisticRepository.SaveChangesAsync();
         }
     }
 }

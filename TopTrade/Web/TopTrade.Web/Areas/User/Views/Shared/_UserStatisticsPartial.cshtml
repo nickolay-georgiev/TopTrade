@@ -1,0 +1,29 @@
+﻿@model TopTrade.Web.ViewModels.User.Profile.UserStatisticViewModel
+
+<div class="footer d-flex justify-content-around mb-2">
+
+    <div class="statistics available-amount flex-column d-flex align-items-center border-right">
+        <h5 class="available-funds">$<span>@Model.Available.ToString("f2")</span></h5>
+        <span class="small">AVAILABLE</span>
+        <i class="fas fa-plus plus-icon"></i>
+    </div>
+    <div class="statistics available-amount flex-column d-flex align-items-center border-right">
+        <h5 class="allocated-funds">$<span>@Model.TotalAllocated.ToString("f2")</span></h5>
+        <span class="small">TOTAL ALLOCATED</span>
+        <i class="fas fa-plus plus-icon"></i>
+
+    </div>
+
+    <div class="statistics available-amount flex-column d-flex align-items-center border-right">
+        <h5 class="profit-funds"><span custom-color>$@Model.Profit.ToString("f2")</span></h5>
+        <span class="small">PROFIT</span>
+        <i class="fas fa-equals plus-icon"></i>
+
+    </div>
+
+    <div class="statistics available-amount flex-column d-flex align-items-center"
+         data-toggle=" modal" data-target="#remove-stock-modal">
+        <h5 class="equity-funds">$<span>@Model.Equity.ToString("f2")</span></h5>
+        <span class="small">EQUITY</span>
+    </div>
+</div>

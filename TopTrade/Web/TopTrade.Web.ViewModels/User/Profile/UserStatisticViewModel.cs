@@ -1,10 +1,9 @@
 ﻿namespace TopTrade.Web.ViewModels.User.Profile
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    using TopTrade.Data.Models.User;
+    using TopTrade.Services.Mapping;
 
-    public class UserStatisticViewModel
+    public class UserStatisticViewModel : IMapFrom<AccountStatistic>
     {
         public decimal Profit { get; set; }
 

@@ -12,9 +12,9 @@
 
         public decimal Price { get; set; }
 
-        public double Change { get; set; }
+        public decimal Change { get; set; }
 
-        public double ChangePercent { get; set; }
+        public decimal ChangePercent { get; set; }
 
         public int BuyPercent { get; set; }
 

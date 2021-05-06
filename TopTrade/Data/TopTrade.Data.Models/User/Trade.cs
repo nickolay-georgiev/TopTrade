@@ -17,7 +17,10 @@
 
         [Required]
         [Column(TypeName = "decimal(14, 2)")]
-        public decimal Price { get; set; }
+        public decimal OpenPrice { get; set; }
+
+        [Column(TypeName = "decimal(14, 2)")]
+        public decimal? ClosePrice { get; set; }
 
         public string TradeStatus { get; set; }
 
@@ -26,12 +29,12 @@
         public int StockId { get; set; }
 
         public virtual Stock Stock { get; set; }
- 
+
         public string UserId { get; set; }
 
         public virtual ApplicationUser User { get; set; }
 
         [NotMapped]
-        public decimal TotalSpent => this.Quantity * this.Price;
+        public decimal TotalSpent => this.Quantity * this.OpenPrice;
     }
 }

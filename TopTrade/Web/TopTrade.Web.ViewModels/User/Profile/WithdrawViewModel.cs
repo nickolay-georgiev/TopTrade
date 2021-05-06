@@ -9,7 +9,7 @@
 
     public class WithdrawViewModel : IMapFrom<AccountStatistic>, IHaveCustomMappings
     {
-        public decimal Amount { get; set; }
+        public decimal DesiredAmount { get; set; }
 
         public decimal Available { get; set; }
 

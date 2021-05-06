@@ -9,7 +9,6 @@
     <partial name="_ToastPartial" />
 }
 
-
 <div class="content-container">
     <div class="col remove-grow">
         <div class="search-bar container-fluid d-flex justify-content-center">
@@ -41,11 +40,11 @@
             <table class="table watchlist-table">
                 <thead class="watchlist-table-header">
                     <tr>
-                        <th scope="col small">TICKERS</th>
-                        <th scope="col">CHANGE</th>
-                        <th scope="col">CHART</th>
-                        <th scope="col">SELL</th>
-                        <th scope="col">BUY</th>
+                        <th scope="col">TICKERS</th>
+                        <th scope="col" class="text-center">CHANGE</th>
+                        <th scope="col" class="text-center">CHART</th>
+                        <th scope="col" class="text-center">SELL</th>
+                        <th scope="col" class="text-center">BUY</th>
                         <th scope="col">SENTIMENT</th>
                     </tr>
                 </thead>
@@ -70,16 +69,16 @@
                                     }
                                 </div>
                             </td>
-                            <td>
-                                <p class="mb-0 ml-2 font-weight-bold stock-price-up"><span custom-color>@stock.Change.ToString("f2")</span></p>
-                                <p class="mb-0 ml-2 font-weight-bold small stock-price-down"><span custom-color>(@stock.ChangePercent.ToString("f2")%)</span></p>
+                            <td class="text-center">
+                                <p class="mb-0 font-weight-bold stock-price-up"><span custom-color>@stock.Change.ToString("f2")</span></p>
+                                <p class="mb-0 font-weight-bold small stock-price-down"><span custom-color>(@stock.ChangePercent.ToString("f2")%)</span></p>
                             </td>
-                            <td style="width: 230px">
+                            <td class="text-center" style="width: 230px">
                                 <div class="stock-chart">
                                     <canvas id="line"></canvas>
                                 </div>
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <div class="input-group sell-button order-type-button">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text font-weight-bold" id="btnGroupAddon">S</div>
@@ -126,137 +125,7 @@
             <a class="pl-2 text-secondary" href="https://clearbit.com">Logos provided by Clearbit</a>
         </div>
     </div>
-
-    <div class="footer d-flex justify-content-around mb-2">
-
-        <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-            <h5 class="available-funds">$<span>@Model.Available.ToString("f2")</span></h5>
-            <span class="small">AVAILABLE</span>
-            <i class="fas fa-plus plus-icon"></i>
-        </div>
-        <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-            <h5 class="allocated-funds">$<span>@Model.TotalAllocated.ToString("f2")</span></h5>
-            <span class="small">TOTAL ALLOCATED</span>
-            <i class="fas fa-plus plus-icon"></i>
-
-        </div>
-
-        <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-            <h5 class="profit-funds"><span custom-color>$@Model.Profit.ToString("f2")</span></h5>
-            <span class="small">PROFIT</span>
-            <i class="fas fa-equals plus-icon"></i>
-
-        </div>
-
-        <div class="statistics available-amount flex-column d-flex align-items-center"
-             data-toggle=" modal" data-target="#remove-stock-modal">
-            <h5 class="equity-funds">$<span>@Model.Equity.ToString("f2")</span></h5>
-            <span class="small">EQUITY</span>
-        </div>
-    </div>
-
-    @*<div class="site-content">
-            <div class="col table-div">
-                <table class="table watchlist-table">
-                    <thead class="watchlist-table-header">
-                        <tr>
-                            <th scope="col small">TICKERS</th>
-                            <th scope="col">CHANGE</th>
-                            <th scope="col">CHART</th>
-                            <th scope="col">SELL</th>
-                            <th scope="col">BUY</th>
-                            <th scope="col">SENTIMENT</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <img class="company-logo" src="//logo.clearbit.com/amazon.com" alt="">
-                                <div>
-                                    <p class="mb-0 ml-2 text-uppercase font-weight-bold stock-ticker">Amzn</p>
-                                    <p class="mb-0 ml-2 small stock-name">Amazon</p>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="mb-0 ml-2 font-weight-bold stock-price-up">13</p>
-                                <p class="mb-0 ml-2 font-weight-bold small stock-price-down">(22)&#37</p>
-                            </td>
-                            <td style="width: 230px">
-                                <div class="stock-chart">
-                                    <canvas id="line"></canvas>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-group sell-button order-type-button">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text font-weight-bold" id="btnGroupAddon">S</div>
-                                    </div>
-                                    <button class="form-control font-weight-bold price" data-target="#buy-button" data-toggle="modal">50</button>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-group buy-button order-type-button">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text font-weight-bold" id="btnGroupAddon">B</div>
-                                    </div>
-                                    <button class="form-control font-weight-bold" data-target="#buy-button"
-                                            data-toggle="modal">
-                                        10
-                                    </button>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="row">
-                                    <div class="col-10">
-                                        <p class="mb-0 total-buyers">99% <span class="small">BUYING</span></p>
-                                        <div class="progress h-50">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                    <div class="position-relative">
-                                        <i class="fas fa-ellipsis-v remove-stock-button">
-                                        </i>
-                                        <div class="remove-stock position-absolute" hidden>
-                                            <button class="btn btn-light">Remove</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <a class="pl-2 text-secondary" href="https://clearbit.com">Logos provided by Clearbit</a>
-            </div>
-        </div>
-
-        <div class="footer d-flex justify-content-around mb-2">
-
-            <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-                <h5>100</h5>
-                <span class="small">AVAILABLE</span>
-                <i class="fas fa-plus plus-icon"></i>
-            </div>
-            <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-                <h5>100</h5>
-                <span class="small">TOTAL ALLOCATED</span>
-                <i class="fas fa-plus plus-icon"></i>
-
-            </div>
-
-            <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-                <h5>100</h5>
-                <span class="small">PROFIT</span>
-                <i class="fas fa-equals plus-icon"></i>
-
-            </div>
-
-            <div class="statistics available-amount flex-column d-flex align-items-center"
-                 data-toggle=" modal" data-target="#remove-stock-modal">
-                <h5>100</h5>
-                <span class="small">EQUITY</span>
-            </div>
-        </div>*@
+    <partial name="_UserStatisticsPartial" model="Model.UserStatistic">   
 </div>
 
 
@@ -335,7 +204,6 @@
     <script type="text/javascript">
 
         var ctx = document.querySelector('#line');
-
         if (ctx) {
             ctx = ctx.getContext('2d');
             var chart = new Chart(ctx, {

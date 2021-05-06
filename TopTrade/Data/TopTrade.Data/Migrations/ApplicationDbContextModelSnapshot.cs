@@ -491,6 +491,9 @@ namespace TopTrade.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<decimal?>("ClosePrice")
+                        .HasColumnType("decimal(14,2)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -503,7 +506,7 @@ namespace TopTrade.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal>("OpenPrice")
                         .HasColumnType("decimal(14,2)");
 
                     b.Property<int>("Quantity")

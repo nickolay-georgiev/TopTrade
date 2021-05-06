@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TopTrade.Data.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InititalCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -293,7 +293,7 @@ namespace TopTrade.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Number = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
+                    Number = table.Column<string>(type: "nvarchar(19)", maxLength: 19, nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -317,9 +317,11 @@ namespace TopTrade.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TradeType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(14,2)", nullable: false),
+                    OpenPrice = table.Column<decimal>(type: "decimal(14,2)", nullable: false),
+                    ClosePrice = table.Column<decimal>(type: "decimal(14,2)", nullable: true),
+                    TradeStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TradeType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StockId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),

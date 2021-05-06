@@ -1,7 +1,7 @@
 ﻿namespace TopTrade.Web
 {
     using System.Reflection;
-    using AutoMapper;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -56,9 +56,9 @@
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddAntiforgery(options =>
-            {
-                options.HeaderName = "X-CSRF-TOKEN";
-            });
+              {
+                  options.HeaderName = "X-CSRF-TOKEN";
+              });
 
             services.AddSingleton(this.configuration);
 

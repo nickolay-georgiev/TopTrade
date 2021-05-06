@@ -31,6 +31,8 @@
 
         StockBuyPercentTradesViewModel GetStockBuyPercentTrades(string ticker);
 
-        ICollection<UserPortfolioVewModel> GetPortoflio(string userId);
+        Task<UserPortfolioVewModel> GetPortoflioAsync(string userId);
+
+        Task CloseTradeAsync(int id, CloseTradeInputModel input, string userId);
     }
 }

@@ -1,8 +1,13 @@
-﻿@model ICollection<TopTrade.Web.ViewModels.User.Profile.UserPortfolioVewModel>
+﻿@model TopTrade.Web.ViewModels.User.Profile.UserPortfolioVewModel
 
 @{
     ViewData["Title"] = "Portfolio page";
     ViewData["PageName"] = "Portfolio";
+}
+
+@if (TempData["Message"] != null)
+{
+    <partial name="_ToastPartial" />
 }
 
 <div class="content-container">
@@ -13,41 +18,48 @@
                     <thead class="watchlist-table-header">
                         <tr>
                             <th scope="col">STOCK NAME</th>
-                            <th scope="col">QUANTITY</th>
-                            <th scope="col">PRICE</th>
-                            <th scope="col">INVESTED</th>
-                            <th scope="col">P/L($)</th>
-                            <th scope="col">CLOSE TRADE</th>
+                            <th scope="col" class="text-center">QUANTITY</th>
+                            <th scope="col" class="text-center">OPEN PRICE</th>
+                            <th scope="col" class="text-center">INVESTED</th>
+                            <th scope="col" class="text-center">CURRENT PRICE</th>
+                            <th scope="col" class="text-center">P/L($)</th>
+                            <th scope="col" class="text-center">CLOSE TRADE</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr></tr>
-                        @foreach (var stock in Model)
+                        @foreach (var trade in Model.Trades)
                         {
                             <tr>
                                 <td>
-                                    <img class="company-logo" src="//logo.clearbit.com/@(stock.Logo).com" alt="">
+                                    <img class="company-logo" src="//logo.clearbit.com/@(trade.Logo).com" alt="">
                                     <div>
-                                        <p class="mb-0 ml-2 text-uppercase font-weight-bold stock-ticker">@stock.StockTicker</p>
-                                        <p class="mb-0 ml-2 small stock-name">@stock.StockName</p>
+                                        <p class="mb-0 ml-2 text-uppercase font-weight-bold stock-ticker">@trade.StockTicker</p>
+                                        <p class="mb-0 ml-2 small stock-name">@trade.StockName</p>
                                     </div>
                                 </td>
-                                <td>
-                                    <p class="mb-0 ml-4">@stock.Quantity</p>
-                                    <p class="mb-0 ml-2 font-weight-bold small text-secondary">@stock.TradeType</p>
+                                <td class="text-center">
+                                    <p class="mb-0">@trade.Quantity</p>
+                                    <p class="mb-0 font-weight-bold small text-secondary">@trade.TradeType</p>
                                 </td>
-                                <td>
-                                    <p class="m-0">$@stock.Price</p>
+                                <td class="text-center">
+                                    <p class="m-0">$@trade.OpenPrice.ToString("f2")</p>
                                 </td>
-                                <td>
-                                    <p class="m-0">$@stock.TotalInvested</p>
+                                <td class="text-center">
+                                    <p class="m-0">$@trade.TotalInvested.ToString("f2")</p>
                                 </td>
-                                <td>
-                                    <p class="mb-0 ml-2 font-weight-bold"><span custom-color>$13</span></p>
-                                    <p class="mb-0 ml-2 font-weight-bold small stock-price-down">(22)&#37</p>
+                                <td class="text-center">
+                                    <p class="m-0">$@trade.CurrentPrice.ToString("f2")</p>
                                 </td>
-                                <td style="width: 200px">
-                                    <button type="button" class="blink_me">Close</button>
+                                <td class="text-center">
+                                    <p class="mb-0 ml-2 font-weight-bold"><span custom-color>$@trade.ProfitLossInCash.ToString("f2")</span></p>
+                                    <p class="mb-0 ml-2 font-weight-bold small"><span custom-color>(@trade.ProfitLossInPercent.ToString("f2")%)</span></p>
+                                </td>
+                                <td class="text-center" style="width: 200px">
+                                    <form asp-action="CloseTrade" asp-controller="Portfolio" asp-route-id="@trade.Id" method="post">
+                                        <input value="@trade.CurrentPrice" name="CurrentPrice" type="hidden"/>
+                                        <button type="submit" class="close-trade-button">Close</button>
+                                    </form>
                                 </td>
                             </tr>
                         }
@@ -56,32 +68,93 @@
                 <a class="pl-2 text-secondary" href="https://clearbit.com">Logos provided by Clearbit</a>
             </div>
         </div>
+        @*   <canvas id="test-chart" style="display: block;height: 389px !important;width: 1226px !important;" width="1103" height="1350" class="chartjs-render-monitor"></canvas>*@
+        <partial name="_UserStatisticsPartial" model="Model.UserStatistic">
 
-        <div class="footer d-flex justify-content-around mb-2">
-
-            <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-                <h5 class="available-funds">$<span>@Model.Available.ToString("f2")</span></h5>
-                <span class="small">AVAILABLE</span>
-                <i class="fas fa-plus plus-icon"></i>
-            </div>
-            <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-                <h5 class="allocated-funds">$<span>@Model.TotalAllocated.ToString("f2")</span></h5>
-                <span class="small">TOTAL ALLOCATED</span>
-                <i class="fas fa-plus plus-icon"></i>
-
-            </div>
-
-            <div class="statistics available-amount flex-column d-flex align-items-center border-right">
-                <h5 class="profit-funds"><span custom-color>$@Model.Profit.ToString("f2")</span></h5>
-                <span class="small">PROFIT</span>
-                <i class="fas fa-equals plus-icon"></i>
-
-            </div>
-
-            <div class="statistics available-amount flex-column d-flex align-items-center"
-                 data-toggle=" modal" data-target="#remove-stock-modal">
-                <h5 class="equity-funds">$<span>@Model.Equity.ToString("f2")</span></h5>
-                <span class="small">EQUITY</span>
-            </div>
-        </div>
 </div>
+
+@section Scripts {
+    @*<script src="~/js/user/user-portfolio.js" type="text/javascript"></script>*@
+
+    <script type="text/javascript">
+
+        $(function () {
+            var chartName = "test-chart";
+            var ctx = document.getElementById(chartName)
+
+            if (ctx) {
+                ctx = ctx.getContext('2d');
+                var data = {
+                    labels: ["Whisky", "Whisky", "Whisky", "Whisky", "Whisky", "Whisky",],
+                    datasets: [{
+                        label: "Drinks Chart",
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 0, 0)',
+                            'rgba(0, 255, 0)',
+                            'rgba(0, 0, 255)',
+                            'rgba(192, 192, 192)',
+                            'rgba(255, 255, 0)',
+                            'rgba(255, 0, 255)'
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 0, 0)',
+                            'rgba(0, 255, 0)',
+                            'rgba(0, 0, 255)',
+                            'rgba(192, 192, 192)',
+                            'rgba(255, 255, 0)',
+                            'rgba(255, 0, 255)'
+                        ],
+                        borderWidth: 1,
+                        data: [1, 5, 9, 10, 12],
+                    }]
+                };
+
+
+                var options = {
+                    maintainAspectRatio: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                beginAtZero: true
+                            },
+                            gridLines: {
+                                display: true,
+                                color: "rgba(255,99,164,0.2)"
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                min: 0,
+                                beginAtZero: true
+                            },
+                            gridLines: {
+                                display: false
+                            }
+                        }]
+                    }
+                };
+
+                var myChart = new Chart(ctx, {
+                    options: options,
+                    data: data,
+                    type: 'pie'
+
+                });
+            }
+        });
+    </script>
+
+}

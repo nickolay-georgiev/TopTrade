@@ -1,21 +1,13 @@
 ﻿namespace TopTrade.Web.ViewModels.User
 {
-    using System;
     using System.Collections.Generic;
-    using System.Text;
+
+    using TopTrade.Web.ViewModels.User.Profile;
 
     public class UserDashboardViewModel
     {
-        public decimal Profit { get; set; }
+        public UserStatisticViewModel UserStatistic { get; set; }
 
-        public decimal Available { get; set; }
-
-        public decimal TotalAllocated { get; set; }
-
-        public decimal Equity { get; set; }
-
-        public int UserId { get; set; }
-
-        public ICollection<StockViewModel> StockWatchlist { get; set; } = new List<StockViewModel>();
+        public ICollection<StockViewModel> StockWatchlist { get; set; }
     }
 }

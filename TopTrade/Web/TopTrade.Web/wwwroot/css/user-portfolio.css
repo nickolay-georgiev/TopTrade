@@ -1,0 +1,39 @@
+﻿table.table-custom-striped tbody tr:nth-child(2n) {
+    background: pink !important;
+}
+
+.close-trade-button {
+    background-color: #1c87c9;
+    -webkit-border-radius: 0.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    color: #eeeeee;
+    cursor: pointer;
+    display: inline-block;
+    font-family: sans-serif;
+    font-size: 20px;
+    padding: 0.4rem 1.7rem;
+    text-align: center;
+    text-decoration: none;
+}
+
+@keyframes glowing {
+    0% {
+        background-color: #2ba805;
+        box-shadow: 0 0 5px #2ba805;
+    }
+
+    50% {
+        background-color: #49e819;
+        box-shadow: 0 0 20px #49e819;
+    }
+
+    100% {
+        background-color: #2ba805;
+        box-shadow: 0 0 5px #2ba805;
+    }
+}
+
+.close-trade-button {
+    animation: glowing 2300ms infinite;
+}

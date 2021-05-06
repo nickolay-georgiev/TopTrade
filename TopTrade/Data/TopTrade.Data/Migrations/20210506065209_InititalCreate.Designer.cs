@@ -10,8 +10,8 @@ using TopTrade.Data;
 namespace TopTrade.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210504152622_AddTradeStatusToTradeEntity")]
-    partial class AddTradeStatusToTradeEntity
+    [Migration("20210506065209_InititalCreate")]
+    partial class InititalCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -383,8 +383,8 @@ namespace TopTrade.Data.Migrations
 
                     b.Property<string>("Number")
                         .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
+                        .HasMaxLength(19)
+                        .HasColumnType("nvarchar(19)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -493,6 +493,9 @@ namespace TopTrade.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<decimal?>("ClosePrice")
+                        .HasColumnType("decimal(14,2)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -505,7 +508,7 @@ namespace TopTrade.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal>("OpenPrice")
                         .HasColumnType("decimal(14,2)");
 
                     b.Property<int>("Quantity")

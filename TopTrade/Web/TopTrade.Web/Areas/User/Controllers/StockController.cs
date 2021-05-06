@@ -32,6 +32,13 @@
         }
 
         [HttpPost]
+        [ActionName("closeTrade")]
+        public ActionResult<StockTickerInputModel> Close(StockTickerInputModel input)
+        {
+            return input;
+        }
+
+        [HttpPost]
         [ActionName("searchStock")]
         public async Task<ActionResult<StockViewModel>> GetStockByTicker(StockSearchResultViewModel stock)
         {
@@ -75,12 +82,12 @@
         }
 
         [HttpPost]
-        [ActionName("remove")]
+        [ActionName("removeFromWathlist")]
         public async Task<IActionResult> RemoveStock(StockTickerInputModel input)
         {
             if (!this.ModelState.IsValid)
             {
-                return this.BadRequest();
+                return this.NotFound();
             }
 
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -93,7 +100,7 @@
             }
             catch (Exception)
             {
-                return this.BadRequest();
+                return this.NotFound();
             }
         }
 
@@ -103,7 +110,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.BadRequest();
+                return this.NotFound();
             }
 
             try
@@ -114,7 +121,7 @@
             }
             catch (Exception)
             {
-                return this.BadRequest();
+                return this.NotFound();
             }
         }
     }

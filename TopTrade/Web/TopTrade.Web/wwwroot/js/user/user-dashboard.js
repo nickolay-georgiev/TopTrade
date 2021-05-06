@@ -19,7 +19,7 @@ async function removeStockButton() {
         this.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector('.stock-ticker').textContent;
     const token = document.querySelector('[name=__RequestVerificationToken]').value;
 
-    const response = await fetch('api/stock/remove', {
+    const response = await fetch('api/stock/removeFromWathlist', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -34,5 +34,3 @@ async function removeStockButton() {
     }
     this.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
 }
-
-
