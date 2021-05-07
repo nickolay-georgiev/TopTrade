@@ -16,11 +16,9 @@
 
         public decimal OpenPrice { get; set; }
 
-        public decimal ClosePrice { get; set; }
+        public DateTime CloseDate { get; set; }
 
         public string StockName { get; set; }
-
-        public DateTime CreatedOn { get; set; }
 
         public decimal TotalPrice => this.OpenPrice * this.Quantity;
 

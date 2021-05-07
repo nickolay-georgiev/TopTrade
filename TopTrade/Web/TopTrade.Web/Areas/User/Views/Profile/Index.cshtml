@@ -123,8 +123,8 @@
                                     <div class="card-body">
                                         <form asp-controller="Profile" asp-action="UploadAvatar" method="POST" enctype="multipart/form-data">
                                             <label asp-for="UserAvatarInputModel.Documents" class="author d-block">
-                                                <input asp-for="UserAvatarInputModel.Documents" type="file" hidden onchange="form.submit()" />                                             
-                                                    <img class="avatar border-gray" src="@Model.AvatarUrl" alt="user-avatar-image">
+                                                <input asp-for="UserAvatarInputModel.Documents" type="file" hidden onchange="form.submit()" />
+                                                <img class="avatar border-gray" src="@Model.AvatarUrl" alt="user-avatar-image">
                                             </label>
                                         </form>
                                     </div>

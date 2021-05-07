@@ -22,9 +22,9 @@
 
         public string TradeType { get; set; }
 
-        public decimal ProfitLossInCash => this.OpenPrice - this.CurrentPrice;
+        public decimal ProfitLossInCash { get; set; }
 
-        public decimal ProfitLossInPercent => (this.CurrentPrice - this.OpenPrice) * 100 / this.OpenPrice;
+        public decimal ProfitLossInPercent { get; set; }
 
         public string Logo => string.Join(string.Empty, this.StockName.Split(new char[] { ' ', '.' })[0]);
 

@@ -34,6 +34,10 @@
 
         public virtual ApplicationUser User { get; set; }
 
+        public DateTime? CloseDate { get; set; }
+
+        public decimal? Balance { get; set; }
+
         [NotMapped]
         public decimal TotalSpent => this.Quantity * this.OpenPrice;
     }

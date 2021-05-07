@@ -67,6 +67,14 @@
                                             </a>
                                         </div>
                                     }
+                                    else
+                                    {
+                                        <div class="open-position-icon" hidden>
+                                            <a asp-area="User" asp-controller="Portfolio" asp-action="Index">
+                                                <i class="fas fa-chart-pie"></i>
+                                            </a>
+                                        </div>
+                                    }
                                 </div>
                             </td>
                             <td class="text-center">
@@ -125,7 +133,7 @@
             <a class="pl-2 text-secondary" href="https://clearbit.com">Logos provided by Clearbit</a>
         </div>
     </div>
-    <partial name="_UserStatisticsPartial" model="Model.UserStatistic">   
+    <partial name="_UserStatisticsPartial" model="Model.UserStatistic">
 </div>
 
 

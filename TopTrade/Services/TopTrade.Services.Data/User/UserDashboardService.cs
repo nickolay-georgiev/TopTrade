@@ -66,16 +66,18 @@
             {
                 var totalTrades = this.GetStockBuyPercentTrades(stock.Ticker);
                 var stockData = await this.stockService.GetStockByTicker(stock.Ticker);
-                var tradeStatus = this.tradeRepository.AllAsNoTracking()
-                    .FirstOrDefault(x => x.UserId == userId && x.Stock.Ticker == stock.Ticker)
-                    .TradeStatus;
+                var tradeStatus = this.tradeRepository
+                    .AllAsNoTracking()
+                    .Where(x => x.UserId == userId)
+                    .Any(x => x.Stock.Ticker == stock.Ticker && x.TradeStatus == TradeStatus.OPEN.ToString())
+                    ? TradeStatus.OPEN.ToString() : TradeStatus.CLOSE.ToString();
 
                 stock.Change = stockData.Change;
                 stock.ChangePercent = stockData.ChangePercent;
                 stock.Price = stockData.Price;
                 stock.BuyPercent = totalTrades.TotalBuyPercentTrades;
-                stock.TradeStatus = tradeStatus;
                 stock.LogoName = string.Join(string.Empty, stock.Name.Split(new char[] { ' ', '.' })[0]);
+                stock.TradeStatus = tradeStatus;
             }
 
             var userAccountStatistic = this.accountStatisticRepository
@@ -334,6 +336,13 @@
             {
                 var stockData = await this.stockService.GetStockByTicker(trade.StockTicker);
                 trade.CurrentPrice = stockData.Price;
+
+                trade.ProfitLossInCash = trade.TradeType == "BUYING" ?
+                trade.CurrentPrice - trade.OpenPrice : trade.OpenPrice - trade.CurrentPrice;
+
+                trade.ProfitLossInPercent = trade.TradeType == "BUYING" ?
+                (trade.CurrentPrice - trade.OpenPrice) * 100 / trade.OpenPrice :
+                (trade.OpenPrice - trade.CurrentPrice) * 100 / trade.OpenPrice;
             }
 
             var userStatistic = this.accountStatisticRepository
@@ -362,7 +371,10 @@
                 throw new ArgumentNullException("Invalid trade id");
             }
 
+            trade.CloseDate = DateTime.UtcNow;
+            trade.ClosePrice = input.CurrentPrice;
             trade.TradeStatus = TradeStatus.CLOSE.ToString();
+
             this.tradeRepository.Update(trade);
             await this.tradeRepository.SaveChangesAsync();
 

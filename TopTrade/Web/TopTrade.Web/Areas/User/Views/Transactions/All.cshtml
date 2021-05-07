@@ -61,7 +61,7 @@
                                                             <div class="status badge badge-success badge-pill badge-sm">Completed</div>
                                                         </td>
                                                         <td>
-                                                            <div class="time">@trade.CreatedOn.ToLocalTime()</div>
+                                                            <div class="time">@trade.CloseDate.ToLocalTime()</div>
                                                         </td>
                                                     </tr>
                                                 }
@@ -75,9 +75,385 @@
                                     </div>
                                 </div>
                             </div>
+                            <section class="chart-wrapper ml-4 row mb-5 mt-3 d-flex justify-content-between">
+
+                                <div class="chart-card col-md-5 pl-0 pie-chart-div theDiv">
+                                    <div class="zoom-chart text-right mt-2 mr-2">
+                                        <i class="fas fa-search-plus text-secondary"></i>
+                                    </div>
+                                    <div class="chart-container">
+                                        <canvas id="line-chart"></canvas>
+                                    </div>
+                                </div>
+
+                                <div class="chart-card col-md-6 mr-5 bar-chart-div theDiv">
+                                    <div class="zoom-chart text-right mt-2 mr-2">
+                                        <i class="fas fa-search-plus text-secondary"></i>
+                                    </div>
+                                    <div class="chart-container">
+                                        <canvas id="bar-chart"></canvas>
+                                    </div>
+                                </div>
+
+                            </section>
                         </div>
                     </div>
                 </section>
             </div>
     </div>
 </div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+        window.onload = function () {
+
+            var dataDto = @Html.Raw(Model.ProfitLossBarChartViewModel);
+            const monthNames = [
+                'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+
+            const date = new Date();
+            const chartName = "bar-chart";
+            let ctx = document.getElementById(chartName)
+            let clicks = 0;
+
+            var dataModel = [
+                {
+                    buyCount :0,
+                    sellCount: 0,
+                    month: 'January'
+                },
+                {
+                    buyCount: 0,
+                    sellCount: 0,
+                    month: 'February'
+                },
+                {
+                    buyCount: 0,
+                    sellCount: 0,
+                    month: 'March'
+                },
+                {
+                    buyCount: 0,
+                    sellCount: 0,
+                    month: 'April'
+                },
+                {
+                    buyCount: 0,
+                    sellCount: 0,
+                    month: 'May'
+                },
+                {
+                    buyCount: 0,
+                    sellCount: 0,
+                    month: 'June'
+                },
+                {
+                    buyCount: 0,
+                    sellCount: 0,
+                    month: 'July'
+                },
+                {
+                    buyCount: 0,
+                    sellCount: 0,
+                    month: 'August'
+                },
+                {
+                    buyCount: 0,
+                    sellCount: 0,
+                    month: 'September'
+                },
+                {
+                    buyCount: 0,
+                    sellCount: 0,
+                    month: 'October'
+                },
+                {
+                    buyCount: 0,
+                    sellCount: 0,
+                    month: 'November'
+                },
+                {
+                    buyCount: 0,
+                    sellCount: 0,
+                    month: 'December'
+                },
+            ];
+
+            for (var record in dataDto) {
+                let currentMonth = dataModel.find(x => x.month == dataDto[record].Month);
+                currentMonth.buyCount = dataDto[record].BuyCount;
+                currentMonth.sellCount = dataDto[record].SellCount;
+            }
+
+            dataModel = dataModel.slice(0, date.getMonth() + 1);
+
+            ctx = ctx.getContext('2d');
+            const DATA_COUNT = 7;
+
+            const labels = [...dataModel.map(x => x.month)];
+            const data = {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'BUY TRADES',
+                        data: [...dataModel.map(x => x.buyCount)],
+                        borderColor: "rgba(40,230,154,.6)",
+                        backgroundColor: "rgba(22,211,154,.6)",
+                    },
+                    {
+                        label: 'SELL TRADES',
+                        data: [...dataModel.map(x => x.sellCount)],
+                        borderColor: "rgba(255, 200, 180, .6)",
+                        backgroundColor: "rgba(255, 160, 180, .6)",
+                    }
+                ]
+            };
+
+            const options = {
+                type: 'bar',
+                data: data,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    }
+                },
+            };
+
+            var myChart = new Chart(ctx, {
+                options: options,
+                data: data,
+                type: 'bar'
+
+            });
+
+            document.querySelectorAll('.zoom-chart > i').forEach(x => x.addEventListener('click', (function (e) {
+
+                let parent = e.target.parentElement.parentElement;
+
+                if (clicks % 2 == 0) {
+                    parent.classList.add('zoom');
+                    document.querySelector('.transactions-deposit-card').style.display = 'none';
+                    if (parent.classList.contains('bar-chart-div')) {
+                        document.querySelector('.pie-chart-div').style.display = 'none';
+                        parent.classList.remove('col-md-6');
+
+                    } else {
+                        document.querySelector('.bar-chart-div').style.display = 'none';
+                        parent.classList.remove('col-md-5');
+                        parent.classList.add('zoom-one');
+                    }
+                } else {
+                    parent.classList.remove('zoom');
+                    document.querySelector('.transactions-deposit-card').style.display = 'block';
+                    if (parent.classList.contains('bar-chart-div')) {
+                        document.querySelector('.pie-chart-div').style.display = 'block';
+                        parent.classList.add('col-md-6');
+                        parent.display = 'block';
+
+                    } else {
+                        document.querySelector('.pie-chart-div').style.display = 'block';
+                        document.querySelector('.bar-chart-div').style.display = 'block';
+                        parent.classList.add('col-md-5');
+                        parent.classList.remove('zoom-one');
+                    }
+                }
+                clicks++;
+            })));
+
+            function generateChart() {
+
+                var dataDto = @Html.Raw(Model.MonthlyWalletPerformanceChartViewModel);
+                var dataModel = [
+                    {
+                        balance: 0,
+                        month: 'January'
+                    },
+                    {
+                        balance: 0,
+                        month: 'February'
+                    },
+                    {
+                        balance: 0,
+                        month: 'March'
+                    },
+                    {
+                        balance: 0,
+                        month: 'April'
+                    },
+                    {
+                        balance: 0,
+                        month: 'May'
+                    },
+                    {
+                        balance: 0,
+                        month: 'June'
+                    },
+                    {
+                        balance: 0,
+                        month: 'July'
+                    },
+                    {
+                        balance: 0,
+                        month: 'August'
+                    },
+                    {
+                        balance: 0,
+                        month: 'September'
+                    },
+                    {
+                        balance: 0,
+                        month: 'October'
+                    },
+                    {
+                        balance: 0,
+                        month: 'November'
+                    },
+                    {
+                        balance: 0,
+                        month: 'December'
+                    },
+                ];
+
+                for (var record in dataDto) {
+                   let currentMonth = dataModel.find(x => x.month == dataDto[record].Month);
+                    currentMonth.balance = dataDto[record].Balance;
+                }
+
+                const monthNames = [
+                    'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+                ];
+
+                dataModel = dataModel.slice(0, date.getMonth() + 1);
+
+                //const labels = dataModel.map(x => x.month);
+                const labels = monthNames;
+                const data = {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'ACCOUNT PERFORMANCE',
+                            data: dataModel.map(x => x.balance),
+                            borderColor: "rgba(10, 160, 180, .6)",
+                            backgroundColor: "rgba(2, 160, 180, .3)",
+                        },
+                    ]
+                };
+
+                const options = {
+                    type: 'line',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Chart.js Line Chart'
+                            }
+                        }
+                    },
+                };
+
+                let ctx = document.getElementById('line-chart')
+                var myChart = new Chart(ctx, {
+                    options: options,
+                    data: data,
+                    type: 'line'
+
+                });
+            }
+            generateChart();
+        };
+
+
+
+        //$(function () {
+        //    var chartName = "test-chart";
+        //    var ctx = document.getElementById(chartName)
+
+        //    if (ctx) {
+        //        ctx = ctx.getContext('2d');
+        //        var data = {
+        //            labels: ["Whisky", "Whisky", "Whisky", "Whisky", "Whisky", "Whisky",],
+        //            datasets: [{
+        //                label: "Drinks Chart",
+        //                backgroundColor: [
+        //                    'rgba(255, 99, 132, 0.2)',
+        //                    'rgba(54, 162, 235, 0.2)',
+        //                    'rgba(255, 206, 86, 0.2)',
+        //                    'rgba(75, 192, 192, 0.2)',
+        //                    'rgba(153, 102, 255, 0.2)',
+        //                    'rgba(255, 159, 64, 0.2)',
+        //                    'rgba(255, 0, 0)',
+        //                    'rgba(0, 255, 0)',
+        //                    'rgba(0, 0, 255)',
+        //                    'rgba(192, 192, 192)',
+        //                    'rgba(255, 255, 0)',
+        //                    'rgba(255, 0, 255)'
+        //                ],
+        //                borderColor: [
+        //                    'rgba(255,99,132,1)',
+        //                    'rgba(54, 162, 235, 1)',
+        //                    'rgba(255, 206, 86, 1)',
+        //                    'rgba(75, 192, 192, 1)',
+        //                    'rgba(153, 102, 255, 1)',
+        //                    'rgba(255, 159, 64, 1)',
+        //                    'rgba(255, 0, 0)',
+        //                    'rgba(0, 255, 0)',
+        //                    'rgba(0, 0, 255)',
+        //                    'rgba(192, 192, 192)',
+        //                    'rgba(255, 255, 0)',
+        //                    'rgba(255, 0, 255)'
+        //                ],
+        //                borderWidth: 1,
+        //                data: [1, 5, 9, 10, 12],
+        //            }]
+        //        };
+
+
+        //        var options = {
+        //            responsive: true,
+        //            maintainAspectRatio: false,
+        //            scales: {
+        //                yAxes: [{
+        //                    ticks: {
+        //                        min: 0,
+        //                        beginAtZero: true
+        //                    },
+        //                    gridLines: {
+        //                        display: true,
+        //                        color: "rgba(255,99,164,0.2)"
+        //                    }
+        //                }],
+        //                xAxes: [{
+        //                    ticks: {
+        //                        min: 0,
+        //                        beginAtZero: true
+        //                    },
+        //                    gridLines: {
+        //                        display: false
+        //                    }
+        //                }]
+        //            }
+        //        };
+
+        //        var myChart = new Chart(ctx, {
+        //            options: options,
+        //            data: data,
+        //            type: 'pie'
+
+        //        });
+        //    }
+        //});
+
+
+    </script>
+
+}
