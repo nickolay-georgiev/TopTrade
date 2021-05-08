@@ -15,15 +15,18 @@
     public class HomeController : BaseLoggedUserController
     {
         private readonly IAlphaVantageApiClientService stockService;
+        private readonly ITradeService tradeService;
         private readonly IUserDashboardService userDashboardService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public HomeController(
             IAlphaVantageApiClientService stockService,
+            ITradeService tradeService,
             IUserDashboardService userDashboardService,
             UserManager<ApplicationUser> userManager)
         {
             this.stockService = stockService;
+            this.tradeService = tradeService;
             this.userDashboardService = userDashboardService;
             this.userManager = userManager;
         }

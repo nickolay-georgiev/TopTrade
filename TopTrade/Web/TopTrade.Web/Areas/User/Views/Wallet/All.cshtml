@@ -18,83 +18,58 @@
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <div class="dataTables_wrapper dt-bootstrap4 no-footer">
-                                            <div class="row">
-                                                <div class="col-sm-12 col-md-6">
-                                                    <div class="dataTables_length">
-                                                        <label>
-                                                            Show <select class="custom-select custom-select-sm form-control form-control-sm">
-                                                                <option value="10">10</option>
-                                                                <option value="25">25</option>
-                                                                <option value="50">50</option>
-                                                                <option value="100">100</option>
-                                                            </select> entries
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-md-6">
-                                                    <div id="DataTables_Table_0_filter" class="dataTables_filter">
-                                                        <label>
-                                                            Search:<input type="search"
-                                                                          class="form-control form-control-sm"
-                                                                          placeholder="">
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <table class="table alt-pagination history-wrapper dataTable no-footer"
-                                                           role="grid"
-                                                           aria-describedby="DataTables_Table_0_info">
-                                                        <thead>
-                                                            <tr role="row">
-                                                                <th class="sorting_asc" tabindex="0"
-                                                                    aria-controls="DataTables_Table_0" rowspan="1"
-                                                                    colspan="1" aria-sort="ascending"
-                                                                    aria-label="Date: activate to sort column descending"
-                                                                    style="width: 208px;">Date</th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="DataTables_Table_0" rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="Coin: activate to sort column ascending"
-                                                                    style="width: 217px;">Amount</th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="DataTables_Table_0" rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="Volume: activate to sort column ascending"
-                                                                    style="width: 193px;">Card Number</th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="DataTables_Table_0" rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="Status: activate to sort column ascending"
-                                                                    style="width: 199px;">Status</th>
+                                            <div class="col-sm-12">
+                                                <table class="table alt-pagination history-wrapper dataTable no-footer"
+                                                       role="grid"
+                                                       aria-describedby="DataTables_Table_0_info">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th class="sorting_asc" tabindex="0"
+                                                                aria-controls="DataTables_Table_0" rowspan="1"
+                                                                colspan="1" aria-sort="ascending"
+                                                                aria-label="Date: activate to sort column descending"
+                                                                style="width: 208px;">Date</th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="DataTables_Table_0" rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Coin: activate to sort column ascending"
+                                                                style="width: 217px;">Amount</th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="DataTables_Table_0" rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Volume: activate to sort column ascending"
+                                                                style="width: 193px;">Card Number</th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="DataTables_Table_0" rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending"
+                                                                style="width: 199px;">Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var deposit in Model.Deposits)
+                                                        {
+                                                            <tr role="row" class="odd">
+                                                                <td class="align-middle sorting_1">
+                                                                    <div class="date">@deposit.CreatedOn.ToLocalTime()</div>
+                                                                </td>
+                                                                <td class="align-middle">
+                                                                    <div class="coin">
+                                                                        <i class="cc BTC warning"></i>$@deposit.Amount.ToString("f2")
+                                                                    </div>
+                                                                </td>
+                                                                <td class="align-middle">
+                                                                    <div class="volume">@deposit.CardNumber</div>
+                                                                </td>
+                                                                <td class="align-middle">
+                                                                    <div custom-badge>
+                                                                        @deposit.TransactionStatus
+                                                                    </div>
+                                                                </td>
                                                             </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach (var deposit in Model.Deposits)
-                                                            {
-                                                                <tr role="row" class="odd">
-                                                                    <td class="align-middle sorting_1">
-                                                                        <div class="date">@deposit.CreatedOn.ToLocalTime()</div>
-                                                                    </td>
-                                                                    <td class="align-middle">
-                                                                        <div class="coin">
-                                                                            <i class="cc BTC warning"></i>@deposit.Amount
-                                                                        </div>
-                                                                    </td>
-                                                                    <td class="align-middle">
-                                                                        <div class="volume">@deposit.CardNumber</div>
-                                                                    </td>
-                                                                    <td class="align-middle">
-                                                                        <div custom-badge>
-                                                                            @deposit.TransactionStatus
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                        }
+                                                    </tbody>
+                                                </table>
                                             </div>
                                             <div class="row d-flex justify-content-end">
                                                 <partial name="_PagingPartial" model="@Model.DepositsPaging" />
@@ -115,31 +90,6 @@
                                     <div class="table-responsive">
                                         <div id="DataTables_Table_1_wrapper"
                                              class="dataTables_wrapper dt-bootstrap4 no-footer">
-                                            <div class="row">
-                                                <div class="col-sm-12 col-md-6">
-                                                    <div class="dataTables_length" id="DataTables_Table_1_length">
-                                                        <label>
-                                                            Show <select name="DataTables_Table_1_length"
-                                                                         aria-controls="DataTables_Table_1"
-                                                                         class="custom-select custom-select-sm form-control form-control-sm">
-                                                                <option value="10">10</option>
-                                                                <option value="25">25</option>
-                                                                <option value="50">50</option>
-                                                                <option value="100">100</option>
-                                                            </select> entries
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-md-6">
-                                                    <div id="DataTables_Table_1_filter" class="dataTables_filter">
-                                                        <label>
-                                                            Search:<input type="search"
-                                                                          class="form-control form-control-sm" placeholder=""
-                                                                          aria-controls="DataTables_Table_1">
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <table class="table alt-pagination history-wrapper dataTable no-footer"

@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Text.Json;
+    using System.Threading.Tasks;
     using TopTrade.Data.Common.Repositories;
     using TopTrade.Data.Models;
     using TopTrade.Data.Models.User;
@@ -12,10 +13,14 @@
 
     public class TradeService : ITradeService
     {
+        private readonly IDeletableEntityRepository<AccountStatistic> accountStatistic;
         private readonly IDeletableEntityRepository<Trade> tradeRepository;
 
-        public TradeService(IDeletableEntityRepository<Trade> tradeRepository)
+        public TradeService(
+            IDeletableEntityRepository<AccountStatistic> accountStatistic,
+            IDeletableEntityRepository<Trade> tradeRepository)
         {
+            this.accountStatistic = accountStatistic;
             this.tradeRepository = tradeRepository;
         }
 
@@ -65,6 +70,37 @@
             historyViewModel.MonthlyWalletPerformanceChartViewModel = JsonSerializer.Serialize(monthlyBalance);
 
             return historyViewModel;
+        }
+
+        public async Task TakeAllSwapFeesAsync()
+        {
+            var userGroups = this.tradeRepository
+                .All()
+                .Where(x => x.TradeStatus == TradeStatus.OPEN.ToString())
+                .ToList()
+                .GroupBy(x => x.UserId);
+
+            foreach (var group in userGroups)
+            {
+                var userId = group.Key;
+
+                foreach (var trade in group)
+                {
+                    trade.SwapFee += trade.OpenPrice * 0.01m;
+                    this.tradeRepository.Update(trade);
+                }
+
+
+                var totalSwapFee = group.Sum(x => x.OpenPrice * 0.01m);
+                var currentUserStatistic = this.accountStatistic.All()
+                    .FirstOrDefault(x => x.UserId == userId);
+
+                currentUserStatistic.Available -= totalSwapFee;
+                this.accountStatistic.Update(currentUserStatistic);
+            }
+
+            await this.tradeRepository.SaveChangesAsync();
+            await this.accountStatistic.SaveChangesAsync();
         }
     }
 }

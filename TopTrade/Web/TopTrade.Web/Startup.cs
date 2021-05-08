@@ -1,6 +1,12 @@
 ﻿namespace TopTrade.Web
 {
+    using System;
     using System.Reflection;
+
+    using Hangfire;
+    using Hangfire.Dashboard;
+    using Hangfire.SqlServer;
+
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -10,12 +16,14 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using TopTrade.Common;
     using TopTrade.Data;
     using TopTrade.Data.Common;
     using TopTrade.Data.Common.Repositories;
     using TopTrade.Data.Models;
     using TopTrade.Data.Repositories;
     using TopTrade.Data.Seeding;
+    using TopTrade.Services.CronJobs;
     using TopTrade.Services.Data;
     using TopTrade.Services.Data.User;
     using TopTrade.Services.Mapping;
@@ -35,6 +43,22 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHangfire(
+                      config => config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                          .UseSimpleAssemblyNameTypeSerializer().UseRecommendedSerializerSettings().UseSqlServerStorage(
+                              this.configuration.GetConnectionString("DefaultConnection"),
+                              new SqlServerStorageOptions
+                              {
+                                  CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                                  SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                                  QueuePollInterval = TimeSpan.Zero,
+                                  UseRecommendedIsolationLevel = true,
+                                  UsePageLocksOnDequeue = true,
+                                  DisableGlobalLocks = true,
+                              }));
+
+            services.AddHangfireServer();
+
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
@@ -79,7 +103,7 @@
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IRecurringJobManager recurringJobManager)
         {
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
@@ -102,6 +126,8 @@
                 app.UseHsts();
             }
 
+            this.SeedHangfireJobs(recurringJobManager);
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -111,6 +137,19 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
+            //if (env.IsProduction())
+            //{
+            //    app.UseHangfireServer(new BackgroundJobServerOptions { WorkerCount = 2 });
+            //    app.UseHangfireDashboard(
+            //        "/hangfire",
+            //        new DashboardOptions { Authorization = new[] { new HangfireAuthorizationFilter() } });
+            //}
+
+            app.UseHangfireServer(new BackgroundJobServerOptions { WorkerCount = 2 });
+            app.UseHangfireDashboard(
+                "/hangfire",
+                new DashboardOptions { Authorization = new[] { new HangfireAuthorizationFilter() } });
+
             app.UseEndpoints(
                 endpoints =>
                     {
@@ -118,6 +157,20 @@
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();
                     });
+        }
+
+        private void SeedHangfireJobs(IRecurringJobManager recurringJobManager)
+        {
+            recurringJobManager.AddOrUpdate<TakeAllSwapFees>("TakeAllSwapFees", x => x.Work(), Cron.Daily);
+        }
+
+        private class HangfireAuthorizationFilter : IDashboardAuthorizationFilter
+        {
+            public bool Authorize(DashboardContext context)
+            {
+                var httpContext = context.GetHttpContext();
+                return true;
+            }
         }
     }
 }

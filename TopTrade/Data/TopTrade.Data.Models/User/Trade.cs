@@ -38,6 +38,9 @@
 
         public decimal? Balance { get; set; }
 
+        [Column(TypeName = "decimal(18, 4)")]
+        public decimal SwapFee { get; set; }
+
         [NotMapped]
         public decimal TotalSpent => this.Quantity * this.OpenPrice;
     }

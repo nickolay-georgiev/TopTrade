@@ -152,7 +152,7 @@
                   <p class="mb-0 ml-2 font-weight-bold small ${color}">(${changeInPercents.toFixed(2)})&#37</p>
               </td>
               <td style="width: 230px">
-                  <div class="stock-chart">
+                  <div class="stock-chart" style="height: 60px;">
                        <canvas id="line"></canvas>
                   </div>
               </td>

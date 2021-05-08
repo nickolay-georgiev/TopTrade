@@ -25,9 +25,10 @@
 
         public async Task<IList<AllNewsViewModel>> GetLatestStocksNewsAsync(string keyword)
         {
-            keyword = keyword == "All" ? "NYSE" : keyword;
+            keyword = keyword == "All" ? "NYSE AMEX NASDAQ BLOOMBERG SEEKINGALPHA WALLSTREET YAHOOFINANCE INVESTING" : keyword;
 
-            ArticlesResult articlesResponse = await this.newsApiClient.GetEverythingAsync(new EverythingRequest
+            ArticlesResult articlesResponse = await this.newsApiClient
+                .GetEverythingAsync(new EverythingRequest
             {
                 Q = keyword,
                 SortBy = SortBys.PublishedAt,
@@ -45,7 +46,7 @@
                     Url = x.Url,
                     PublishedAt = x.PublishedAt,
                     ImageUrl = x.UrlToImage,
-                }).Take(5).ToList();
+                }).Take(20).ToList();
 
             return articles;
         }
