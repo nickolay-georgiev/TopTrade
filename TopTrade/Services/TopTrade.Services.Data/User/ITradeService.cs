@@ -10,5 +10,7 @@
         TradeHistoryViewModel GetTradeHistory(ApplicationUser user, int page, int itemsPerPage);
 
         Task TakeAllSwapFeesAsync();
+
+        string GetData();
     }
 }

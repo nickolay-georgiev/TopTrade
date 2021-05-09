@@ -211,6 +211,31 @@
 
     <script type="text/javascript">
 
+        var tickers = [...document.querySelectorAll('.stock-ticker')].map(x => x.textContent);
+
+        document.addEventListener('DOMContentLoaded', function (e) {
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("/user/index")
+                .build();
+
+            connection.on("GetStockData", function (data) {
+                console.log(data);
+            });
+
+
+            connection.start()
+                .then(() => {
+                    setInterval(function () {
+                        console.log(connection.invoke("GetActualStockData", tickers));
+                    }, 112000);
+                    //connection.invoke("GetActualStockData", "test message");
+                })
+                .catch(err => console.error(err.toString()));
+        });
+    </script>
+
+    <script type="text/javascript">
+
         var ctx = document.querySelector('#line');
         if (ctx) {
             ctx = ctx.getContext('2d');

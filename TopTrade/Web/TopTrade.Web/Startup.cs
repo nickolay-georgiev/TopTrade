@@ -16,7 +16,6 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using TopTrade.Common;
     using TopTrade.Data;
     using TopTrade.Data.Common;
     using TopTrade.Data.Common.Repositories;
@@ -29,6 +28,7 @@
     using TopTrade.Services.Mapping;
     using TopTrade.Services.Messaging;
     using TopTrade.Services.Stock;
+    using TopTrade.Web.Areas.User.Hubs;
     using TopTrade.Web.ViewModels;
 
     public class Startup
@@ -71,6 +71,8 @@
                         options.CheckConsentNeeded = context => true;
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
+
+            services.AddSignalR();
 
             services.AddControllersWithViews(
                 options =>
@@ -153,6 +155,8 @@
             app.UseEndpoints(
                 endpoints =>
                     {
+                        endpoints.MapHub<TradeHub>("/user/index");
+                        endpoints.MapHub<TradeHub>("/user/portfolio/index");
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();

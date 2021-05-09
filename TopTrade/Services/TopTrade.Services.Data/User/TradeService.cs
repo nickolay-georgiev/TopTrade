@@ -102,5 +102,10 @@
             await this.tradeRepository.SaveChangesAsync();
             await this.accountStatistic.SaveChangesAsync();
         }
+
+        public string GetData()
+        {
+            return "test data";
+        }
     }
 }
