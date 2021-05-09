@@ -15,13 +15,13 @@
     public class ProfileController : BaseLoggedUserController
     {
         private readonly IWebHostEnvironment environment;
-        private readonly IUserProfileService editProfileService;
+        private readonly IUserService editProfileService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IUploadDocumentsService uploadDocumentsService;
 
         public ProfileController(
             IWebHostEnvironment environment,
-            IUserProfileService editProfileService,
+            IUserService editProfileService,
             UserManager<ApplicationUser> userManager,
             IUploadDocumentsService uploadDocumentsService)
         {

@@ -1,12 +1,6 @@
 ﻿namespace TopTrade.Web.ViewModels.User
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Text;
-
-    using TopTrade.Data.Models;
-    using TopTrade.Services.Mapping;
 
     public class EditProfileViewModel
     {

@@ -1,6 +1,5 @@
-﻿namespace TopTrade.Services.Data
+﻿namespace TopTrade.Services
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using AlphaVantage.Net.Stocks;
@@ -8,10 +7,10 @@
 
     public interface IAlphaVantageApiClientService
     {
-        Task<StockSearchResultViewModel[]> SearchStockBySymbol(string stockNameOrTicker);
+        Task<StockSearchResultViewModel[]> SearchStockBySymbolAsync(string stockNameOrTicker);
 
-        Task<StockViewModel> GetStockByTicker(string stockTicker);
+        Task<StockViewModel> GetStockDataAsync(string stockTicker);
 
-        Task<StockTimeSeries> GetStockTimeSeries(string stockTicker);
+        Task<StockTimeSeries> GetStockTimeSeriesAsync(string stockTicker);
     }
 }

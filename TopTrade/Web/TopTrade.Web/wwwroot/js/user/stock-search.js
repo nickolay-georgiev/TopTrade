@@ -141,7 +141,7 @@
                       <p class="mb-0 ml-2 small stock-name">${companyName}</p>
                   </div>
                   <div class="open-position-icon" hidden>
-                      <a asp-area="User" asp-controller="Portfolio" asp-action="Index">
+                      <a href="/User/Portfolio" asp-action="Index">
                           <i class="fas fa-chart-pie"></i>
                       </a>
                   </div>
@@ -316,7 +316,7 @@
                         if (lastClick >= (Date.now() - delay)) { return }
                         lastClick = Date.now();
 
-                        let response = await makeAjax(endpoint, tradeDetails);
+                        let response = await makeAjax("trade", tradeDetails);
                         let result = await response.json();
 
                         if (response.ok) {

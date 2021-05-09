@@ -1,9 +1,6 @@
 ﻿namespace TopTrade.Data.Models.User
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Text;
 
     using TopTrade.Data.Common.Models;
 

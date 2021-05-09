@@ -3,12 +3,10 @@ namespace TopTrade.Data.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     using Microsoft.AspNetCore.Identity;
     using TopTrade.Data.Common.Models;
     using TopTrade.Data.Models.User;
-    using TopTrade.Data.Models.User.Enums;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {

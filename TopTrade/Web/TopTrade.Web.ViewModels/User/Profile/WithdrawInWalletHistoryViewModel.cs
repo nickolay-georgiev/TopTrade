@@ -1,6 +1,5 @@
 ﻿namespace TopTrade.Web.ViewModels.User.Profile
 {
-    using AutoMapper;
     using System;
 
     using TopTrade.Data.Models.User;
@@ -20,11 +19,11 @@
 
         public string TransactionStatus { get; set; }
 
-        //public void CreateMappings(IProfileExpression configuration)
-        //{
+        // public void CreateMappings(IProfileExpression configuration)
+        // {
         //    configuration.CreateMap<Withdraw, WithdrawInWalletHistoryViewModel>()
         //       .ForMember(x => x.card, opt =>
         //           opt.MapFrom(x => x.Stock.Name));
-        //}
+        // }
     }
 }

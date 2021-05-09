@@ -7,41 +7,35 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using TopTrade.Data.Models;
-    using TopTrade.Services.Data;
     using TopTrade.Services.Data.User;
     using TopTrade.Web.Areas.User.Controllers;
     using TopTrade.Web.ViewModels.User.Profile;
 
     public class HomeController : BaseLoggedUserController
     {
-        private readonly IAlphaVantageApiClientService stockService;
+        private readonly IUserService userService;
+        private readonly IStockService stockService;
         private readonly ITradeService tradeService;
-        private readonly IUserDashboardService userDashboardService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public HomeController(
-            IAlphaVantageApiClientService stockService,
+            IUserService userService,
+            IStockService stockService,
             ITradeService tradeService,
-            IUserDashboardService userDashboardService,
             UserManager<ApplicationUser> userManager)
         {
-            this.stockService = stockService;
-            this.tradeService = tradeService;
-            this.userDashboardService = userDashboardService;
+            this.userService = userService;
             this.userManager = userManager;
+            this.tradeService = tradeService;
+            this.stockService = stockService;
         }
 
         public async Task<IActionResult> Index()
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var userData = await this.userDashboardService.GetUserDataAsync(userId);
+            var userData = await this.stockService.GetUserWatchlistWithStatisticAsync(userId);
             return this.View(userData);
         }
-
-        //public async Task<IActionResult> Index()
-        //{
-        //    return this.View();
-        //}
 
         [HttpPost]
         public async Task<IActionResult> WithdrawFunds(WithdrawInputModel input)
@@ -57,7 +51,7 @@
 
             try
             {
-                await this.userDashboardService.AcceptWithdrawRequest(input, userId);
+                await this.userService.AcceptWithdrawRequest(input, userId);
             }
             catch (Exception error)
             {

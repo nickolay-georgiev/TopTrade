@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
 
     using TopTrade.Data.Models;
+    using TopTrade.Web.ViewModels.User.Profile;
     using TopTrade.Web.ViewModels.User.Stock;
 
     public interface ITradeService
@@ -11,6 +12,8 @@
 
         Task TakeAllSwapFeesAsync();
 
-        string GetData();
+        Task<UserStatisticViewModel> Trade(StockTradeDetailsInputModel input, string userId);
+
+        Task CloseTradeAsync(int id, CloseTradeInputModel input, string userId);
     }
 }

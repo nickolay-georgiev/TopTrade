@@ -8,10 +8,8 @@
     [Authorize]
     public class TradeHub : Hub
     {
-
         public TradeHub()
         {
-            
         }
 
         public async Task GetActualStockData(string[] data)

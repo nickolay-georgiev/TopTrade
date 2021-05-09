@@ -1,8 +1,6 @@
 ﻿namespace TopTrade.Web.Areas.User.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -12,17 +10,21 @@
 
     public class PortfolioController : BaseLoggedUserController
     {
-        private readonly IUserDashboardService userDashboardService;
+        private readonly IStockService stockService;
+        private readonly ITradeService tradeService;
 
-        public PortfolioController(IUserDashboardService userDashboardService)
+        public PortfolioController(
+            IStockService stockService,
+            ITradeService tradeService)
         {
-            this.userDashboardService = userDashboardService;
+            this.stockService = stockService;
+            this.tradeService = tradeService;
         }
 
         public async Task<IActionResult> Index()
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var portfolioVewModel = await this.userDashboardService.GetPortoflioAsync(userId);
+            var portfolioVewModel = await this.stockService.GetPortoflioAsync(userId);
 
             return this.View(portfolioVewModel);
         }
@@ -34,7 +36,7 @@
 
             try
             {
-                await this.userDashboardService.CloseTradeAsync(id, input, userId);
+                await this.tradeService.CloseTradeAsync(id, input, userId);
             }
             catch (Exception error)
             {

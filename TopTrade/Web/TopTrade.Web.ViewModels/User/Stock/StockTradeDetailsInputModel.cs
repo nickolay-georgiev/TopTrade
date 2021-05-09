@@ -1,9 +1,5 @@
 ﻿namespace TopTrade.Web.ViewModels.User.Stock
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     public class StockTradeDetailsInputModel
     {
         public string Ticker { get; set; }

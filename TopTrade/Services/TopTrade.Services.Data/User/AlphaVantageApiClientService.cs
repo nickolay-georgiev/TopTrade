@@ -1,4 +1,4 @@
-﻿namespace TopTrade.Services.Data
+﻿namespace TopTrade.Services.Stock
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -22,7 +22,7 @@
             this.configuration = configuration;
         }
 
-        public async Task<StockSearchResultViewModel[]> SearchStockBySymbol(string stockNameOrTicker)
+        public async Task<StockSearchResultViewModel[]> SearchStockBySymbolAsync(string stockNameOrTicker)
         {
             using var client = new AlphaVantageClient(this.configuration.GetSection(GlobalConstants.AlphaVantageApiKey).Value);
             using var stocksClient = client.Stocks();
@@ -42,17 +42,18 @@
             return stocks;
         }
 
-        public async Task<StockViewModel> GetStockByTicker(string stockTicker)
+        public async Task<StockViewModel> GetStockDataAsync(string stockTicker)
         {
-            using var client = new AlphaVantageClient("AYEDU2WZ2YC86XC0");
+            using var client = new AlphaVantageClient(this.configuration.GetSection(GlobalConstants.AlphaVantageApiKey).Value);
             using var stocksClient = client.Stocks();
 
             var stockResult = await stocksClient.GetGlobalQuoteAsync(stockTicker);
-            //var stockTimeSeries = await stocksClient
-            //    .GetTimeSeriesAsync(stockTicker, Interval.Daily, OutputSize.Compact, isAdjusted: true);
 
-            //var dataset = stockTimeSeries.DataPoints.Select(x => x.ClosingPrice).ToList();
+            // var stockTimeSeries = await stocksClient
 
+            // .GetTimeSeriesAsync(stockTicker, Interval.Daily, OutputSize.Compact, isAdjusted: true);
+
+            // var dataset = stockTimeSeries.DataPoints.Select(x => x.ClosingPrice).ToList();
             var stock = new StockViewModel
             {
                 Ticker = stockResult.Symbol,
@@ -65,9 +66,9 @@
             return stock;
         }
 
-        public async Task<StockTimeSeries> GetStockTimeSeries(string stockTicker)
+        public async Task<StockTimeSeries> GetStockTimeSeriesAsync(string stockTicker)
         {
-            using var client = new AlphaVantageClient("AYEDU2WZ2YC86XC0");
+            using var client = new AlphaVantageClient(this.configuration.GetSection(GlobalConstants.AlphaVantageApiKey).Value);
             using var stocksClient = client.Stocks();
             return await stocksClient.GetTimeSeriesAsync(stockTicker, Interval.Daily, OutputSize.Compact, isAdjusted: true);
         }

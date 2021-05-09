@@ -1,8 +1,5 @@
 ﻿namespace TopTrade.Web.Areas.User.ViewComponents
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
@@ -13,11 +10,11 @@
     public class UserCardViewComponent : ViewComponent
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly IUserProfileService editProfileService;
+        private readonly IUserService editProfileService;
 
         public UserCardViewComponent(
             UserManager<ApplicationUser> userManager,
-            IUserProfileService editProfileService)
+            IUserService editProfileService)
         {
             this.userManager = userManager;
             this.editProfileService = editProfileService;

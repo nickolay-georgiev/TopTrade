@@ -1,15 +1,12 @@
 ﻿namespace TopTrade.Web.Areas.User.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
 
     public class SettingsController : BaseLoggedUserController
     {
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             return this.View();
         }

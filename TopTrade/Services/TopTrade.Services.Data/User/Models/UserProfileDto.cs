@@ -1,9 +1,5 @@
 ﻿namespace TopTrade.Services.Data.User.Models
 {
-    using System.Collections.Generic;
-
-    using Microsoft.AspNetCore.Http;
-
     public class UserProfileDto
     {
         public string FirstName { get; set; }

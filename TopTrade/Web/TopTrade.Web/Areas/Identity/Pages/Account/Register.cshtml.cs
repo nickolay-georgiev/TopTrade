@@ -1,6 +1,5 @@
 ﻿namespace TopTrade.Web.Areas.Identity.Pages.Account
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
@@ -27,20 +26,20 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<RegisterModel> logger;
         private readonly IEmailSender emailSender;
-        private readonly IUserDashboardService userDashboardService;
+        private readonly IUserService userService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            IUserDashboardService userDashboardService)
+            IUserService userService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.logger = logger;
             this.emailSender = emailSender;
-            this.userDashboardService = userDashboardService;
+            this.userService = userService;
         }
 
         [BindProperty]
@@ -85,7 +84,7 @@
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
                 {
-                    await this.userDashboardService.InitializeUserCollectionsAsync(user);
+                    await this.userService.InitializeUserCollectionsAsync(user);
                     this.logger.LogInformation("User created a new account with password.");
 
                     var code = await this.userManager.GenerateEmailConfirmationTokenAsync(user);

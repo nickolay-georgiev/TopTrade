@@ -1,7 +1,5 @@
 ﻿namespace TopTrade.Web.ViewModels.User.Stock
 {
-    using System;
-
     using AutoMapper;
     using TopTrade.Data.Models.User;
     using TopTrade.Services.Mapping;

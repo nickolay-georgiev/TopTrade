@@ -11,21 +11,21 @@
     public class WithdrawFundsViewComponent : ViewComponent
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly IUserDashboardService userDashboardService;
+        private readonly IUserService userService;
 
         public WithdrawFundsViewComponent(
             UserManager<ApplicationUser> userManager,
-            IUserDashboardService userDashboardService)
+            IUserService userService)
         {
             this.userManager = userManager;
             this.userManager = userManager;
-            this.userDashboardService = userDashboardService;
+            this.userService = userService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var user = await this.userManager.GetUserAsync((ClaimsPrincipal)this.User);
-            var withdrawViewModel = this.userDashboardService.GetAvailableUserWithdrawData(user.Id);
+            var withdrawViewModel = this.userService.GetAvailableUserWithdrawData(user.Id);
             return this.View(withdrawViewModel);
         }
     }

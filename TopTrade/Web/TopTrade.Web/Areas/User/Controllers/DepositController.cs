@@ -1,23 +1,20 @@
 ﻿namespace TopTrade.Web.Areas.User.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
     using TopTrade.Services.Data.User;
-    using TopTrade.Web.Controllers;
     using TopTrade.Web.ViewModels.User.ViewComponents;
 
     public class DepositController : BaseLoggedUserController
     {
-        private readonly IUserDashboardService userDashboardService;
+        private readonly IUserService userService;
 
-        public DepositController(IUserDashboardService userDashboardService)
+        public DepositController(IUserService userService)
         {
-            this.userDashboardService = userDashboardService;
+            this.userService = userService;
         }
 
         [HttpPost]
@@ -27,7 +24,7 @@
 
             try
             {
-                await this.userDashboardService.UpdateUserAccountAsync(input, userId);
+                await this.userService.UpdateUserAccountAsync(input, userId);
             }
             catch (Exception error)
             {

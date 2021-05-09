@@ -6,8 +6,6 @@
     using Hangfire;
     using Hangfire.Dashboard;
     using Hangfire.SqlServer;
-
-
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -22,6 +20,7 @@
     using TopTrade.Data.Models;
     using TopTrade.Data.Repositories;
     using TopTrade.Data.Seeding;
+    using TopTrade.Services;
     using TopTrade.Services.CronJobs;
     using TopTrade.Services.Data;
     using TopTrade.Services.Data.User;
@@ -97,10 +96,10 @@
             services.AddTransient<IEmailSender, NullMessageSender>();
 
             services.AddTransient<IAlphaVantageApiClientService, AlphaVantageApiClientService>();
+            services.AddTransient<IStockService, StockService>();
             services.AddTransient<INewsService, NewsService>();
             services.AddTransient<IUploadDocumentsService, UploadDocumentsService>();
-            services.AddTransient<IUserProfileService, UserProfileService>();
-            services.AddTransient<IUserDashboardService, UserDashboardService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<ITradeService, TradeService>();
         }
 
@@ -139,13 +138,13 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
-            //if (env.IsProduction())
-            //{
+            // if (env.IsProduction())
+            // {
             //    app.UseHangfireServer(new BackgroundJobServerOptions { WorkerCount = 2 });
             //    app.UseHangfireDashboard(
             //        "/hangfire",
             //        new DashboardOptions { Authorization = new[] { new HangfireAuthorizationFilter() } });
-            //}
+            // }
 
             app.UseHangfireServer(new BackgroundJobServerOptions { WorkerCount = 2 });
             app.UseHangfireDashboard(

@@ -1,11 +1,8 @@
 ﻿namespace TopTrade.Services.Data
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Runtime.CompilerServices;
-    using System.Text;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
@@ -72,7 +69,7 @@
         {
             if (input.Documents.Count > 3)
             {
-                throw new Exception("You can not upload more than 3 documents");
+                throw new ArgumentOutOfRangeException("You can not upload more than 3 documents");
             }
 
             foreach (var document in input.Documents)
@@ -80,12 +77,12 @@
                 var extension = Path.GetExtension(document.FileName).TrimStart('.').ToUpper();
                 if (!Enum.IsDefined(typeof(AllowedFileExtensions), extension))
                 {
-                    throw new Exception($"Invalid image extension {extension}");
+                    throw new InvalidOperationException($"Invalid image extension {extension}");
                 }
 
                 if (document.Length > (5 * 1024 * 1024))
                 {
-                    throw new Exception("File size is bigger than 5MB");
+                    throw new InvalidOperationException("File size is bigger than 5MB");
                 }
             }
         }

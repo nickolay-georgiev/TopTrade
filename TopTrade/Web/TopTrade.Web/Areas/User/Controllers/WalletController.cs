@@ -1,20 +1,15 @@
 ﻿namespace TopTrade.Web.Areas.User.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Security.Claims;
-    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
     using TopTrade.Services.Data.User;
-    using TopTrade.Web.Controllers;
 
     public class WalletController : BaseLoggedUserController
     {
-        private readonly IUserProfileService profileService;
+        private readonly IUserService profileService;
 
-        public WalletController(IUserProfileService profileService)
+        public WalletController(IUserService profileService)
         {
             this.profileService = profileService;
         }
