@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Text.Json;
     using System.Threading.Tasks;
-
+    using TopTrade.Common;
     using TopTrade.Data.Common.Repositories;
     using TopTrade.Data.Models;
     using TopTrade.Data.Models.User;
@@ -29,7 +29,7 @@
             this.accountStatisticRepository = accountStatisticRepository;
         }
 
-        public TradeHistoryViewModel GetTradeHistory(ApplicationUser user, int pageNumber, int itemsPerPage = 8)
+        public TradeHistoryViewModel GetTradeHistory(ApplicationUser user, int pageNumber, int itemsPerPage)
         {
             var historyViewModel = new TradeHistoryViewModel
             {
@@ -40,7 +40,7 @@
 
             historyViewModel.Trades = this.tradeRepository
                 .AllAsNoTracking()
-                .Where(x => x.UserId == user.Id)
+                .Where(x => x.UserId == user.Id && x.CloseDate != null)
                 .OrderByDescending(x => x.CreatedOn)
                 .Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage)
                 .To<TradeInHistoryViewModel>()
@@ -88,12 +88,12 @@
 
             if (account.Available < totalPrice)
             {
-                throw new ArgumentException("Insuffisient funds to process this order");
+                throw new ArgumentException(GlobalConstants.InsuffisientFunds);
             }
 
             if (!Enum.IsDefined(typeof(TradeType), input.TradeType.ToUpper()))
             {
-                throw new InvalidOperationException("Something goes wrong... please try again");
+                throw new InvalidOperationException(GlobalConstants.TryAgain);
             }
 
             account.Available -= totalPrice;
@@ -115,6 +115,7 @@
                 StockId = stock.Id,
                 TradeType = input.TradeType.ToUpper(),
                 TradeStatus = TradeStatus.OPEN.ToString(),
+                CloseDate = DateTime.UtcNow,
             };
 
             await this.tradeRepository.AddAsync(trade);
@@ -138,7 +139,7 @@
 
             if (trade == null)
             {
-                throw new ArgumentNullException("Invalid trade id");
+                throw new ArgumentNullException(GlobalConstants.InvalidTradeId);
             }
 
             trade.CloseDate = DateTime.UtcNow;
@@ -206,11 +207,11 @@
 
                 foreach (var trade in group)
                 {
-                    trade.SwapFee += trade.OpenPrice * 0.01m;
+                    trade.SwapFee += trade.OpenPrice * GlobalConstants.SwapFee;
                     this.tradeRepository.Update(trade);
                 }
 
-                var totalSwapFee = group.Sum(x => x.OpenPrice * 0.01m);
+                var totalSwapFee = group.Sum(x => x.OpenPrice * GlobalConstants.SwapFee);
                 var currentUserStatistic = this.accountStatisticRepository.All()
                     .FirstOrDefault(x => x.UserId == userId);
 

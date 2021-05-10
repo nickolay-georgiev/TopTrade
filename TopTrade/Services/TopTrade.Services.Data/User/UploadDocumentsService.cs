@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
+    using TopTrade.Common;
     using TopTrade.Data.Common.Repositories;
     using TopTrade.Data.Models;
     using TopTrade.Data.Models.User;
@@ -34,7 +35,7 @@
             {
                 var extension = Path.GetExtension(document.FileName).TrimStart('.');
 
-                if (callerName.Equals("UploadDocuments"))
+                if (callerName.Equals(GlobalConstants.UploadVerificationDocuments))
                 {
                     var currentDocument = new VerificationDocument
                     {
@@ -51,7 +52,7 @@
                     await this.verificationDocumentRepository.AddAsync(currentDocument);
                     await this.verificationDocumentRepository.SaveChangesAsync();
                 }
-                else if (callerName.Equals("UploadAvatar"))
+                else if (callerName.Equals(GlobalConstants.UploadAvatar))
                 {
                     var user = await this.userManager.FindByIdAsync(userId);
                     string physicalPath = $"{imagePath}.{extension}";
@@ -69,7 +70,7 @@
         {
             if (input.Documents.Count > 3)
             {
-                throw new ArgumentOutOfRangeException("You can not upload more than 3 documents");
+                throw new ArgumentOutOfRangeException(GlobalConstants.ExceedMaximumDocumentsCount);
             }
 
             foreach (var document in input.Documents)
@@ -77,12 +78,12 @@
                 var extension = Path.GetExtension(document.FileName).TrimStart('.').ToUpper();
                 if (!Enum.IsDefined(typeof(AllowedFileExtensions), extension))
                 {
-                    throw new InvalidOperationException($"Invalid image extension {extension}");
+                    throw new InvalidOperationException(string.Format(GlobalConstants.InvalidFileExtension, extension));
                 }
 
                 if (document.Length > (5 * 1024 * 1024))
                 {
-                    throw new InvalidOperationException("File size is bigger than 5MB");
+                    throw new InvalidOperationException(GlobalConstants.ExceedMaximumDocumentSize);
                 }
             }
         }

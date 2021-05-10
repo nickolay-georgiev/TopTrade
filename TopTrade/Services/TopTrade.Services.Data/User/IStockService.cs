@@ -1,5 +1,6 @@
 ﻿namespace TopTrade.Services.Data.User
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using AlphaVantage.Net.Stocks;
@@ -26,5 +27,7 @@
         Task<UserPortfolioVewModel> GetPortoflioAsync(string userId);
 
         Task UpdateUserStockWatchlistAsync(StockSearchResultViewModel stock, string userId);
+
+        Task<ICollection<ActualStockDataViewModel>> GetActualStockDataAsync(StockTickerInputModel[] input);
     }
 }

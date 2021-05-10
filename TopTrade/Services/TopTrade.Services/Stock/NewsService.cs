@@ -13,6 +13,7 @@
 
     public class NewsService : INewsService
     {
+        private const string SearchFilter = "WALL STREET";
         private readonly IConfiguration configuration;
         private readonly NewsApiClient newsApiClient;
 
@@ -24,7 +25,7 @@
 
         public async Task<IList<AllNewsViewModel>> GetLatestStocksNewsAsync(string keyword)
         {
-            keyword = keyword == "All" ? "NYSE AMEX NASDAQ BLOOMBERG SEEKINGALPHA WALLSTREET YAHOOFINANCE INVESTING" : keyword;
+            keyword = keyword == "All" ? SearchFilter : keyword;
 
             ArticlesResult articlesResponse = await this.newsApiClient
                 .GetEverythingAsync(new EverythingRequest
@@ -40,7 +41,7 @@
                 .Select(x => new AllNewsViewModel
                 {
                     Title = x.Title,
-                    Author = x.Author ?? "Unknown",
+                    Author = x.Author ?? GlobalConstants.UnknownNewsAuthor,
                     Description = x.Description,
                     Url = x.Url,
                     PublishedAt = x.PublishedAt,

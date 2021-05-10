@@ -78,8 +78,8 @@
                                 </div>
                             </td>
                             <td class="text-center">
-                                <p class="mb-0 font-weight-bold stock-price-up"><span custom-color>@stock.Change.ToString("f2")</span></p>
-                                <p class="mb-0 font-weight-bold small stock-price-down"><span custom-color>(@stock.ChangePercent.ToString("f2")%)</span></p>
+                                <p class="mb-0 font-weight-bold change"><span custom-color>@stock.Change.ToString("f2")</span></p>
+                                <p class="mb-0 font-weight-bold small change-percent"><span custom-color>(@stock.ChangePercent.ToString("f2")%)</span></p>
                             </td>
                             <td class="text-center" style="width: 230px">
                                 <div class="stock-chart" style="height: 60px;">
@@ -99,7 +99,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text font-weight-bold" id="btnGroupAddon">B</div>
                                     </div>
-                                    <button class="form-control font-weight-bold" data-target="#buy-button"
+                                    <button class="form-control font-weight-bold price" data-target="#buy-button"
                                             data-toggle="modal">
                                         @stock.Price.ToString("f2")
                                     </button>
@@ -208,31 +208,6 @@
 @section Scripts {
     <script src="~/js/user/user-dashboard.js" type="text/javascript"></script>
     <script src="~/js/user/stock-search.js" type="text/javascript"></script>
-
-    <script type="text/javascript">
-
-        var tickers = [...document.querySelectorAll('.stock-ticker')].map(x => x.textContent);
-
-        document.addEventListener('DOMContentLoaded', function (e) {
-            const connection = new signalR.HubConnectionBuilder()
-                .withUrl("/user/index")
-                .build();
-
-            connection.on("GetStockData", function (data) {
-                console.log(data);
-            });
-
-
-            connection.start()
-                .then(() => {
-                    setInterval(function () {
-                        console.log(connection.invoke("GetActualStockData", tickers));
-                    }, 112000);
-                    //connection.invoke("GetActualStockData", "test message");
-                })
-                .catch(err => console.error(err.toString()));
-        });
-    </script>
 
     <script type="text/javascript">
 

@@ -1,14 +1,18 @@
-﻿window.onload = function () {
+﻿document.addEventListener('DOMContentLoaded', function () {
 
     function init() {
+
+        document.querySelectorAll('.remove-stock')
+            .forEach(x => x.firstElementChild.addEventListener('click', removeStockButton));
+
         let stockName;
         let stockTicker;
         let stockPrice;
         let stockQuantity;
         let domElement;
 
-        var lastClick = 0;
-        var delay = 20;
+        const executeOrderButton = document.querySelector('.execute-order-button');
+        executeOrderButton.addEventListener('click', attemptToProccessTrade);
 
         const domElements = {
             token: () => document.querySelector('[name=__RequestVerificationToken]').value,
@@ -34,10 +38,61 @@
             stockSearch: () => 'searchStock',
             stockList: () => 'searchList',
             stockBuyPercent: () => 'buyPercent',
+            trade: () => 'trade',
+            removeFromWathlist: () => 'removeFromWathlist',
         }
+
+        function initHub() {
+            var tickers = [...document.querySelectorAll('.stock-ticker')].map(x => { return { ticker: x.textContent } });
+
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("/user/index")
+                .build();
+
+            connection.on("GetStockData", function (data) {
+                let updatedData = data;
+
+                const rows = [...document.querySelectorAll('.table-div tbody tr')];
+
+                for (var i = 0; i < updatedData.length; i++) {
+                    let currentRow = rows.find(x => x.querySelector('.stock-ticker').textContent == updatedData[i].ticker);
+                    currentRow.querySelectorAll('.price')
+                        .forEach(x => x.textContent = updatedData[i].price.toFixed(2));
+
+                    const changeInCashElement = currentRow.querySelector('.change');
+                    const changeInPercentElement = currentRow.querySelector('.change-percent');
+
+                    if (updatedData[i].change < 0) {
+                        changeInCashElement.classList.add('text-danger');
+                        changeInPercentElement.classList.add('text-danger');
+                        changeInCashElement.classList.remove('text-success');
+                        changeInPercentElement.classList.remove('text-success');
+                    } else {
+                        changeInCashElement.classList.add('text-success');
+                        changeInPercentElement.classList.add('text-success');
+                        changeInCashElement.classList.remove('text-danger');
+                        changeInPercentElement.classList.remove('text-danger');
+                    }
+                    currentRow.querySelector('.change').textContent = updatedData[i].change.toFixed(2);
+                    currentRow.querySelector('.change-percent').textContent = `(${updatedData[i].changePercent.toFixed(2)}%)`;
+                }
+            });
+
+            connection.start()
+                .then(() => {
+                    //setInterval(function () {
+                    //    connection.invoke("GetUpdateForStockPrice", tickers);
+                    //}, 60000);
+                })
+                .catch(err => console.error(err.toString()));
+        }
+        initHub();
+
 
         domElements.searchIconButton().addEventListener('click', stockSearch);
         domElements.closeSearchBar().addEventListener('click', closeSearchBarAndClearSearchResult);
+        document.querySelectorAll(".remove-stock-button")
+            .forEach(x => x.addEventListener('click', showRemoveStockButton));
 
         async function stockSearch() {
             const inputValue = domElements.searchInputValue().value.trim();
@@ -45,7 +100,6 @@
             if (!inputValue) { return };
 
             activateSpinner();
-            //closeSearchBarAndClearSearchResult();
 
             const response = await makeAjax(endpoints.stockList(), { ticker: inputValue });
             let searchResult = await response.json();
@@ -148,8 +202,8 @@
                   </div>
               </td>
               <td>
-                  <p class="mb-0 ml-2 font-weight-bold ${color}">${changeInCash.toFixed(2)}</p>
-                  <p class="mb-0 ml-2 font-weight-bold small ${color}">(${changeInPercents.toFixed(2)})&#37</p>
+                  <p class="mb-0 ml-2 font-weight-bold change ${color}">${changeInCash.toFixed(2)}</p>
+                  <p class="mb-0 ml-2 font-weight-bold small change-percent ${color}">(${changeInPercents.toFixed(2)})&#37</p>
               </td>
               <td style="width: 230px">
                   <div class="stock-chart" style="height: 60px;">
@@ -169,7 +223,7 @@
                       <div class="input-group-prepend">
                           <div class="input-group-text font-weight-bold" id="btnGroupAddon">B</div>
                       </div>
-                      <button class="form-control font-weight-bold" data-target="#buy-button"
+                      <button class="form-control font-weight-bold price" data-target="#buy-button"
                           data-toggle="modal">${buyPrice.toFixed(2)}</button>
                   </div>
               </td>
@@ -277,7 +331,6 @@
                 stockQuantity = Number(e.target.value);
                 if (stockQuantity < 0) { return };
 
-                const executeOrderButton = document.querySelector('.execute-order-button');
                 executeOrderButton.removeAttribute('disabled');
 
                 const totalPrice = stockPrice * stockQuantity;
@@ -300,45 +353,7 @@
                 } else {
                     error.hidden = true;
                 }
-
-                executeOrderButton.addEventListener('click', () => {
-
-                    const endpoint = executeOrderButton.firstElementChild.textContent;
-                    const tradeDetails = {
-                        price: stockPrice,
-                        quantity: stockQuantity,
-                        ticker: stockTicker,
-                        tradeType: endpoint
-                    };
-
-                    doClick();
-                    async function doClick() {
-                        if (lastClick >= (Date.now() - delay)) { return }
-                        lastClick = Date.now();
-
-                        let response = await makeAjax("trade", tradeDetails);
-                        let result = await response.json();
-
-                        if (response.ok) {
-                            domElements.userAvailableFunds().textContent = result.available.toFixed(2);
-                            domElements.userTotalAllocatedFunds().textContent = result.totalAllocated.toFixed(2);
-                            domElements.userProfit().textContent = `$${result.profit.toFixed(2)}`;
-                            domElements.userEquity().textContent = result.equity.toFixed(2);
-                            domElements.configOrderQuantity().value = '';
-
-                            error.hidden = true;
-                            orderDetailsPrice.textContent = 0;
-                            document.querySelector('.close').click();
-
-                            var htmlElement = [...document.querySelectorAll('.table-div tbody tr')]
-                                .find(x => x.querySelector('.stock-ticker').textContent == stockTicker);
-
-                            htmlElement.querySelector('.open-position-icon').hidden = false;
-                            getBuyPercent(stockTicker, htmlElement);
-                        }
-                    }
-                });
-            })
+            });
 
             inputPrice.placeholder = `${stockPrice.toFixed(2)}`;
         };
@@ -373,6 +388,65 @@
                 htmlElement.querySelector('div.progress-bar.bg-danger').setAttribute('aria-valuenow', `${100 - result.totalBuyPercentTrades}`);
             }
         }
+
+        function showRemoveStockButton(event) {
+            const hiddenDiv = event.target.nextElementSibling;
+            if (hiddenDiv.hidden) {
+                hiddenDiv.hidden = false;
+            } else {
+                hiddenDiv.hidden = true;
+            }
+        }
+
+        async function removeStockButton() {
+            var stockToRemove =
+                this.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector('.stock-ticker').textContent;
+
+            const response = await fetch(`api/stock/removeFromWatchlist`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "X-CSRF-TOKEN": domElements.token(),
+                },
+                body: JSON.stringify({ ticker: stockToRemove })
+            });
+            if (response.ok) {
+                this.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
+            }
+        }
+
+        async function attemptToProccessTrade() {
+
+            const tradeType = executeOrderButton.firstElementChild.textContent;
+            const tradeDetails = {
+                price: stockPrice,
+                quantity: stockQuantity,
+                ticker: stockTicker,
+                tradeType: tradeType
+            };
+
+            let response = await makeAjax(endpoints.trade(), tradeDetails);
+
+            if (response.ok) {
+                let result = await response.json();
+                domElements.userAvailableFunds().textContent = result.available.toFixed(2);
+                domElements.userTotalAllocatedFunds().textContent = result.totalAllocated.toFixed(2);
+                domElements.userProfit().textContent = `$${result.profit.toFixed(2)}`;
+                domElements.userEquity().textContent = result.equity.toFixed(2);
+                domElements.configOrderQuantity().value = '';
+
+                domElements.configOrderErrorMessage().hidden = true;
+                domElements.configOrderSummaryPrice().textContent = 0;
+                document.querySelector('.close').click();
+
+                var htmlElement = [...document.querySelectorAll('.table-div tbody tr')]
+                    .find(x => x.querySelector('.stock-ticker').textContent == stockTicker);
+
+                htmlElement.querySelector('.open-position-icon').hidden = false;
+                getBuyPercent(stockTicker, htmlElement);
+            }
+        };
 
         async function makeAjax(endpoint, argument) {
             return await fetch(`api/stock/${endpoint}`, {
@@ -438,7 +512,6 @@
                 },
             });
         }
-
     }
     init();
-}
+});

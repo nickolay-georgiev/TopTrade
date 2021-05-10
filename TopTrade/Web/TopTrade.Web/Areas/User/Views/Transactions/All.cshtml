@@ -23,10 +23,13 @@
                                                 <tr>
                                                     <th class="border-top-0">ID</th>
                                                     <th class="border-top-0">Type</th>
+                                                    <th class="border-top-0">Ticker</th>
                                                     <th class="border-top-0">Quantity</th>
                                                     <th class="border-top-0">Open Price</th>
+                                                    <th class="border-top-0">Close Price</th>
                                                     <th class="border-top-0">Total ($)</th>
-                                                    <th class="border-top-0">Fee (%)</th>
+                                                    <th class="border-top-0">Profit/Loss ($)</th>
+                                                    <th class="border-top-0">Fee ($)</th>
                                                     <th class="border-top-0">Status</th>
                                                     <th class="border-top-0">Time</th>
                                                 </tr>
@@ -34,36 +37,47 @@
                                             <tbody>
                                                 @foreach (var trade in Model.Trades)
                                                 {
-                                                    <tr>
-                                                        <td>
-                                                            <div class="Trans-id">#@trade.Id</div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="trans-type success font-weight-bold">
-                                                                <span custom-color>@trade.TradeType</span>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="amount">
-                                                                <i class="la la-bitcoin"></i>@trade.Quantity
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="price">@trade.OpenPrice</div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="usd">@trade.TotalPrice</div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="fee">0.2</div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="status badge badge-success badge-pill badge-sm">Completed</div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="time">@trade.CloseDate.ToLocalTime()</div>
-                                                        </td>
-                                                    </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="Trans-id">#@trade.Id</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="trans-type success font-weight-bold">
+                                                            <span custom-color>@trade.TradeType</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="trans-type success">
+                                                            <span>@trade.StockTicker</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="amount">
+                                                            <i class="la la-bitcoin"></i>@trade.Quantity
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="price">@trade.OpenPrice</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="price">@trade.ClosePrice.ToString("f2")</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="usd">@trade.TotalPrice</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="usd">@trade.Balance.ToString("f2")</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="fee">@trade.SwapFee.ToString("f2")</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="status badge badge-success badge-pill badge-sm">Completed</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="time">@trade.CloseDate.ToLocalTime()</div>
+                                                    </td>
+                                                </tr>
                                                 }
                                             </tbody>
                                         </table>

@@ -4,17 +4,24 @@
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.SignalR;
+    using TopTrade.Services.Data.User;
+    using TopTrade.Web.ViewModels.User.Stock;
 
     [Authorize]
     public class TradeHub : Hub
     {
-        public TradeHub()
+        private readonly IStockService stockService;
+
+        public TradeHub(IStockService stockService)
         {
+            this.stockService = stockService;
         }
 
-        public async Task GetActualStockData(string[] data)
+        public async Task GetUpdateForStockPrice(StockTickerInputModel[] input)
         {
-            await this.Clients.Caller.SendAsync("GetStockData", data);
+            var updatedStocksData = await this.stockService.GetActualStockDataAsync(input);
+            await this.Clients.Caller.SendAsync("GetStockData", updatedStocksData);
+            //await this.Clients.Caller.SendAsync("GetStockData", "123");
         }
     }
 }

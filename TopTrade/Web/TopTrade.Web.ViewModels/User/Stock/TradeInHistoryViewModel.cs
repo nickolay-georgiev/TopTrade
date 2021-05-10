@@ -10,15 +10,23 @@
     {
         public int Id { get; set; }
 
+        public string StockTicker { get; set; }
+
         public string TradeType { get; set; }
 
         public int Quantity { get; set; }
 
         public decimal OpenPrice { get; set; }
 
+        public decimal ClosePrice { get; set; }
+
+        public decimal Balance { get; set; }
+
         public DateTime CloseDate { get; set; }
 
         public string StockName { get; set; }
+
+        public decimal SwapFee { get; set; }
 
         public decimal TotalPrice => this.OpenPrice * this.Quantity;
 

@@ -31,13 +31,6 @@
         }
 
         [HttpPost]
-        [ActionName("closeTrade")]
-        public ActionResult<StockTickerInputModel> Close(StockTickerInputModel input)
-        {
-            return input;
-        }
-
-        [HttpPost]
         [ActionName("searchStock")]
         public async Task<ActionResult<StockViewModel>> GetStockByTicker(StockSearchResultViewModel stock)
         {
@@ -65,7 +58,7 @@
         }
 
         [HttpPost]
-        [ActionName("removeFromWathlist")]
+        [ActionName("removeFromWatchlist")]
         public async Task<IActionResult> RemoveStock(StockTickerInputModel input)
         {
             if (!this.ModelState.IsValid)

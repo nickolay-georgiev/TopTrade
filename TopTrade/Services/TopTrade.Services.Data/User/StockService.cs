@@ -1,10 +1,12 @@
 ﻿namespace TopTrade.Services.Data.User
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using AlphaVantage.Net.Stocks;
+    using TopTrade.Common;
     using TopTrade.Data.Common.Repositories;
     using TopTrade.Data.Models.User;
     using TopTrade.Data.Models.User.Enums;
@@ -187,10 +189,10 @@
                 var stockData = await this.GetStockDataAsync(trade.StockTicker);
                 trade.CurrentPrice = stockData.Price;
 
-                trade.ProfitLossInCash = trade.TradeType == "BUYING" ?
+                trade.ProfitLossInCash = trade.TradeType == GlobalConstants.TradeTypeBuying ?
                 trade.CurrentPrice - trade.OpenPrice : trade.OpenPrice - trade.CurrentPrice;
 
-                trade.ProfitLossInPercent = trade.TradeType == "BUYING" ?
+                trade.ProfitLossInPercent = trade.TradeType == GlobalConstants.TradeTypeBuying ?
                 (trade.CurrentPrice - trade.OpenPrice) * 100 / trade.OpenPrice :
                 (trade.OpenPrice - trade.CurrentPrice) * 100 / trade.OpenPrice;
             }
@@ -246,6 +248,27 @@
                 this.watchlistRepository.Update(watchlist);
                 await this.watchlistRepository.SaveChangesAsync();
             }
+        }
+
+        public async Task<ICollection<ActualStockDataViewModel>> GetActualStockDataAsync(StockTickerInputModel[] input)
+        {
+            IList<ActualStockDataViewModel> stockViewModel = new List<ActualStockDataViewModel>();
+
+            foreach (var asset in input)
+            {
+                var data = await this.GetStockDataAsync(asset.Ticker);
+                var stock = new ActualStockDataViewModel
+                {
+                    Ticker = data.Ticker,
+                    Price = data.Price,
+                    Change = data.Change,
+                    ChangePercent = data.ChangePercent,
+                };
+
+                stockViewModel.Add(stock);
+            }
+
+            return stockViewModel;
         }
     }
 }

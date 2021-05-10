@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Identity;
+    using TopTrade.Common;
     using TopTrade.Data.Common.Repositories;
     using TopTrade.Data.Models;
     using TopTrade.Data.Models.User;
@@ -113,7 +113,7 @@
             var verificationStatus =
                 documents.Any() &&
                 documents.All(d => d.VerificationStatus == VerificationDocumentStatus.Approved.ToString())
-                ? "Verified" : "Not Verified";
+                ? GlobalConstants.DisplayedStatusVerified : GlobalConstants.DisplayedStatusNotVerified;
 
             return verificationStatus;
         }
@@ -188,8 +188,8 @@
                 .AddAsync(new Deposit
                 {
                     Amount = input.Amount,
-                    Currency = "USD",
-                    PaymentMethod = "Credit/Debit Card",
+                    Currency = AcceptedCurrencies.USD.ToString(),
+                    PaymentMethod = GlobalConstants.PaymentMethod,
                     UserId = userId,
                     CardId = card.Id,
                     TransactionStatus = TransactionStatus.Completed.ToString(),
@@ -224,7 +224,7 @@
         {
             if (input.Available < input.DesiredAmount)
             {
-                throw new InvalidOperationException($"You can withdraw up to ${input.Available}");
+                throw new InvalidOperationException(string.Format(GlobalConstants.ReachedWithdrawLimit, input.Available));
             }
 
             var card = this.cardRepository

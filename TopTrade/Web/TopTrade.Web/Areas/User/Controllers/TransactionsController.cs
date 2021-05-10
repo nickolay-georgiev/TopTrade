@@ -9,6 +9,7 @@
 
     public class TransactionsController : BaseLoggedUserController
     {
+        private const int ItemsPerPage = 8;
         private readonly ITradeService tradeService;
         private readonly UserManager<ApplicationUser> userManager;
 
@@ -23,8 +24,6 @@
         public async Task<IActionResult> All(int id = 1)
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            const int ItemsPerPage = 8;
-
             var viewModel = this.tradeService.GetTradeHistory(user, id, ItemsPerPage);
 
             return this.View(viewModel);
