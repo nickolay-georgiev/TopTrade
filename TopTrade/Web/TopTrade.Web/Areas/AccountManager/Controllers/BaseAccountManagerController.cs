@@ -5,7 +5,7 @@
     using TopTrade.Common;
 
     [Area("AccountManager")]
-    [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+    [Authorize(Roles = GlobalConstants.AccountManagerRoleName)]
     public class BaseAccountManagerController : Controller
     {
     }

@@ -522,7 +522,7 @@ namespace TopTrade.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("SwapFee")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<string>("TradeStatus")
                         .HasColumnType("nvarchar(max)");

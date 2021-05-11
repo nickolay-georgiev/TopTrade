@@ -17,8 +17,8 @@
     <link rel="apple-touch-icon-precomposed" href="~/img/apple-touch-icon.png" asp-append-version="true">
     <!-- CSS -->
     <link rel="stylesheet" href="~/css/uikit.min.css" asp-append-version="true">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
 </head>
 <body>
     <div class="in-loader">
@@ -36,9 +36,18 @@
                                 <img src="~/img/in-lazy.gif" data-src="img/top-trade-logo.svg" alt="logo" width="160" height="34" data-uk-img>
                             </a>
                             <ul class="uk-navbar-nav uk-visible@m">
-                                <li>
-                                    <a asp-area="User" asp-controller="Home" asp-action="Index">Home</a>
-                                </li>                             
+                                @if (this.User.IsInRole(GlobalConstants.AccountManagerRoleName))
+                                {
+                                    <li>
+                                        <a asp-area="AccountManager" asp-controller="Home" asp-action="Index">Home</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a asp-area="User" asp-controller="Home" asp-action="Index">Home</a>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </div>

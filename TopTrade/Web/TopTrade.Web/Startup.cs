@@ -43,22 +43,6 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHangfire(
-                      config => config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
-                          .UseSimpleAssemblyNameTypeSerializer().UseRecommendedSerializerSettings().UseSqlServerStorage(
-                              this.configuration.GetConnectionString("DefaultConnection"),
-                              new SqlServerStorageOptions
-                              {
-                                  CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-                                  SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
-                                  QueuePollInterval = TimeSpan.Zero,
-                                  UseRecommendedIsolationLevel = true,
-                                  UsePageLocksOnDequeue = true,
-                                  DisableGlobalLocks = true,
-                              }));
-
-            services.AddHangfireServer();
-
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
@@ -73,6 +57,23 @@
                     });
 
             services.AddSignalR();
+
+            services.AddHangfire(
+                      config => config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                          .UseSimpleAssemblyNameTypeSerializer().UseRecommendedSerializerSettings()
+                          .UseSqlServerStorage(
+                              this.configuration.GetConnectionString("DefaultConnection"),
+                              new SqlServerStorageOptions
+                              {
+                                  CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                                  SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                                  QueuePollInterval = TimeSpan.Zero,
+                                  UseRecommendedIsolationLevel = true,
+                                  UsePageLocksOnDequeue = true,
+                                  DisableGlobalLocks = true,
+                              }));
+
+            //services.AddHangfireServer();
 
             services.AddControllersWithViews(
                 options =>
@@ -115,7 +116,11 @@
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 dbContext.Database.Migrate();
-                new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+
+                new ApplicationDbContextSeeder()
+                    .SeedAsync(dbContext, serviceScope.ServiceProvider)
+                    .GetAwaiter()
+                    .GetResult();
             }
 
             if (env.IsDevelopment())
@@ -129,8 +134,6 @@
                 app.UseHsts();
             }
 
-            this.SeedHangfireJobs(recurringJobManager);
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -140,18 +143,13 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
-            // if (env.IsProduction())
-            // {
+            //if (env.IsProduction())
+            //{
             //    app.UseHangfireServer(new BackgroundJobServerOptions { WorkerCount = 2 });
             //    app.UseHangfireDashboard(
             //        "/hangfire",
             //        new DashboardOptions { Authorization = new[] { new HangfireAuthorizationFilter() } });
-            // }
-
-            app.UseHangfireServer(new BackgroundJobServerOptions { WorkerCount = 2 });
-            app.UseHangfireDashboard(
-                "/hangfire",
-                new DashboardOptions { Authorization = new[] { new HangfireAuthorizationFilter() } });
+            //}
 
             app.UseEndpoints(
                 endpoints =>

@@ -46,6 +46,6 @@
 
         public const string UnknownNewsAuthor = "Unknown";
 
-        public const string AccountManagerRoleName = "AccountManager";
+        public const string Password = "manager@toptrade.com";
     }
 }

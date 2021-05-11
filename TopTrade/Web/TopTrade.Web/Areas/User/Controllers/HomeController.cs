@@ -6,8 +6,10 @@
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using TopTrade.Common;
     using TopTrade.Data.Models;
     using TopTrade.Services.Data.User;
+    using TopTrade.Web.Areas.AccountManager.Controllers;
     using TopTrade.Web.Areas.User.Controllers;
     using TopTrade.Web.ViewModels.User.Profile;
 
@@ -32,6 +34,11 @@
 
         public async Task<IActionResult> Index()
         {
+            if (this.User.IsInRole(GlobalConstants.AccountManagerRoleName))
+            {
+                return this.RedirectToAction(nameof(DashboardController.Index), "Dashboard", new { area = "AccountManager" });
+            }
+
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var userData = await this.stockService.GetUserWatchlistWithStatisticAsync(userId);
             return this.View(userData);

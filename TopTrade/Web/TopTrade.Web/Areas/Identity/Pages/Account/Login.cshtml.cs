@@ -11,7 +11,9 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Logging;
+    using TopTrade.Common;
     using TopTrade.Data.Models;
+    using TopTrade.Web.Areas.AccountManager.Controllers;
     using TopTrade.Web.Areas.User;
 
     [AllowAnonymous]
@@ -89,6 +91,7 @@
                 {
                     this.logger.LogInformation("User logged in.");
                     return this.RedirectToAction(nameof(HomeController.Index), "Home", new { area = "User" });
+
                 }
 
                 if (result.RequiresTwoFactor)

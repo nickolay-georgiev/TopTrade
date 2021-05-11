@@ -4,7 +4,6 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
-    using TopTrade.Data;
     using TopTrade.Services.Data.AccountManager;
     using TopTrade.Web.ViewModels.AccountManager;
 

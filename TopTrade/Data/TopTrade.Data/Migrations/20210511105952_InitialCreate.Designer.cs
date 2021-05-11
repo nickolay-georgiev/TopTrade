@@ -10,8 +10,8 @@ using TopTrade.Data;
 namespace TopTrade.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210506145451_AddCloseDatePropToTradeEntity")]
-    partial class AddCloseDatePropToTradeEntity
+    [Migration("20210511105952_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -493,6 +493,9 @@ namespace TopTrade.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<decimal?>("Balance")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime?>("CloseDate")
                         .HasColumnType("datetime2");
 
@@ -519,6 +522,9 @@ namespace TopTrade.Data.Migrations
 
                     b.Property<int>("StockId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("SwapFee")
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<string>("TradeStatus")
                         .HasColumnType("nvarchar(max)");

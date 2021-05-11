@@ -1,6 +1,5 @@
 ﻿namespace TopTrade.Web.Areas.User.Controllers
 {
-    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
 
