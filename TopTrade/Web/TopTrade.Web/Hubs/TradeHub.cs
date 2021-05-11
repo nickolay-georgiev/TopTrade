@@ -21,7 +21,6 @@
         {
             var updatedStocksData = await this.stockService.GetActualStockDataAsync(input);
             await this.Clients.Caller.SendAsync("GetStockData", updatedStocksData);
-            //await this.Clients.Caller.SendAsync("GetStockData", "123");
         }
     }
 }

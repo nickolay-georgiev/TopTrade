@@ -1,0 +1,61 @@
+﻿@using TopTrade.Data.Models.User.Enums
+@model TopTrade.Web.ViewModels.AccountManager.VerificationDocumentViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+@if (TempData["Message"] != null)
+{
+    <partial name="_ToastPartial" />
+}
+
+<h5>Edit</h5>
+
+<h4>VerificationDocument</h4>
+<hr />
+<div class="row">
+    <form asp-action="Edit">
+        <div class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-md">
+                <div class="form-group">
+                    <label asp-for="VerificationStatus" class="control-label"></label>
+                    <select class="form-control" asp-for="VerificationStatus" asp-items="Html.GetEnumSelectList<VerificationDocumentStatus>()"></select>
+                    <span asp-validation-for="VerificationStatus" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-group">
+                    <label asp-for="UserId" class="control-label"></label>
+                    <input asp-for="UserId" class="form-control" disabled>
+                </div>
+                <input type="hidden" asp-for="Id" />
+            </div>
+            <div class="col-md">
+                <div class="form-group">
+                    <label asp-for="CreatedOn" class="control-label"></label>
+                    <input asp-for="CreatedOn" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="col-md-2 d-flex align-self-md-end">
+                <div class="form-group">
+                    <input type="submit" value="Update Status" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="form-group">
+                <img class="img-fluid" src="@Model.DocumentUrl" alt="Alternate Text" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

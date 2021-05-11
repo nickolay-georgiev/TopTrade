@@ -37,6 +37,11 @@
                                                             <th class="sorting" tabindex="0"
                                                                 aria-controls="DataTables_Table_0" rowspan="1"
                                                                 colspan="1"
+                                                                aria-label="Coin: activate to sort column ascending"
+                                                                style="width: 217px;">Method</th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="DataTables_Table_0" rowspan="1"
+                                                                colspan="1"
                                                                 aria-label="Volume: activate to sort column ascending"
                                                                 style="width: 193px;">Card Number</th>
                                                             <th class="sorting" tabindex="0"
@@ -49,24 +54,27 @@
                                                     <tbody>
                                                         @foreach (var deposit in Model.Deposits)
                                                         {
-                                                            <tr role="row" class="odd">
-                                                                <td class="align-middle sorting_1">
-                                                                    <div class="date">@deposit.CreatedOn.ToLocalTime()</div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="coin">
-                                                                        <i class="cc BTC warning"></i>$@deposit.Amount.ToString("f2")
-                                                                    </div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div class="volume">@deposit.CardNumber</div>
-                                                                </td>
-                                                                <td class="align-middle">
-                                                                    <div custom-badge>
-                                                                        @deposit.TransactionStatus
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td class="align-middle sorting_1">
+                                                                <div class="date">@deposit.CreatedOn.ToLocalTime()</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="coin">
+                                                                    <i class="cc BTC warning"></i>$@deposit.Amount.ToString("f2")
+                                                                </div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="volume">@deposit.PaymentMethod</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div class="volume">@deposit.CardNumber</div>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <div custom-badge>
+                                                                    @deposit.TransactionStatus
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                                         }
                                                     </tbody>
                                                 </table>
@@ -110,13 +118,13 @@
                                                                 <th class="sorting" tabindex="0"
                                                                     aria-controls="DataTables_Table_1" rowspan="1"
                                                                     colspan="1"
-                                                                    aria-label="Volume: activate to sort column ascending"
-                                                                    style="width: 121px;">Card Number</th>
+                                                                    aria-label="Status: activate to sort column ascending"
+                                                                    style="width: 126px;">Method</th>
                                                                 <th class="sorting" tabindex="0"
                                                                     aria-controls="DataTables_Table_1" rowspan="1"
                                                                     colspan="1"
-                                                                    aria-label="Status: activate to sort column ascending"
-                                                                    style="width: 126px;">Method</th>
+                                                                    aria-label="Volume: activate to sort column ascending"
+                                                                    style="width: 121px;">Card Number</th>
                                                                 <th class="sorting" tabindex="0"
                                                                     aria-controls="DataTables_Table_1" rowspan="1"
                                                                     colspan="1"
@@ -137,10 +145,10 @@
                                                                         </div>
                                                                     </td>
                                                                     <td class="align-middle receiver">
-                                                                        @withdraw.CardNumber
+                                                                        Credit\Debit Card
                                                                     </td>
                                                                     <td class="align-middle receiver">
-                                                                        Credit\Debit Card
+                                                                        @withdraw.CardNumber
                                                                     </td>
                                                                     <td class="align-middle">
                                                                         <div custom-badge>

@@ -49,11 +49,11 @@
                                     <p class="m-0">$@trade.TotalInvested.ToString("f2")</p>
                                 </td>
                                 <td class="text-center">
-                                    <p class="m-0">$@trade.CurrentPrice.ToString("f2")</p>
+                                    <p class="m-0 price">$@trade.CurrentPrice.ToString("f2")</p>
                                 </td>
                                 <td class="text-center">
-                                    <p class="mb-0 ml-2 font-weight-bold"><span custom-color>$@trade.ProfitLossInCash.ToString("f2")</span></p>
-                                    <p class="mb-0 ml-2 font-weight-bold small"><span custom-color>(@trade.ProfitLossInPercent.ToString("f2")%)</span></p>
+                                    <p class="mb-0 ml-2 font-weight-bold change"><span custom-color>$@trade.ProfitLossInCash.ToString("f2")</span></p>
+                                    <p class="mb-0 ml-2 font-weight-bold small change-percent"><span custom-color>(@trade.ProfitLossInPercent.ToString("f2")%)</span></p>
                                 </td>
                                 <td class="text-center" style="width: 200px">
                                     <form asp-action="CloseTrade" asp-controller="Portfolio" asp-route-id="@trade.Id" method="post">

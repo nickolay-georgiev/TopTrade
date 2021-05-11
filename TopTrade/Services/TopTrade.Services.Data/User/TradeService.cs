@@ -41,7 +41,7 @@
             historyViewModel.Trades = this.tradeRepository
                 .AllAsNoTracking()
                 .Where(x => x.UserId == user.Id && x.CloseDate != null)
-                .OrderByDescending(x => x.CreatedOn)
+                .OrderByDescending(x => x.CloseDate)
                 .Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage)
                 .To<TradeInHistoryViewModel>()
                 .ToList();
@@ -146,9 +146,6 @@
             trade.ClosePrice = input.CurrentPrice;
             trade.TradeStatus = TradeStatus.CLOSE.ToString();
 
-            this.tradeRepository.Update(trade);
-            await this.tradeRepository.SaveChangesAsync();
-
             var accountStatistic = this.accountStatisticRepository
                 .All()
                 .FirstOrDefault(x => x.UserId == userId);
@@ -162,6 +159,7 @@
             {
                 var profit = tradeClosePriceTotal - tradeOpenPriceTotal;
                 accountStatistic.Available += profit + tradeOpenPriceTotal;
+                trade.Balance = profit;
 
                 if (profit < 0)
                 {
@@ -176,6 +174,7 @@
             {
                 var profit = tradeOpenPriceTotal - tradeClosePriceTotal;
                 accountStatistic.Available += profit + tradeOpenPriceTotal;
+                trade.Balance = profit;
 
                 if (profit < 0)
                 {
@@ -188,6 +187,9 @@
             }
 
             accountStatistic.TotalAllocated -= trade.OpenPrice * trade.Quantity;
+
+            this.tradeRepository.Update(trade);
+            await this.tradeRepository.SaveChangesAsync();
 
             this.accountStatisticRepository.Update(accountStatistic);
             await this.accountStatisticRepository.SaveChangesAsync();

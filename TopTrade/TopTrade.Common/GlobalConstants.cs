@@ -6,6 +6,8 @@
 
         public const string AdministratorRoleName = "Administrator";
 
+        public const string AccountManagerRoleName = "AccountManager";
+
         public const string AlphaVantageApiKey = "AlphaVantage:ApiKey";
 
         public const string NewsApiKey = "NewsApi:ApiKey";
@@ -43,5 +45,7 @@
         public const string ReachedWithdrawLimit = "You can withdraw up to {0}";
 
         public const string UnknownNewsAuthor = "Unknown";
+
+        public const string AccountManagerRoleName = "AccountManager";
     }
 }

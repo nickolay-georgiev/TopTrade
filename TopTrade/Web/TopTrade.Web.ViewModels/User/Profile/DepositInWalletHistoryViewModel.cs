@@ -11,6 +11,8 @@
 
         public DateTime CreatedOn { get; set; }
 
+        public string PaymentMethod { get; set; }
+
         public string CardNumber { get; set; }
 
         public string TransactionStatus { get; set; }

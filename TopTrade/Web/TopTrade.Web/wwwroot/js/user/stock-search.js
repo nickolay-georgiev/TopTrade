@@ -82,7 +82,7 @@
                 .then(() => {
                     //setInterval(function () {
                     //    connection.invoke("GetUpdateForStockPrice", tickers);
-                    //}, 60000);
+                    //}, 120000);
                 })
                 .catch(err => console.error(err.toString()));
         }

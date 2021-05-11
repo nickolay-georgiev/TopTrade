@@ -184,11 +184,17 @@
                 .To<TradeInPortfolioViewModel>()
                 .ToList();
 
+            var tickers = trades.Select(x => x.StockTicker).Distinct();
+            foreach (var ticker in tickers)
+            {
+                var stockData = await this.GetStockDataAsync(ticker);
+                trades.Where(x => x.StockTicker == ticker)
+                     .ToList()
+                     .ForEach(x => x.CurrentPrice = stockData.Price);
+            }
+
             foreach (var trade in trades)
             {
-                var stockData = await this.GetStockDataAsync(trade.StockTicker);
-                trade.CurrentPrice = stockData.Price;
-
                 trade.ProfitLossInCash = trade.TradeType == GlobalConstants.TradeTypeBuying ?
                 trade.CurrentPrice - trade.OpenPrice : trade.OpenPrice - trade.CurrentPrice;
 

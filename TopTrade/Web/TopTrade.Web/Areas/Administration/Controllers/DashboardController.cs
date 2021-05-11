@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
-    public class DashboardController : AdministrationController
+    public class DashboardController : BaseAdministrationController
     {
         public DashboardController()
         {

@@ -23,6 +23,7 @@
     using TopTrade.Services;
     using TopTrade.Services.CronJobs;
     using TopTrade.Services.Data;
+    using TopTrade.Services.Data.AccountManager;
     using TopTrade.Services.Data.User;
     using TopTrade.Services.Mapping;
     using TopTrade.Services.Messaging;
@@ -101,6 +102,7 @@
             services.AddTransient<IUploadDocumentsService, UploadDocumentsService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ITradeService, TradeService>();
+            services.AddTransient<IAccountManagementService, AccountManagementService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
