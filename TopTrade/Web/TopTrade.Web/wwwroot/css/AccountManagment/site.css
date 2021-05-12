@@ -62,3 +62,7 @@
             cursor: pointer;
             box-shadow: 0 5px 10px -5px rgb(0 0 0 / 15%), 0 10px 10px -5px rgb(0 0 0 / 10%);
         }
+
+li:hover {
+    border-bottom: 1px solid lightblue;
+}

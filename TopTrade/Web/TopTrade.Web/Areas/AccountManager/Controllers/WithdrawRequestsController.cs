@@ -4,47 +4,47 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using TopTrade.Data;
     using TopTrade.Services.Data.AccountManager;
     using TopTrade.Web.ViewModels.AccountManager;
 
-    public class VerificationDocumentsController : BaseAccountManagerController
+    public class WithdrawRequestsController : BaseAccountManagerController
     {
         private const int ItemsPerPage = 20;
         private readonly IAccountManagementService accountManagementService;
 
-        public VerificationDocumentsController(
-            IAccountManagementService accountManagementService)
+        public WithdrawRequestsController(
+            IAccountManagementService accountManagementService,
+            ApplicationDbContext context)
         {
             this.accountManagementService = accountManagementService;
         }
 
         public IActionResult All(int id = 1)
         {
-            var verificationDocumentViewModels = this.accountManagementService.GetAllUnverifiedUsers(id, ItemsPerPage);
-            return this.View(verificationDocumentViewModels);
+            var pageViewModel = this.accountManagementService.GetAllWithdrawRequests(id, ItemsPerPage);
+            return this.View(pageViewModel);
         }
 
-        public IActionResult Edit(string id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return this.NotFound();
             }
 
-            try
-            {
-                var verificationDocument = this.accountManagementService.GetUnverifiedUserById(id);
-                return this.View(verificationDocument);
-            }
-            catch (Exception)
+            var withdrawViewModel = this.accountManagementService.GetWithdrawRequestById(id);
+
+            if (withdrawViewModel == null)
             {
                 return this.NotFound();
-
             }
+
+            return this.View(withdrawViewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, VerificationDocumentInputModel input)
+        public async Task<IActionResult> Edit(int id, WithdrawRequestInputModel input)
         {
             if (id != input.Id)
             {
@@ -55,10 +55,10 @@
             {
                 try
                 {
-                    await this.accountManagementService.UpdateUserVerificationStatusAsync(id, input);
+                    await this.accountManagementService.UpdateUserWithdrawRequestAsync(id, input);
 
                     this.TempData["Success"] = "Success!";
-                    this.TempData["Message"] = "Account was updated";
+                    this.TempData["Message"] = "Request was updated";
 
                     return this.RedirectToAction(nameof(this.All));
                 }

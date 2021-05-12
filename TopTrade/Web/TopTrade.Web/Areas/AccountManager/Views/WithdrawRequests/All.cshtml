@@ -1,0 +1,71 @@
+﻿@model TopTrade.Web.ViewModels.AccountManager.WithdrawRequestPageViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (TempData["Message"] != null)
+{
+    <partial name="_ToastPartial" />
+}
+
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Available</th>
+            <th scope="col">Card Number</th>
+            <th scope="col">User Id</th>
+            <th scope="col">Created On</th>
+            <th scope="col">Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in Model.WithdrawRequestViewModels)
+        {
+            <tr>
+                <td>
+                    <div class="form-group">
+                        @request.Id
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        @request.Amount.ToString("f2")
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        @request.UserAccountStatisticAvailable.ToString("f2")
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        @request.CardNumber
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        @request.UserId
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        @request.CreatedOn.ToLocalTime()
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <div custom-badge>@request.TransactionStatus</div>
+                    </div>
+                </td>
+                <td>
+                    <a class="px-4 py-2 text-light bg-success rounded" asp-action="Edit" asp-route-id="@request.Id">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -22,7 +22,7 @@
                 output.Attributes.Add(
                     new TagHelperAttribute("class", "status badge badge-danger badge-pill badge-sm"));
             }
-            else if (status == "Completed")
+            else if (status == "Completed" || status == "Approved")
             {
                 output.Attributes.Add(
                     new TagHelperAttribute("class", "status badge badge-success badge-pill badge-sm"));

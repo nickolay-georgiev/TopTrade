@@ -7,9 +7,12 @@
 <ul class="navbar-nav">
     @if (this.SignInManager.IsSignedIn(this.User))
     {
-        <li class="nav-item">
+        @*<li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @this.User.Identity.Name!</a>
-        </li>
+        </li>*@
+        <p class="mt-2 mb-0">
+            Hello @this.User.Identity.Name!
+        </p>
         if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
         {
             <li class="nav-item">

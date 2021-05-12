@@ -7,10 +7,16 @@
 
     public interface IAccountManagementService
     {
-        ICollection<VerificationDocumentViewModel> GetAllUnverifiedUsers();
+        VerificationDocumentPageViewModel GetAllUnverifiedUsers(int pageNumber, int itemsPerPage);
 
-        VerificationDocumentViewModel GetById(string id);
+        VerificationDocumentViewModel GetUnverifiedUserById(string id);
 
         Task UpdateUserVerificationStatusAsync(string id, VerificationDocumentInputModel input);
+
+        WithdrawRequestPageViewModel GetAllWithdrawRequests(int pageNumber, int itemsPerPage);
+
+        WithdrawRequestViewModel GetWithdrawRequestById(int? id);
+
+        Task UpdateUserWithdrawRequestAsync(int id, WithdrawRequestInputModel input);
     }
 }

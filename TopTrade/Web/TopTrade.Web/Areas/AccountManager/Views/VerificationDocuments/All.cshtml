@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TopTrade.Web.ViewModels.AccountManager.VerificationDocumentViewModel>
+﻿@model TopTrade.Web.ViewModels.AccountManager.VerificationDocumentPageViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -24,29 +24,37 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var user in Model)
+            @foreach (var document in Model.VerificationDocuments)
             {
                 <tr>
                     <td>
-                        <div class="document-img-wrapper">
-                            <img class="img-fluid" src="@user.DocumentUrl" alt="Alternate Text" />
+                        <div class="document-img-wrapper form-group">
+                            <img class="img-fluid" src="@document.DocumentUrl" alt="Alternate Text" />
                         </div>
                     </td>
                     <td>
-                        @user.VerificationStatus
+                        <div class="form-group">
+                            <div custom-badge>@document.VerificationStatus</div>
+                        </div>
                     </td>
                     <td>
-                        @user.UserId
-                    </td>
-
-                    <td>
-                        @user.CreatedOn.ToLocalTime()
+                        <div class="form-group">
+                            @document.UserId
+                        </div>
                     </td>
                     <td>
-                        <a class="px-4 py-2 text-light bg-success rounded" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
+                        <div class="form-group">
+                            @document.CreatedOn.ToLocalTime()
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <a class="px-4 py-2 text-light bg-success rounded" asp-action="Edit" asp-route-id="@document.Id">Edit</a>
+                        </div>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+    <partial name="_PagingPartial" model="@Model">
 </div>

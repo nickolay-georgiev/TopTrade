@@ -8,7 +8,6 @@
 
     public class VerificationDocumentViewModel : IMapFrom<VerificationDocument>
     {
-        [Display(Name ="User Id")]
         public string Id { get; set; }
 
         public string DocumentUrl { get; set; }

@@ -180,11 +180,11 @@
                     UserId = userId,
                 };
 
-                _ = this.cardRepository.AddAsync(card);
+                await this.cardRepository.AddAsync(card);
                 await this.cardRepository.SaveChangesAsync();
             }
 
-            _ = this.depositRepository
+            await this.depositRepository
                 .AddAsync(new Deposit
                 {
                     Amount = input.Amount,
