@@ -22,6 +22,11 @@
 
         public IActionResult All(int id = 1)
         {
+            if (id < 0)
+            {
+                return this.NotFound();
+            }
+
             var pageViewModel = this.accountManagementService.GetAllWithdrawRequests(id, ItemsPerPage);
             return this.View(pageViewModel);
         }

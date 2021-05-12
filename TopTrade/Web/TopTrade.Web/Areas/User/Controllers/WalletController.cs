@@ -16,6 +16,11 @@
 
         public IActionResult All(int id = 1)
         {
+            if (id < 0)
+            {
+                return this.NotFound();
+            }
+
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             int itemPerPage = 8;
 

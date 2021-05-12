@@ -18,5 +18,13 @@
         WithdrawRequestViewModel GetWithdrawRequestById(int? id);
 
         Task UpdateUserWithdrawRequestAsync(int id, WithdrawRequestInputModel input);
+
+        UsersPageViewModel GetAllUsers(int pageNumber, int itemsPerPage);
+
+        UserInPageViewModel GetUserById(string id);
+
+        Task DeactivateUserAccountAsync(string id, UserInputModel input);
+
+        DashboardViewModel GetManagerDashboardData();
     }
 }

@@ -23,6 +23,11 @@
 
         public async Task<IActionResult> All(int id = 1)
         {
+            if (id < 0)
+            {
+                return this.NotFound();
+            }
+
             var user = await this.userManager.GetUserAsync(this.User);
             var viewModel = this.tradeService.GetTradeHistory(user, id, ItemsPerPage);
 

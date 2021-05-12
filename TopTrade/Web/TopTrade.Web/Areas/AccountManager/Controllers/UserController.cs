@@ -7,12 +7,12 @@
     using TopTrade.Services.Data.AccountManager;
     using TopTrade.Web.ViewModels.AccountManager;
 
-    public class VerificationDocumentsController : BaseAccountManagerController
+    public class UserController : BaseAccountManagerController
     {
         private const int ItemsPerPage = 20;
         private readonly IAccountManagementService accountManagementService;
 
-        public VerificationDocumentsController(
+        public UserController(
             IAccountManagementService accountManagementService)
         {
             this.accountManagementService = accountManagementService;
@@ -25,8 +25,8 @@
                 return this.NotFound();
             }
 
-            var verificationDocumentViewModels = this.accountManagementService.GetAllUnverifiedUsers(id, ItemsPerPage);
-            return this.View(verificationDocumentViewModels);
+            var allUsersPageViewModel = this.accountManagementService.GetAllUsers(id, ItemsPerPage);
+            return this.View(allUsersPageViewModel);
         }
 
         public IActionResult Edit(string id)
@@ -36,19 +36,18 @@
                 return this.NotFound();
             }
 
-            try
-            {
-                var verificationDocument = this.accountManagementService.GetUnverifiedUserById(id);
-                return this.View(verificationDocument);
-            }
-            catch (Exception)
+            var userViewModel = this.accountManagementService.GetUserById(id);
+
+            if (userViewModel == null)
             {
                 return this.NotFound();
             }
+
+            return this.View(userViewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, VerificationDocumentInputModel input)
+        public async Task<IActionResult> Edit(string id, UserInputModel input)
         {
             if (id != input.Id)
             {
@@ -59,10 +58,10 @@
             {
                 try
                 {
-                    await this.accountManagementService.UpdateUserVerificationStatusAsync(id, input);
+                    await this.accountManagementService.DeactivateUserAccountAsync(id, input);
 
                     this.TempData["Success"] = "Success!";
-                    this.TempData["Message"] = "Account was updated";
+                    this.TempData["Message"] = "User account was updated";
 
                     return this.RedirectToAction(nameof(this.All));
                 }

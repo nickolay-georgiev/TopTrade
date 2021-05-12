@@ -1,11 +1,11 @@
 ﻿namespace TopTrade.Services.Data.AccountManager
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using TopTrade.Data.Common.Repositories;
+    using TopTrade.Data.Models;
     using TopTrade.Data.Models.User;
     using TopTrade.Data.Models.User.Enums;
     using TopTrade.Services.Mapping;
@@ -14,14 +14,17 @@
     public class AccountManagementService : IAccountManagementService
     {
         private readonly IDeletableEntityRepository<Withdraw> withdrawRepository;
+        private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
         private readonly IDeletableEntityRepository<VerificationDocument> verificationDocumentRepository;
 
         public AccountManagementService(
             IDeletableEntityRepository<Withdraw> withdrawRepository,
+            IDeletableEntityRepository<ApplicationUser> userRepository,
             IDeletableEntityRepository<VerificationDocument> verificationDocumentRepository)
         {
             this.verificationDocumentRepository = verificationDocumentRepository;
             this.withdrawRepository = withdrawRepository;
+            this.userRepository = userRepository;
         }
 
         public VerificationDocumentPageViewModel GetAllUnverifiedUsers(int pageNumber, int itemsPerPage)
@@ -130,6 +133,80 @@
 
             this.withdrawRepository.Update(withdrawRequest);
             await this.withdrawRepository.SaveChangesAsync();
+        }
+
+        public UsersPageViewModel GetAllUsers(int pageNumber, int itemsPerPage)
+        {
+            var users = this.userRepository
+                .AllAsNoTrackingWithDeleted()
+                .OrderBy(x => x.CreatedOn)
+                .Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage)
+                .To<UserInPageViewModel>()
+                .ToList();
+
+            var pageViewModel = new UsersPageViewModel
+            {
+                Users = users,
+                ItemsPerPage = itemsPerPage,
+                PageNumber = pageNumber,
+                DataCount = this.userRepository
+                .AllAsNoTrackingWithDeleted()
+                .Count(),
+            };
+
+            return pageViewModel;
+        }
+
+        public UserInPageViewModel GetUserById(string id)
+        {
+            return this.userRepository
+                .AllAsNoTrackingWithDeleted()
+                .To<UserInPageViewModel>()
+                .FirstOrDefault(x => x.Id == id);
+        }
+
+        public async Task DeactivateUserAccountAsync(string id, UserInputModel input)
+        {
+            var user = this.userRepository
+                .AllWithDeleted()
+                .FirstOrDefault(x => x.Id == id);
+
+            if (user == null)
+            {
+                throw new ArgumentNullException("User not found");
+            }
+
+            user.IsDeleted = input.IsDeleted;
+
+            this.userRepository.Update(user);
+            await this.userRepository.SaveChangesAsync();
+        }
+
+        public DashboardViewModel GetManagerDashboardData()
+        {
+            var usersCount = this.userRepository
+                .AllAsNoTrackingWithDeleted()
+                .Where(x => x.CreatedOn.Month == DateTime.Now.Month)
+                .Count();
+
+            var unverifiedDocuments = this.verificationDocumentRepository
+                .AllAsNoTracking()
+                .Where(x => x.VerificationStatus == VerificationDocumentStatus.Pending.ToString())
+                .Count();
+
+            var unverifiedWithdrawRequests = this.withdrawRepository
+                .AllAsNoTracking()
+                .Where(x => x.TransactionStatus == TransactionStatus.Pending.ToString())
+                .Count();
+
+            var dashboardViewModel = new DashboardViewModel()
+            {
+                NewUsersThisMonth = usersCount,
+                UnverifiedDocumentsCount = unverifiedDocuments,
+                UnverifiedWithdrawRequestsCount = unverifiedWithdrawRequests,
+            };
+
+            return dashboardViewModel;
         }
     }
 }

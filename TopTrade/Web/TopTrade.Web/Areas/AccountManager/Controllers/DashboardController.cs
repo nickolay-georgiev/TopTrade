@@ -1,17 +1,22 @@
 ﻿namespace TopTrade.Web.Areas.AccountManager.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-
     using Microsoft.AspNetCore.Mvc;
+    using TopTrade.Services.Data.AccountManager;
 
     public class DashboardController : BaseAccountManagerController
     {
+        private readonly IAccountManagementService accountManagementService;
+
+        public DashboardController(
+            IAccountManagementService accountManagementService)
+        {
+            this.accountManagementService = accountManagementService;
+        }
+
         public IActionResult Index()
         {
-            return this.View();
+            var viewModel = this.accountManagementService.GetManagerDashboardData();
+            return this.View(viewModel);
         }
     }
 }

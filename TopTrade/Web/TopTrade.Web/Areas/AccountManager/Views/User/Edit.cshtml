@@ -1,0 +1,68 @@
+﻿@model TopTrade.Web.ViewModels.AccountManager.UserInPageViewModel
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+@if (TempData["Message"] != null)
+{
+    <partial name="_ToastPartial" />
+}
+
+<div class="d-flex justify-content-between align-items-xl-end">
+    <h4>Edit User</h4>
+    <div>
+        <a asp-action="All">Back to List</a>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <form asp-action="Edit">
+        <div class="row">
+            <div class="col-md">
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-group">
+                    <label asp-for="FullName" class="control-label"></label>
+                    <input asp-for="FullName" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" disabled />
+                </div>
+            </div>
+        </div>
+        <div class="row">            
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="CreatedOn" class="control-label"></label>
+                    <input asp-for="CreatedOn" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="ModifiedOn" class="control-label"></label>
+                    <input asp-for="ModifiedOn" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group text-center">
+                    <label asp-for="IsDeleted" class="control-label"></label>
+                    <input asp-for="IsDeleted" class="form-control" type="checkbox" />
+                </div>
+            </div>
+            <div class="col-md-2 d-flex align-self-md-end">
+                <div class="form-group">
+                    <input type="submit" value="Update User" class="btn btn-primary" />
+                </div>
+            </div>
+            <input type="hidden" asp-for="Id" />
+        </div>
+    </form>
+</div>
