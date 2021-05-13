@@ -1,12 +1,8 @@
 ﻿namespace TopTrade.Web.ViewModels.Administration
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using TopTrade.Web.ViewModels.User;
+    using TopTrade.Web.ViewModels.Shared;
 
-    public class AccountManagerPageViewModel : PagingViewModel
+    public class AccountManagerPageViewModel : BaseUsersPageViewModel<AccountManagerViewModel>
     {
-        public ICollection<AccountManagerViewModel> Managers { get; set; }
     }
 }

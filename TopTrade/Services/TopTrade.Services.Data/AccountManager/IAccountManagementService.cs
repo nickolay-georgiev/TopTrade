@@ -21,10 +21,10 @@
 
         Task<UsersPageViewModel> GetAllUsersAsync(int pageNumber, int itemsPerPage);
 
-        UserInPageViewModel GetUserById(string id);
-
         Task DeactivateUserAccountAsync(string id, EditUserInputModel input);
 
         Task<DashboardViewModel> GetManagerDashboardDataAsync();
+
+        T GetUserById<T>(string id);
     }
 }

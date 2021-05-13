@@ -10,7 +10,7 @@
 
         Task<UsersPageViewModel> GetAllUsersAsync(int pageNumber, int itemsPerPage);
 
-        AccountManagerViewModel GetUserById(string id);
+        T GetUserById<T>(string id);
 
         Task<AccountManagerPageViewModel> GetAllAccountManagersAsync(int pageNumber, int itemsPerPage);
 

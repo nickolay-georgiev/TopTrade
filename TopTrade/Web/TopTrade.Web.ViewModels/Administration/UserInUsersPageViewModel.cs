@@ -3,9 +3,9 @@
     using AutoMapper;
     using TopTrade.Data.Models;
     using TopTrade.Services.Mapping;
-    using TopTrade.Web.ViewModels.AccountManager;
+    using TopTrade.Web.ViewModels.Shared;
 
-    public class UserInUsersPageViewModel : UserInPageViewModel, IMapFrom<ApplicationUser>, IHaveCustomMappings
+    public class UserInUsersPageViewModel : BaseUserModel, IMapFrom<ApplicationUser>, IHaveCustomMappings
     {
         public string Address { get; set; }
 

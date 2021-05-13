@@ -1,11 +1,8 @@
 ﻿namespace TopTrade.Web.ViewModels.AccountManager
 {
-    using System.Collections.Generic;
+    using TopTrade.Web.ViewModels.Shared;
 
-    using TopTrade.Web.ViewModels.User;
-
-    public class UsersPageViewModel : PagingViewModel
+    public class UsersPageViewModel : BaseUsersPageViewModel<UserInPageViewModel>
     {
-        public ICollection<UserInPageViewModel> Users { get; set; }
     }
 }

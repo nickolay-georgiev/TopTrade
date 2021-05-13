@@ -38,7 +38,7 @@
                 return this.NotFound();
             }
 
-            var userViewModel = this.accountManagementService.GetUserById(id);
+            var userViewModel = this.accountManagementService.GetUserById<UserInPageViewModel>(id);
 
             if (userViewModel == null)
             {
@@ -86,7 +86,7 @@
                 return this.NotFound();
             }
 
-            var user = this.accountManagementService.GetUserById(id);
+            var user = this.accountManagementService.GetUserById<UserInPageViewModel>(id);
 
             if (user == null)
             {

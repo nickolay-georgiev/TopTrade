@@ -149,7 +149,7 @@
 
             var users = this.userRepository
                 .AllAsNoTrackingWithDeleted()
-                .Where(x => x.Roles.Any(x => x.RoleId != managerRole.Id && x.RoleId != adminRole.Id))
+                .Where(x => x.Roles.All(x => x.RoleId != managerRole.Id && x.RoleId != adminRole.Id))
                 .OrderBy(x => x.CreatedOn)
                 .Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage)
                 .To<UserInPageViewModel>()
@@ -168,12 +168,13 @@
             return pageViewModel;
         }
 
-        public UserInPageViewModel GetUserById(string id)
+        public T GetUserById<T>(string id)
         {
             return this.userRepository
                 .AllAsNoTrackingWithDeleted()
-                .To<UserInPageViewModel>()
-                .FirstOrDefault(x => x.Id == id);
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefault();
         }
 
         public async Task DeactivateUserAccountAsync(string id, EditUserInputModel input)
@@ -195,14 +196,13 @@
 
         public async Task<DashboardViewModel> GetManagerDashboardDataAsync()
         {
-
             var adminRole = await this.roleManager.FindByNameAsync(GlobalConstants.AdministratorRoleName);
             var managerRole = await this.roleManager.FindByNameAsync(GlobalConstants.AccountManagerRoleName);
 
             var usersCount = this.userRepository
                 .AllAsNoTrackingWithDeleted()
                 .Where(x => x.CreatedOn.Month == DateTime.Now.Month && x.Roles
-                .Any(x => x.RoleId != managerRole.Id && x.RoleId != adminRole.Id))
+                .All(x => x.RoleId != managerRole.Id && x.RoleId != adminRole.Id))
                 .Count();
 
             var unverifiedDocuments = this.verificationDocumentRepository

@@ -1,9 +1,8 @@
 ﻿namespace TopTrade.Web.ViewModels.AccountManager
 {
-    public class EditUserInputModel
-    {
-        public string Id { get; set; }
+    using TopTrade.Web.ViewModels.Shared.AdministrationAndAccountManagement;
 
-        public bool IsDeleted { get; set; }
+    public class EditUserInputModel : BaseEditUserModel
+    {
     }
 }

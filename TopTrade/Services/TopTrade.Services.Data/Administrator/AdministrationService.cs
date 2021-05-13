@@ -98,12 +98,13 @@
             return pageViewModel;
         }
 
-        public AccountManagerViewModel GetUserById(string id)
+        public T GetUserById<T>(string id)
         {
             return this.userRepository
                 .AllAsNoTrackingWithDeleted()
-                .To<AccountManagerViewModel>()
-                .FirstOrDefault(x => x.Id == id);
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefault();
         }
 
         public async Task<AccountManagerPageViewModel> GetAllAccountManagersAsync(int pageNumber, int itemsPerPage)
@@ -121,7 +122,7 @@
 
             var pageViewModel = new AccountManagerPageViewModel
             {
-                Managers = managers,
+                Users = managers,
                 ItemsPerPage = itemsPerPage,
                 PageNumber = pageNumber,
                 DataCount = this.userRepository

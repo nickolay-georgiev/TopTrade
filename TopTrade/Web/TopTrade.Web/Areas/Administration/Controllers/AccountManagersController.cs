@@ -38,7 +38,7 @@
                 return this.NotFound();
             }
 
-            var userViewModel = this.administrationService.GetUserById(id);
+            var userViewModel = this.administrationService.GetUserById<AccountManagerViewModel>(id);
 
             if (userViewModel == null)
             {
@@ -86,7 +86,7 @@
                 return this.NotFound();
             }
 
-            var manager = this.administrationService.GetUserById(id);
+            var manager = this.administrationService.GetUserById<AccountManagerViewModel>(id);
 
             if (manager == null)
             {
@@ -95,7 +95,7 @@
 
             var viewModel = new AccountManagerPageViewModel
             {
-                Managers = new List<AccountManagerViewModel> { manager },
+                Users = new List<AccountManagerViewModel> { manager },
                 PageNumber = 1,
                 ItemsPerPage = ItemsPerPage,
                 DataCount = 1,

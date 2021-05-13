@@ -1,8 +1,6 @@
 ﻿namespace TopTrade.Web.Areas.Administration.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
@@ -39,7 +37,7 @@
                 return this.NotFound();
             }
 
-            var userViewModel = this.administrationService.GetUserById(id);
+            var userViewModel = this.administrationService.GetUserById<UserInUsersPageViewModel>(id);
 
             if (userViewModel == null)
             {
@@ -56,7 +54,7 @@
                 return this.NotFound();
             }
 
-            var userViewModel = this.administrationService.GetUserById(id);
+            var userViewModel = this.administrationService.GetUserById<AccountManagerViewModel>(id);
 
             if (userViewModel == null)
             {
