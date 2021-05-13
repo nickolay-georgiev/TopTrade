@@ -1,6 +1,6 @@
 ﻿namespace TopTrade.Web.ViewModels.AccountManager
 {
-    public class UserInputModel
+    public class EditUserInputModel
     {
         public string Id { get; set; }
 

@@ -1,22 +1,22 @@
-﻿namespace TopTrade.Web.Areas.AccountManager.Controllers
+﻿namespace TopTrade.Web.Areas.Administration.Controllers
 {
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
-    using TopTrade.Services.Data.AccountManager;
-    using TopTrade.Web.ViewModels.AccountManager;
+    using TopTrade.Services.Data.Administrator;
+    using TopTrade.Web.ViewModels.Administration;
 
-    public class UserController : BaseAccountManagerController
+    public class AccountManagersController : BaseAdministrationController
     {
         private const int ItemsPerPage = 20;
-        private readonly IAccountManagementService accountManagementService;
+        private readonly IAdministrationService administrationService;
 
-        public UserController(
-            IAccountManagementService accountManagementService)
+        public AccountManagersController(
+            IAdministrationService administrationService)
         {
-            this.accountManagementService = accountManagementService;
+            this.administrationService = administrationService;
         }
 
         public async Task<IActionResult> All(int id = 1)
@@ -26,9 +26,9 @@
                 return this.NotFound();
             }
 
-            var allUsersPageViewModel = await this.accountManagementService.GetAllUsersAsync(id, ItemsPerPage);
+            var allManagersPageViewModel = await this.administrationService.GetAllAccountManagersAsync(id, ItemsPerPage);
 
-            return this.View(allUsersPageViewModel);
+            return this.View(allManagersPageViewModel);
         }
 
         public IActionResult Edit(string id)
@@ -38,7 +38,7 @@
                 return this.NotFound();
             }
 
-            var userViewModel = this.accountManagementService.GetUserById(id);
+            var userViewModel = this.administrationService.GetUserById(id);
 
             if (userViewModel == null)
             {
@@ -49,7 +49,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, EditUserInputModel input)
+        public async Task<IActionResult> Edit(string id, EditAccountManagerInputModel input)
         {
             if (id != input.Id)
             {
@@ -60,7 +60,7 @@
             {
                 try
                 {
-                    await this.accountManagementService.DeactivateUserAccountAsync(id, input);
+                    await this.administrationService.DeactivateManagerAccountAsync(id, input);
 
                     this.TempData["Success"] = "Success!";
                     this.TempData["Message"] = "User account was updated";
@@ -86,16 +86,16 @@
                 return this.NotFound();
             }
 
-            var user = this.accountManagementService.GetUserById(id);
+            var manager = this.administrationService.GetUserById(id);
 
-            if (user == null)
+            if (manager == null)
             {
                 return this.NotFound();
             }
 
-            var viewModel = new UsersPageViewModel
+            var viewModel = new AccountManagerPageViewModel
             {
-                Users = new List<UserInPageViewModel> { user },
+                Managers = new List<AccountManagerViewModel> { manager },
                 PageNumber = 1,
                 ItemsPerPage = ItemsPerPage,
                 DataCount = 1,

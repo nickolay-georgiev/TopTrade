@@ -9,7 +9,6 @@
     using TopTrade.Common;
     using TopTrade.Data.Models;
     using TopTrade.Services.Data.User;
-    using TopTrade.Web.Areas.AccountManager.Controllers;
     using TopTrade.Web.Areas.User.Controllers;
     using TopTrade.Web.ViewModels.User.Profile;
 
@@ -36,7 +35,12 @@
         {
             if (this.User.IsInRole(GlobalConstants.AccountManagerRoleName))
             {
-                return this.RedirectToAction(nameof(DashboardController.Index), "Dashboard", new { area = "AccountManager" });
+                return this.RedirectToAction(nameof(AccountManager.Controllers.DashboardController.Index), "Dashboard", new { area = "AccountManager" });
+            }
+
+            if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+            {
+                return this.RedirectToAction(nameof(Administration.Controllers.DashboardController.Index), "Dashboard", new { area = "Administration" });
             }
 
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;

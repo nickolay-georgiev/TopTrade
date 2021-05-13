@@ -19,12 +19,12 @@
 
         Task UpdateUserWithdrawRequestAsync(int id, WithdrawRequestInputModel input);
 
-        UsersPageViewModel GetAllUsers(int pageNumber, int itemsPerPage);
+        Task<UsersPageViewModel> GetAllUsersAsync(int pageNumber, int itemsPerPage);
 
         UserInPageViewModel GetUserById(string id);
 
-        Task DeactivateUserAccountAsync(string id, UserInputModel input);
+        Task DeactivateUserAccountAsync(string id, EditUserInputModel input);
 
-        DashboardViewModel GetManagerDashboardData();
+        Task<DashboardViewModel> GetManagerDashboardDataAsync();
     }
 }

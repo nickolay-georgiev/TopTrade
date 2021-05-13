@@ -1,0 +1,82 @@
+﻿@model TopTrade.Web.ViewModels.Administration.UserInUsersPageViewModel
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+@if (TempData["Message"] != null)
+{
+    <partial name="_ToastPartial" />
+}
+
+<div class="d-flex justify-content-between align-items-xl-end">
+    <h4>User Details</h4>
+    <div>
+        <a asp-action="All">Back to List</a>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <form asp-action="Edit" method="get">
+        <div class="form-group">
+            <label asp-for="Id" class="control-label"></label>
+            <input asp-for="Id" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label asp-for="FullName" class="control-label"></label>
+            <input asp-for="FullName" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label asp-for="Address" class="control-label"></label>
+            <input asp-for="Address" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label asp-for="City" class="control-label"></label>
+            <input asp-for="City" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label asp-for="Country" class="control-label"></label>
+            <input asp-for="Country" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label asp-for="ZipCode" class="control-label"></label>
+            <input asp-for="ZipCode" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label asp-for="ProfileStatus" class="control-label"></label>
+            <input asp-for="ProfileStatus" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label asp-for="Profit" class="control-label"></label>
+            <input asp-for="Profit" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label asp-for="Allocated" class="control-label"></label>
+            <input asp-for="Allocated" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label asp-for="Available" class="control-label"></label>
+            <input asp-for="Available" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label asp-for="UserEquity" class="control-label"></label>
+            <input asp-for="UserEquity" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label asp-for="ModifiedOn" class="control-label"></label>
+            <input asp-for="ModifiedOn" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label asp-for="AvatarUrl" class="control-label"></label>
+            <input asp-for="AvatarUrl" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label asp-for="IsDeleted" class="control-label"></label>
+            <input asp-for="IsDeleted" class="form-control" disabled />
+        </div>
+    </form>
+</div>

@@ -14,6 +14,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using TopTrade.Common;
     using TopTrade.Data;
     using TopTrade.Data.Common;
     using TopTrade.Data.Common.Repositories;
@@ -24,6 +25,7 @@
     using TopTrade.Services.CronJobs;
     using TopTrade.Services.Data;
     using TopTrade.Services.Data.AccountManager;
+    using TopTrade.Services.Data.Administrator;
     using TopTrade.Services.Data.User;
     using TopTrade.Services.Mapping;
     using TopTrade.Services.Messaging;
@@ -96,7 +98,6 @@
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
-
             services.AddTransient<IAlphaVantageApiClientService, AlphaVantageApiClientService>();
             services.AddTransient<IStockService, StockService>();
             services.AddTransient<INewsService, NewsService>();
@@ -104,6 +105,7 @@
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ITradeService, TradeService>();
             services.AddTransient<IAccountManagementService, AccountManagementService>();
+            services.AddTransient<IAdministrationService, AdministrationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -121,6 +123,8 @@
                     .SeedAsync(dbContext, serviceScope.ServiceProvider)
                     .GetAwaiter()
                     .GetResult();
+
+                this.SeedHangfireJobs(recurringJobManager);
             }
 
             if (env.IsDevelopment())
@@ -147,9 +151,22 @@
             //{
             //    app.UseHangfireServer(new BackgroundJobServerOptions { WorkerCount = 2 });
             //    app.UseHangfireDashboard(
-            //        "/hangfire",
-            //        new DashboardOptions { Authorization = new[] { new HangfireAuthorizationFilter() } });
+            //        "/Administration/Hangfire",
+            //        new DashboardOptions
+            //        {
+            //            Authorization = new[] { new HangfireAuthorizationFilter() },
+            //            AppPath = "/Administration/Dashboard",
+            //        });
             //}
+
+            app.UseHangfireServer(new BackgroundJobServerOptions { WorkerCount = 2 });
+            app.UseHangfireDashboard(
+                "/Administration/Hangfire",
+                new DashboardOptions
+                {
+                    Authorization = new[] { new HangfireAuthorizationFilter() },
+                    AppPath = "/Administration/Dashboard",
+                });
 
             app.UseEndpoints(
                 endpoints =>
@@ -172,7 +189,7 @@
             public bool Authorize(DashboardContext context)
             {
                 var httpContext = context.GetHttpContext();
-                return true;
+                return httpContext.User.IsInRole(GlobalConstants.AdministratorRoleName);
             }
         }
     }

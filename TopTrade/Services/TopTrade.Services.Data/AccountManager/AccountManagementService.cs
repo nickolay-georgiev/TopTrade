@@ -1,9 +1,13 @@
 ﻿namespace TopTrade.Services.Data.AccountManager
 {
+    using Microsoft.AspNetCore.Identity;
+
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
+    using TopTrade.Common;
     using TopTrade.Data.Common.Repositories;
     using TopTrade.Data.Models;
     using TopTrade.Data.Models.User;
@@ -13,18 +17,21 @@
 
     public class AccountManagementService : IAccountManagementService
     {
+        private readonly RoleManager<ApplicationRole> roleManager;
         private readonly IDeletableEntityRepository<Withdraw> withdrawRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
         private readonly IDeletableEntityRepository<VerificationDocument> verificationDocumentRepository;
 
         public AccountManagementService(
+            RoleManager<ApplicationRole> roleManager,
             IDeletableEntityRepository<Withdraw> withdrawRepository,
             IDeletableEntityRepository<ApplicationUser> userRepository,
             IDeletableEntityRepository<VerificationDocument> verificationDocumentRepository)
         {
-            this.verificationDocumentRepository = verificationDocumentRepository;
-            this.withdrawRepository = withdrawRepository;
+            this.roleManager = roleManager;
             this.userRepository = userRepository;
+            this.withdrawRepository = withdrawRepository;
+            this.verificationDocumentRepository = verificationDocumentRepository;
         }
 
         public VerificationDocumentPageViewModel GetAllUnverifiedUsers(int pageNumber, int itemsPerPage)
@@ -135,10 +142,14 @@
             await this.withdrawRepository.SaveChangesAsync();
         }
 
-        public UsersPageViewModel GetAllUsers(int pageNumber, int itemsPerPage)
+        public async Task<UsersPageViewModel> GetAllUsersAsync(int pageNumber, int itemsPerPage)
         {
+            var adminRole = await this.roleManager.FindByNameAsync(GlobalConstants.AdministratorRoleName);
+            var managerRole = await this.roleManager.FindByNameAsync(GlobalConstants.AccountManagerRoleName);
+
             var users = this.userRepository
                 .AllAsNoTrackingWithDeleted()
+                .Where(x => x.Roles.Any(x => x.RoleId != managerRole.Id && x.RoleId != adminRole.Id))
                 .OrderBy(x => x.CreatedOn)
                 .Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage)
                 .To<UserInPageViewModel>()
@@ -165,7 +176,7 @@
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task DeactivateUserAccountAsync(string id, UserInputModel input)
+        public async Task DeactivateUserAccountAsync(string id, EditUserInputModel input)
         {
             var user = this.userRepository
                 .AllWithDeleted()
@@ -182,11 +193,16 @@
             await this.userRepository.SaveChangesAsync();
         }
 
-        public DashboardViewModel GetManagerDashboardData()
+        public async Task<DashboardViewModel> GetManagerDashboardDataAsync()
         {
+
+            var adminRole = await this.roleManager.FindByNameAsync(GlobalConstants.AdministratorRoleName);
+            var managerRole = await this.roleManager.FindByNameAsync(GlobalConstants.AccountManagerRoleName);
+
             var usersCount = this.userRepository
                 .AllAsNoTrackingWithDeleted()
-                .Where(x => x.CreatedOn.Month == DateTime.Now.Month)
+                .Where(x => x.CreatedOn.Month == DateTime.Now.Month && x.Roles
+                .Any(x => x.RoleId != managerRole.Id && x.RoleId != adminRole.Id))
                 .Count();
 
             var unverifiedDocuments = this.verificationDocumentRepository

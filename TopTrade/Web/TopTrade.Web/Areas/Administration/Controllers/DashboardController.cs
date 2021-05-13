@@ -1,18 +1,25 @@
 ﻿namespace TopTrade.Web.Areas.Administration.Controllers
 {
+    using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Mvc;
+
+    using TopTrade.Services.Data.Administrator;
 
     public class DashboardController : BaseAdministrationController
     {
-        public DashboardController()
+        private readonly IAdministrationService administrationService;
+
+        public DashboardController(
+            IAdministrationService administrationService)
         {
+            this.administrationService = administrationService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            // var viewModel = new IndexViewModel { SettingsCount = this.settingsService.GetCount(), };
-            // return this.View(viewModel);
-            return this.View();
+            var viewModel = await this.administrationService.GetAdminDashboardDataAsync();
+            return this.View(viewModel);
         }
     }
 }
