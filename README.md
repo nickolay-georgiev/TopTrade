@@ -100,6 +100,64 @@ Every registered user,administrator and account manager has own profile page.
 * **Alpha Vantage API** - https://www.alphavantage.co
 * **NewsApi API** - https://newsapi.org/
 
+## DB Diagram
+![Diagram](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/db_relations.jpg)
+
+## Platform pictures
+
+![Dasboard](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/dashboard.png)
+
+##
+![Verification](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/verification.png)
+
+##
+![Deposit](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/deposit.png)
+
+##
+![Withdraw](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/withdraw.png)
+
+##
+![Trade](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/trade.png)
+
+##
+![Portfolio](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/portfolio.png)
+
+##
+![Transactions](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/transactions.png)
+
+##
+![News](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/news_feed.png)
+
+##
+![Profle](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/profile.png)
+
+##
+![Wallet](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/wallet.png)
+
+##
+![Admin_Dashboard](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/admin_dashboard.png)
+
+##
+![Admin_Users](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/admin_users.png)
+
+##
+![Manager_Dasboard](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/manager_dashboard.png)
+
+##
+![Manager_Users](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/manager_users.png)
+
+##
+![Manager_Verification_Documents](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/manager_verification_documents.png)
+
+##
+![Manager_Verification_Documents_Edit](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/manager_verification_documents_edit.png)
+
+##
+![Manager_Withdraw_Requests](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/manager_withdraw_requests.png)
+
+##
+![Manager_Withdraw_Requests_Edit](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/manager_withdraw_requests_edit.png)
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
