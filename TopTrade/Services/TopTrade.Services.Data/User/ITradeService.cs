@@ -12,7 +12,7 @@
 
         Task TakeAllSwapFeesAsync();
 
-        Task<UserStatisticViewModel> Trade(StockTradeDetailsInputModel input, string userId);
+        Task<UserStatisticViewModel> OpenTradeAsync(StockTradeDetailsInputModel input, string userId);
 
         Task CloseTradeAsync(int id, CloseTradeInputModel input, string userId);
     }

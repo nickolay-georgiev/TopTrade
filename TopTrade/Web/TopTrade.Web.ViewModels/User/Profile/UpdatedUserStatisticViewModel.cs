@@ -6,6 +6,11 @@
 
     public class UpdatedUserStatisticViewModel
     {
+        public UpdatedUserStatisticViewModel()
+        {
+            this.Stocks = new List<ActualStockDataViewModel>();
+        }
+
         public ICollection<ActualStockDataViewModel> Stocks { get; set; }
 
         public decimal UserProfit { get; set; }

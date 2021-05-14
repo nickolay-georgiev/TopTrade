@@ -54,7 +54,7 @@
 
             try
             {
-                var resultViewModel = await this.tradeService.Trade(input, userId);
+                var resultViewModel = await this.tradeService.OpenTradeAsync(input, userId);
                 return this.Ok(resultViewModel);
             }
             catch (Exception error)
@@ -77,7 +77,7 @@
             try
             {
                 await this.stockService.RemoveStockFromWatchlistAsync(input.Ticker, userId);
-                return this.Ok();
+                return this.Ok(input.Ticker);
             }
             catch (Exception)
             {

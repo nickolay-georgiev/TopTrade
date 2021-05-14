@@ -78,7 +78,7 @@
             return historyViewModel;
         }
 
-        public async Task<UserStatisticViewModel> Trade(StockTradeDetailsInputModel input, string userId)
+        public async Task<UserStatisticViewModel> OpenTradeAsync(StockTradeDetailsInputModel input, string userId)
         {
             var account = this.accountStatisticRepository
                 .All()
@@ -116,7 +116,6 @@
                 StockId = stock.Id,
                 TradeType = input.TradeType.ToUpper(),
                 TradeStatus = TradeStatus.OPEN.ToString(),
-                CloseDate = DateTime.UtcNow,
             };
 
             await this.tradeRepository.AddAsync(trade);
