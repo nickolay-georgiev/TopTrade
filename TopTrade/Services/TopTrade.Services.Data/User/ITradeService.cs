@@ -8,7 +8,7 @@
 
     public interface ITradeService
     {
-        TradeHistoryViewModel GetTradeHistory(ApplicationUser user, int page, int itemsPerPage);
+        TradeHistoryViewModel GetTradeHistory(string userId, int page, int itemsPerPage);
 
         Task TakeAllSwapFeesAsync();
 

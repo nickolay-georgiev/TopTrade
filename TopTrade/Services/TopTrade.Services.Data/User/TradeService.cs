@@ -7,7 +7,6 @@
 
     using TopTrade.Common;
     using TopTrade.Data.Common.Repositories;
-    using TopTrade.Data.Models;
     using TopTrade.Data.Models.User;
     using TopTrade.Data.Models.User.Enums;
     using TopTrade.Services.Mapping;
@@ -30,18 +29,19 @@
             this.accountStatisticRepository = accountStatisticRepository;
         }
 
-        public TradeHistoryViewModel GetTradeHistory(ApplicationUser user, int pageNumber, int itemsPerPage)
+        public TradeHistoryViewModel GetTradeHistory(string userId, int pageNumber, int itemsPerPage)
         {
             var historyViewModel = new TradeHistoryViewModel
             {
                 ItemsPerPage = itemsPerPage,
                 PageNumber = pageNumber,
-                DataCount = this.tradeRepository.AllAsNoTracking().Where(x => x.UserId == user.Id).Count(),
+                DataCount = this.tradeRepository.AllAsNoTracking()
+                .Where(x => x.UserId == userId).Count(),
             };
 
             historyViewModel.Trades = this.tradeRepository
                 .AllAsNoTracking()
-                .Where(x => x.UserId == user.Id && x.CloseDate != null)
+                .Where(x => x.UserId == userId && x.CloseDate != null)
                 .OrderByDescending(x => x.CloseDate)
                 .Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage)
                 .To<TradeInHistoryViewModel>()
@@ -49,7 +49,7 @@
 
             var tradesByMonths = this.tradeRepository
                 .AllAsNoTracking()
-                .Where(x => x.UserId == user.Id && x.CloseDate != null)
+                .Where(x => x.UserId == userId && x.CloseDate != null)
                 .ToList()
                 .GroupBy(x => x.CloseDate.Value.Month)
                 .Select(x => new TradesByMonthsChartViewModel
@@ -63,7 +63,7 @@
 
             var monthlyBalance = this.tradeRepository
                .AllAsNoTracking()
-               .Where(x => x.UserId == user.Id && x.TradeStatus == TradeStatus.CLOSE.ToString())
+               .Where(x => x.UserId == userId && x.TradeStatus == TradeStatus.CLOSE.ToString())
                .ToList()
                .GroupBy(x => x.CloseDate.Value.Month)
                .Select(x => new MonthlyWalletPerformanceChartViewModel
@@ -136,7 +136,7 @@
         {
             var trade = this.tradeRepository
                 .AllAsNoTracking()
-                .FirstOrDefault(x => x.Id == id);
+                .FirstOrDefault(x => x.Id == id && x.UserId == userId);
 
             if (trade == null)
             {

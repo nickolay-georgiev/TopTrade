@@ -3,18 +3,17 @@
     using System.Threading.Tasks;
 
     using TopTrade.Data.Models;
-    using TopTrade.Services.Data.User.Models;
     using TopTrade.Web.ViewModels.User;
     using TopTrade.Web.ViewModels.User.Profile;
     using TopTrade.Web.ViewModels.User.ViewComponents;
 
     public interface IUserService
     {
-        Task EditProfileAsync(ApplicationUser user, EditProfileViewModel input);
+        Task EditProfileAsync(string userId, EditProfileInputModel input);
 
-        UserProfileDto GetUserDataProfilePage(ApplicationUser user);
+        UserProfileViewModel GetUserDataProfilePage(string userId);
 
-        UserCardDto GetUserDataCardComponent(ApplicationUser user);
+        UserProfileCardViewModel GetUserDataCardComponent(ApplicationUser user);
 
         string GetUserVerificationStatus(ApplicationUser user);
 
@@ -26,6 +25,6 @@
 
         WithdrawViewModel GetAvailableUserWithdrawData(string userId);
 
-        Task AcceptWithdrawRequest(WithdrawInputModel input, string userId);
+        Task AcceptWithdrawRequestAsync(WithdrawInputModel input, string userId);
     }
 }

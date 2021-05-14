@@ -62,7 +62,7 @@
 
             try
             {
-                await this.userService.AcceptWithdrawRequest(input, userId);
+                await this.userService.AcceptWithdrawRequestAsync(input, userId);
             }
             catch (Exception error)
             {

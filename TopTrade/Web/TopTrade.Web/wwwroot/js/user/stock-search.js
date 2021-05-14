@@ -43,7 +43,6 @@
         }
 
         function initHub() {
-            var tickers = [...document.querySelectorAll('.stock-ticker')].map(x => { return { ticker: x.textContent } });
 
             const connection = new signalR.HubConnectionBuilder()
                 .withUrl("/user/index")
@@ -52,17 +51,20 @@
             connection.on("GetStockData", function (data) {
                 let updatedData = data;
 
+                domElements.userProfit().textContent = `$${data.userProfit.toFixed(2)}`;
+                domElements.userEquity().textContent = `${data.userEquity.toFixed(2)}`;
+
                 const rows = [...document.querySelectorAll('.table-div tbody tr')];
 
-                for (var i = 0; i < updatedData.length; i++) {
-                    let currentRow = rows.find(x => x.querySelector('.stock-ticker').textContent == updatedData[i].ticker);
+                for (var i = 0; i < updatedData.stocks.length; i++) {
+                    let currentRow = rows.find(x => x.querySelector('.stock-ticker').textContent == updatedData.stocks[i].ticker);
                     currentRow.querySelectorAll('.price')
-                        .forEach(x => x.textContent = updatedData[i].price.toFixed(2));
+                        .forEach(x => x.textContent = updatedData.stocks[i].price.toFixed(2));
 
                     const changeInCashElement = currentRow.querySelector('.change');
                     const changeInPercentElement = currentRow.querySelector('.change-percent');
 
-                    if (updatedData[i].change < 0) {
+                    if (updatedData.stocks[i].change < 0) {
                         changeInCashElement.classList.add('text-danger');
                         changeInPercentElement.classList.add('text-danger');
                         changeInCashElement.classList.remove('text-success');
@@ -73,16 +75,19 @@
                         changeInCashElement.classList.remove('text-danger');
                         changeInPercentElement.classList.remove('text-danger');
                     }
-                    currentRow.querySelector('.change').textContent = updatedData[i].change.toFixed(2);
-                    currentRow.querySelector('.change-percent').textContent = `(${updatedData[i].changePercent.toFixed(2)}%)`;
+                    currentRow.querySelector('.change').textContent = updatedData.stocks[i].change.toFixed(2);
+                    currentRow.querySelector('.change-percent').textContent = `(${updatedData.stocks[i].changePercent.toFixed(2)}%)`;
                 }
             });
 
             connection.start()
                 .then(() => {
-                    //setInterval(function () {
-                    //    connection.invoke("GetUpdateForStockPrice", tickers);
-                    //}, 120000);
+                    setInterval(function () {
+                        var tickers = [...document.querySelectorAll('.stock-ticker')].map(x => { return { ticker: x.textContent } });
+                        if (tickers) {
+                            connection.invoke("GetUpdateForStockPrice", tickers);
+                        }
+                    }, 60000);
                 })
                 .catch(err => console.error(err.toString()));
         }
@@ -181,7 +186,7 @@
             const changeInCash = searchResult.change;
             const changeInPercents = searchResult.changePercent;
             const sellPrice = searchResult.price;
-            const buyPrice = searchResult.price * 1.005;
+            const buyPrice = searchResult.price;
             stockPrice = sellPrice;
 
             const color = 0 > changeInCash ? 'stock-price-down' : 'stock-price-up';
@@ -259,6 +264,8 @@
 
             tr.querySelector('i.remove-stock-button').addEventListener('click', showRemoveStockButton);
             document.querySelector('tbody').appendChild(tr);
+
+            tr.querySelector('.remove-stock').addEventListener('click', removeStockButton);
 
             [...tr.querySelectorAll('.order-type-button')].forEach(x => {
                 x.addEventListener('click', configureOrder);
@@ -423,7 +430,7 @@
                 price: stockPrice,
                 quantity: stockQuantity,
                 ticker: stockTicker,
-                tradeType: tradeType
+                tradeType: tradeType.toUpperCase(),
             };
 
             let response = await makeAjax(endpoints.trade(), tradeDetails);

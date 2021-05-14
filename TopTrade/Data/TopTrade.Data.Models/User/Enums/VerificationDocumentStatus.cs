@@ -5,5 +5,6 @@
         Approved = 1,
         Pending = 2,
         Rejected = 3,
+        Verified = 4,
     }
 }

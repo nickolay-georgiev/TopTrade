@@ -43,9 +43,15 @@
 
         [HttpPost]
         [ActionName("trade")]
-        public async Task<IActionResult> SellStock(StockTradeDetailsInputModel input)
+        public async Task<IActionResult> Trade(StockTradeDetailsInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.NotFound();
+            }
+
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             try
             {
                 var resultViewModel = await this.tradeService.Trade(input, userId);

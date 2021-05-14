@@ -32,6 +32,11 @@
         [HttpPost]
         public async Task<IActionResult> CloseTrade(int id, CloseTradeInputModel input)
         {
+            if (id != input.Id)
+            {
+                return this.NotFound();
+            }
+
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             try

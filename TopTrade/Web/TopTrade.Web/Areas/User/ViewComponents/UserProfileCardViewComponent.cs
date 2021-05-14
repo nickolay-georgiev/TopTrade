@@ -7,25 +7,25 @@
     using TopTrade.Data.Models;
     using TopTrade.Services.Data.User;
 
-    public class UserCardViewComponent : ViewComponent
+    public class UserProfileCardViewComponent : ViewComponent
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly IUserService editProfileService;
+        private readonly IUserService userService;
 
-        public UserCardViewComponent(
+        public UserProfileCardViewComponent(
             UserManager<ApplicationUser> userManager,
             IUserService editProfileService)
         {
             this.userManager = userManager;
-            this.editProfileService = editProfileService;
+            this.userService = editProfileService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
-            var userDto = this.editProfileService.GetUserDataCardComponent(user);
+            var userProfileCardViewModel = this.userService.GetUserDataCardComponent(user);
 
-            return this.View(userDto);
+            return this.View(userProfileCardViewModel);
         }
     }
 }

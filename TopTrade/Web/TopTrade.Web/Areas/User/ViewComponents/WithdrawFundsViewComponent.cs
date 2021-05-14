@@ -10,14 +10,13 @@
 
     public class WithdrawFundsViewComponent : ViewComponent
     {
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly IUserService userService;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public WithdrawFundsViewComponent(
-            UserManager<ApplicationUser> userManager,
-            IUserService userService)
+            IUserService userService,
+            UserManager<ApplicationUser> userManager)
         {
-            this.userManager = userManager;
             this.userManager = userManager;
             this.userService = userService;
         }

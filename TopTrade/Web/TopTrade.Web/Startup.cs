@@ -75,7 +75,7 @@
                                   DisableGlobalLocks = true,
                               }));
 
-            //services.AddHangfireServer();
+            services.AddHangfireServer();
 
             services.AddControllersWithViews(
                 options =>

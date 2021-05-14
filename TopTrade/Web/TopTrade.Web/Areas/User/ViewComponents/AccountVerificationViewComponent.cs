@@ -7,7 +7,7 @@
     {
         public IViewComponentResult Invoke()
         {
-            VerificationDocumentsInputModel documentsViewModel = new VerificationDocumentsInputModel();
+            var documentsViewModel = new VerificationDocumentsInputModel();
             return this.View(documentsViewModel);
         }
     }

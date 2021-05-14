@@ -9,7 +9,6 @@
     using TopTrade.Data.Models;
     using TopTrade.Data.Models.User;
     using TopTrade.Data.Models.User.Enums;
-    using TopTrade.Services.Data.User.Models;
     using TopTrade.Services.Mapping;
     using TopTrade.Web.ViewModels.User;
     using TopTrade.Web.ViewModels.User.Profile;
@@ -40,8 +39,12 @@
             this.verificationDocumentRepository = verificationDocumentRepository;
         }
 
-        public async Task EditProfileAsync(ApplicationUser user, EditProfileViewModel input)
+        public async Task EditProfileAsync(string userId, EditProfileInputModel input)
         {
+            var user = this.userRepository
+                .All()
+                .FirstOrDefault(x => x.Id == userId);
+
             user.FirstName = input.FirstName;
             user.MiddleName = input.MiddleName;
             user.LastName = input.LastName;
@@ -55,10 +58,15 @@
             await this.userRepository.SaveChangesAsync();
         }
 
-        public UserProfileDto GetUserDataProfilePage(ApplicationUser user)
+        public UserProfileViewModel GetUserDataProfilePage(string userId)
         {
-            var userDto = new UserProfileDto
+            var user = this.userRepository
+                .AllAsNoTracking()
+                .FirstOrDefault(x => x.Id == userId);
+
+            var userViewModel = new UserProfileViewModel
             {
+                Id = user.Id,
                 FirstName = user.FirstName,
                 MiddleName = user.MiddleName,
                 LastName = user.LastName,
@@ -67,26 +75,28 @@
                 Country = user.Country,
                 ZipCode = user.ZipCode,
                 AboutMe = user.AboutMe,
-                AvatarUrl = user.AvatarUrl,
             };
 
-            return userDto;
+            // TODO Remove this when upload to azure
+            userViewModel.AvatarUrl = userViewModel.AvatarUrl == null ?
+                "/img/default-user-avatar.webp" : userViewModel.AvatarUrl.Split("wwwroot")[1];
+
+            return userViewModel;
         }
 
-        public UserCardDto GetUserDataCardComponent(ApplicationUser user)
+        public UserProfileCardViewModel GetUserDataCardComponent(ApplicationUser user)
         {
-            string verificationStatus = this.GetUserVerificationStatus(user);
-
             // TODO Remove this when upload to azure
             var test = user.AvatarUrl == null ? "/img/default-user-avatar.webp" : user.AvatarUrl.Split("wwwroot")[1];
 
-            var userCardDto = new UserCardDto
-            {
-                // AvatarUrl = user.AvatarUrl,
-                AvatarUrl = test,
-                Username = user.Email.Split("@")[0],
-                VerificationStatus = verificationStatus,
-            };
+            var userCardDto = this.userRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id == user.Id)
+                .To<UserProfileCardViewModel>()
+                .FirstOrDefault();
+
+            userCardDto.AvatarUrl = test;
+            userCardDto.Username = user.Email.Split("@")[0];
 
             return userCardDto;
         }
@@ -220,8 +230,9 @@
             return withdrawViewModel;
         }
 
-        public async Task AcceptWithdrawRequest(WithdrawInputModel input, string userId)
+        public async Task AcceptWithdrawRequestAsync(WithdrawInputModel input, string userId)
         {
+
             if (input.Available < input.DesiredAmount)
             {
                 throw new InvalidOperationException(string.Format(GlobalConstants.ReachedWithdrawLimit, input.Available));

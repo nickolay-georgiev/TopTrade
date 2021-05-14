@@ -256,9 +256,9 @@
             }
         }
 
-        public async Task<ICollection<ActualStockDataViewModel>> GetActualStockDataAsync(StockTickerInputModel[] input)
+        public async Task<UpdatedUserStatisticViewModel> GetActualStockDataAsync(string userId, StockTickerInputModel[] input)
         {
-            IList<ActualStockDataViewModel> stockViewModel = new List<ActualStockDataViewModel>();
+            var stockViewModel = new UpdatedUserStatisticViewModel();
 
             foreach (var asset in input)
             {
@@ -271,10 +271,60 @@
                     ChangePercent = data.ChangePercent,
                 };
 
-                stockViewModel.Add(stock);
+                stockViewModel.Stocks.Add(stock);
             }
 
+            stockViewModel = await this.UpdateUserStatistic(userId, stockViewModel);
+
             return stockViewModel;
+        }
+
+        private async Task<UpdatedUserStatisticViewModel> UpdateUserStatistic(string userId, UpdatedUserStatisticViewModel updatedStockList)
+        {
+            var userAccountStatistic = this.accountStatisticRepository
+                .All()
+                .FirstOrDefault(x => x.UserId == userId);
+
+            var allTrades = this.tradeRepository
+                .All()
+                .Where(x => x.UserId == userId &&
+                       x.TradeStatus == TradeStatus.OPEN.ToString())
+                .Select(x => new
+                {
+                    TradeType = x.TradeType,
+                    OpenPrice = x.OpenPrice,
+                    StockTicker = x.Stock.Ticker,
+                })
+                .ToList();
+
+            decimal currentProfitLoss = 0;
+            foreach (var stock in updatedStockList.Stocks)
+            {
+                var currentTrades = allTrades.Where(x => x.StockTicker == stock.Ticker);
+
+                foreach (var trade in currentTrades)
+                {
+                    if (trade.TradeType == TradeType.BUY.ToString())
+                    {
+                        currentProfitLoss += stock.Price - trade.OpenPrice;
+                    }
+                    else
+                    {
+                        currentProfitLoss += trade.OpenPrice - stock.Price;
+                    }
+                }
+            }
+
+            userAccountStatistic.Profit = currentProfitLoss;
+
+            updatedStockList.UserProfit = userAccountStatistic.Profit;
+            updatedStockList.UserEquity =
+                userAccountStatistic.TotalAllocated + userAccountStatistic.Available + userAccountStatistic.Profit;
+
+            this.accountStatisticRepository.Update(userAccountStatistic);
+            await this.accountStatisticRepository.SaveChangesAsync();
+
+            return updatedStockList;
         }
     }
 }

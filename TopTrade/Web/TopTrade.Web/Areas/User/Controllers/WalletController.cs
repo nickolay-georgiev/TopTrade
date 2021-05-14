@@ -7,6 +7,7 @@
 
     public class WalletController : BaseLoggedUserController
     {
+        private const int ItemsPerPage = 8;
         private readonly IUserService profileService;
 
         public WalletController(IUserService profileService)
@@ -22,9 +23,8 @@
             }
 
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            int itemPerPage = 8;
 
-            var walletDataViewModel = this.profileService.GetWalletHitoryData(userId, id, itemPerPage);
+            var walletDataViewModel = this.profileService.GetWalletHitoryData(userId, id, ItemsPerPage);
             return this.View(walletDataViewModel);
         }
     }

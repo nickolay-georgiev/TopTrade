@@ -1,5 +1,6 @@
 ﻿namespace TopTrade.Web.Areas.User.Controllers
 {
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
@@ -11,25 +12,24 @@
     {
         private const int ItemsPerPage = 8;
         private readonly ITradeService tradeService;
-        private readonly UserManager<ApplicationUser> userManager;
 
         public TransactionsController(
             ITradeService tradeService,
             UserManager<ApplicationUser> userManager)
         {
             this.tradeService = tradeService;
-            this.userManager = userManager;
         }
 
-        public async Task<IActionResult> All(int id = 1)
+        public IActionResult All(int id = 1)
         {
             if (id < 0)
             {
                 return this.NotFound();
             }
 
-            var user = await this.userManager.GetUserAsync(this.User);
-            var viewModel = this.tradeService.GetTradeHistory(user, id, ItemsPerPage);
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var viewModel = this.tradeService.GetTradeHistory(userId, id, ItemsPerPage);
 
             return this.View(viewModel);
         }

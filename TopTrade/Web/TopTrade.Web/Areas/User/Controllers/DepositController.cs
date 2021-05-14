@@ -20,6 +20,11 @@
         [HttpPost]
         public async Task<IActionResult> MakeDeposit(DepositModalInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.NotFound();
+            }
+
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             try

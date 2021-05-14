@@ -58,6 +58,7 @@
                                 <td class="text-center" style="width: 200px">
                                     <form asp-action="CloseTrade" asp-controller="Portfolio" asp-route-id="@trade.Id" method="post">
                                         <input value="@trade.CurrentPrice" name="CurrentPrice" type="hidden" />
+                                        <input asp-for="@trade.Id" type="hidden" />
                                         <button type="submit" class="close-trade-button">Close</button>
                                     </form>
                                 </td>

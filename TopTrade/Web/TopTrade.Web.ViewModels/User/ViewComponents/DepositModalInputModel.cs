@@ -9,8 +9,6 @@
         [Range(10, 50_000)]
         public decimal Amount { get; set; }
 
-        public bool IsVerified { get; set; }
-
         public DepositCardInputModel Card { get; set; }
     }
 }

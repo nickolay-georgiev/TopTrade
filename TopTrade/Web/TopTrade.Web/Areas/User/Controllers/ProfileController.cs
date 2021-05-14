@@ -15,7 +15,7 @@
     public class ProfileController : BaseLoggedUserController
     {
         private readonly IWebHostEnvironment environment;
-        private readonly IUserService editProfileService;
+        private readonly IUserService userService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IUploadDocumentsService uploadDocumentsService;
 
@@ -27,39 +27,28 @@
         {
             this.environment = environment;
             this.userManager = userManager;
-            this.editProfileService = editProfileService;
+            this.userService = editProfileService;
             this.uploadDocumentsService = uploadDocumentsService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var user = await this.userManager.GetUserAsync(this.User);
-            var userDto = this.editProfileService.GetUserDataProfilePage(user);
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            // TODO Remove this when upload to azure
-            var test = userDto.AvatarUrl == null ? "/img/default-user-avatar.webp" : userDto.AvatarUrl.Split("wwwroot")[1];
+            var userProfileViewModel = this.userService.GetUserDataProfilePage(userId);
 
-            var userInputModel = new EditProfileViewModel
-            {
-                FirstName = userDto.FirstName,
-                MiddleName = userDto.MiddleName,
-                LastName = userDto.LastName,
-                Address = userDto.Address,
-                City = userDto.City,
-                Country = userDto.Country,
-                ZipCode = userDto.ZipCode,
-                AboutMe = userDto.AboutMe,
-                // AvatarUrl = user.AvatarUrl,
-                AvatarUrl = test,
-            };
-
-            return this.View(userInputModel);
+            return this.View(userProfileViewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(EditProfileViewModel input)
+        public async Task<IActionResult> Edit(EditProfileInputModel input)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            if (userId != input.Id)
+            {
+                return this.NotFound();
+            }
 
             if (!this.ModelState.IsValid)
             {
@@ -70,7 +59,7 @@
 
             try
             {
-                await this.editProfileService.EditProfileAsync(user, input);
+                await this.userService.EditProfileAsync(userId, input);
             }
             catch (Exception error)
             {
@@ -108,9 +97,14 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadAvatar(EditProfileViewModel input)
+        public async Task<IActionResult> UploadAvatar(EditProfileInputModel input)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            if (input.Id != userId)
+            {
+                return this.NotFound();
+            }
 
             try
             {

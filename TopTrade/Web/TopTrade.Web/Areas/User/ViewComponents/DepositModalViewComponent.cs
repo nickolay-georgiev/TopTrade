@@ -6,17 +6,18 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using TopTrade.Data.Models;
+    using TopTrade.Data.Models.User.Enums;
     using TopTrade.Services.Data.User;
     using TopTrade.Web.ViewModels.User.ViewComponents;
 
     public class DepositModalViewComponent : ViewComponent
     {
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly IUserService userProfileService;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public DepositModalViewComponent(
-            UserManager<ApplicationUser> userManager,
-            IUserService userProfileService)
+            IUserService userProfileService,
+            UserManager<ApplicationUser> userManager)
         {
             this.userManager = userManager;
             this.userProfileService = userProfileService;
@@ -27,9 +28,9 @@
             var user = await this.userManager.GetUserAsync((ClaimsPrincipal)this.User);
             string verifiactionStatus = this.userProfileService.GetUserVerificationStatus(user);
 
-            var depositViewModel = new DepositModalInputModel
+            var depositViewModel = new DepositModalViewModel
             {
-                IsVerified = verifiactionStatus == "Verified",
+                IsVerified = verifiactionStatus == VerificationDocumentStatus.Verified.ToString(),
             };
 
             return this.View(depositViewModel);

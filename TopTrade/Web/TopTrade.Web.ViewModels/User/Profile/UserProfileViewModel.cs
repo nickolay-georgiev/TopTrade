@@ -1,9 +1,11 @@
-﻿namespace TopTrade.Web.ViewModels.User
+﻿namespace TopTrade.Web.ViewModels.User.Profile
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class EditProfileViewModel
+    public class UserProfileViewModel
     {
+        public string Id { get; set; }
+
         [Required]
         [StringLength(20, MinimumLength = 1)]
         [Display(Name = "First Name")]
