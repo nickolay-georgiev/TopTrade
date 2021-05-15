@@ -1,6 +1,6 @@
 # TopTrade
 
-Demo project for trading stocks on NYSE. Provided data is refreshing on 2 min. series.
+Demo project for trading stocks on NYSE build with Asp.net Core 5.0 MVC. Provided data is refreshing on 2 min. series.
 
 
 ## Roles
@@ -24,7 +24,7 @@ Every registered user,administrator and account manager has own profile page.
 
 **Administrator**
 * Manage account managers.
-* Create, update and delete account manager.
+* Create, update and delete account manager
 * Manage Hangfire dashboard.
 * Sees statistics
 	- Count of newly registered users for current month 
@@ -44,12 +44,12 @@ Every registered user,administrator and account manager has own profile page.
 	- Count of withdraw requests waiting approval	
 		
 **User with not confirmed account**
-* Can search stocks.
-* Can save stocks in wathclist.
-* Can update profile data.
-* Can upload documents for account verification.
-* Can upload avatar picture.
-* Can read/search stock news.
+* Can search stocks
+* Can save stocks in wathclist
+* Can update profile data
+* Can upload documents for account verification
+* Can upload avatar picture
+* Can read/search stock news
 
 
 **User with confirmed account**
@@ -99,6 +99,7 @@ Every registered user,administrator and account manager has own profile page.
 
 * **Alpha Vantage API** - https://www.alphavantage.co
 * **NewsApi API** - https://newsapi.org/
+* **Logo API**  - https://clearbit.com/
 
 ## DB Diagram
 ![Diagram](https://github.com/nickolay-georgiev/TopTrade/blob/main/TopTrade/Web/TopTrade.Web/wwwroot/img/platform_images/db_relations.jpg)
@@ -160,7 +161,7 @@ Every registered user,administrator and account manager has own profile page.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License
 
 ## Author
 
