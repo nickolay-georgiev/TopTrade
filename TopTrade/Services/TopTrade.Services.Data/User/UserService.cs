@@ -75,27 +75,30 @@
                 Country = user.Country,
                 ZipCode = user.ZipCode,
                 AboutMe = user.AboutMe,
+                AvatarUrl = user.AvatarUrl,
             };
 
             // TODO Remove this when upload to azure
             userViewModel.AvatarUrl = userViewModel.AvatarUrl == null ?
-                "/img/default-user-avatar.webp" : userViewModel.AvatarUrl.Split("wwwroot")[1];
+                "/img/default-user-avatar.webp" : userViewModel.AvatarUrl.Split("wwwroot")[2];
+
+            //userViewModel.AvatarUrl = userViewModel.AvatarUrl == null ?
+            //  "/img/default-user-avatar.webp" : userViewModel.AvatarUrl;
 
             return userViewModel;
         }
 
         public UserProfileCardViewModel GetUserDataCardComponent(ApplicationUser user)
         {
-            // TODO Remove this when upload to azure
-            var test = user.AvatarUrl == null ? "/img/default-user-avatar.webp" : user.AvatarUrl.Split("wwwroot")[1];
-
             var userCardDto = this.userRepository
                 .AllAsNoTracking()
                 .Where(x => x.Id == user.Id)
                 .To<UserProfileCardViewModel>()
                 .FirstOrDefault();
 
-            userCardDto.AvatarUrl = test;
+            userCardDto.AvatarUrl = userCardDto.AvatarUrl == null ?
+                "/img/default-user-avatar.webp" : user.AvatarUrl.Split("wwwroot")[2];
+
             userCardDto.Username = user.Email.Split("@")[0];
 
             return userCardDto;

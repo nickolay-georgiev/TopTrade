@@ -1,16 +1,8 @@
 ﻿namespace TopTrade.Web.ViewModels.User
 {
-    using System.Collections.Generic;
+    using TopTrade.Web.ViewModels.User.Profile;
 
-    using Microsoft.AspNetCore.Http;
-
-    public class VerificationDocumentsInputModel : IUploadFiles
+    public class VerificationDocumentsInputModel : BaseUploadFileInputModel
     {
-        public VerificationDocumentsInputModel()
-        {
-            this.Documents = new List<IFormFile>();
-        }
-
-        public IList<IFormFile> Documents { get; set; }
     }
 }

@@ -97,18 +97,13 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadAvatar(EditProfileInputModel input)
+        public async Task<IActionResult> UploadAvatar(UserAvatarInputModel input)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            if (input.Id != userId)
-            {
-                return this.NotFound();
-            }
-
             try
             {
-                await this.uploadDocumentsService.UploadDocumentsAsync(input.UserAvatarInputModel, userId, $"{this.environment.WebRootPath}/users/profile-images/{userId}");
+                await this.uploadDocumentsService.UploadDocumentsAsync(input, userId, $"{this.environment.WebRootPath}/users/profile-images/{userId}");
             }
             catch (Exception error)
             {

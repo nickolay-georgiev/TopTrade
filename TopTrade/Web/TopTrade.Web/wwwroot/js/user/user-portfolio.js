@@ -8,6 +8,7 @@
             .withUrl("/user/portfolio/index")
             .build();
 
+
         connection.on("GetStockData", function (data) {
             let updatedData = data.stocks;
 

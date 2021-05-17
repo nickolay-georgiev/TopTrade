@@ -45,7 +45,7 @@
                     Description = x.Description,
                     Url = x.Url,
                     PublishedAt = x.PublishedAt,
-                    ImageUrl = x.UrlToImage,
+                    ImageUrl = x.UrlToImage ?? "/img/avatar-background-img.png",
                 }).Take(20).ToList();
 
             return articles;

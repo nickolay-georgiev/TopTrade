@@ -34,6 +34,8 @@
             userEquity: () => document.querySelector('.equity-funds > span'),
         };
 
+        domElements.token()
+
         const endpoints = {
             stockSearch: () => 'searchStock',
             stockList: () => 'searchList',

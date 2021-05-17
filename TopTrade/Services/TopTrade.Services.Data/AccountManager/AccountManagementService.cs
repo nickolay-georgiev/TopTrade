@@ -1,12 +1,10 @@
 ﻿namespace TopTrade.Services.Data.AccountManager
 {
-    using Microsoft.AspNetCore.Identity;
-
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Identity;
     using TopTrade.Common;
     using TopTrade.Data.Common.Repositories;
     using TopTrade.Data.Models;
@@ -47,7 +45,7 @@
             // TODO Remove when upload on azure
             foreach (var model in viewModels)
             {
-                model.DocumentUrl = model.DocumentUrl.Split("wwwroot")[1];
+                model.DocumentUrl = model.DocumentUrl.Split("wwwroot")[2];
             }
 
             var verificationDocumentPageViewModel = new VerificationDocumentPageViewModel
@@ -75,7 +73,7 @@
                 throw new ArgumentNullException("Document not found");
             }
 
-            document.DocumentUrl = document.DocumentUrl.Split("wwwroot")[1];
+            document.DocumentUrl = document.DocumentUrl.Split("wwwroot")[2];
 
             return document;
         }

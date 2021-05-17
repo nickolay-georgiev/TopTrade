@@ -12,6 +12,7 @@
     using TopTrade.Data.Models.User;
     using TopTrade.Data.Models.User.Enums;
     using TopTrade.Web.ViewModels.User;
+    using TopTrade.Web.ViewModels.User.Profile;
 
     public class UploadDocumentsService : IUploadDocumentsService
     {
@@ -26,7 +27,7 @@
             this.verificationDocumentRepository = verificationDocumentRepository;
         }
 
-        public async Task UploadDocumentsAsync(IUploadFiles input, string userId, string imagePath, [CallerMemberName]string callerName = "")
+        public async Task UploadDocumentsAsync(BaseUploadFileInputModel input, string userId, string imagePath, [CallerMemberName]string callerName = "")
         {
             this.VerifyDocumentsAreValid(input);
 
