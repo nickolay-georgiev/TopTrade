@@ -2,6 +2,20 @@
 
 Demo project for trading stocks on NYSE build with Asp.net Core 5.0 MVC. Provided data is refreshing on 2 min. series.
 
+We kindly ask you do not operate with more than 1-2 stocks, because our provider is limmiting us up to 5 api calls per minute, every stock require at least 2 api calls.
+
+## Demo Accounts
+* Administrator
+
+User: admin@toptrade.com
+
+Password: adminpass
+##
+* AccountManager
+
+User: manager@toptrade.com
+
+Password: managerpass
 
 ## Roles
 
