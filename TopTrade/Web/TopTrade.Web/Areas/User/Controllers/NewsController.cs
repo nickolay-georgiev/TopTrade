@@ -7,6 +7,7 @@
 
     public class NewsController : BaseLoggedUserController
     {
+        private const string DefaultNewsSearch = "All";
         private readonly INewsService newsService;
 
         public NewsController(INewsService newsService)
@@ -16,15 +17,15 @@
 
         public async Task<IActionResult> Index()
         {
-            var news = await this.newsService.GetLatestStocksNewsAsync("All");
-            return this.View(news);
+            var newsViewModel = await this.newsService.GetLatestStocksNewsAsync(DefaultNewsSearch);
+            return this.View(newsViewModel);
         }
 
         [HttpGet]
         public async Task<IActionResult> Search(string keyword)
         {
-            var news = await this.newsService.GetLatestStocksNewsAsync(keyword);
-            return this.View(nameof(this.Index), news);
+            var newsViewModel = await this.newsService.GetLatestStocksNewsAsync(keyword);
+            return this.View(nameof(this.Index), newsViewModel);
         }
     }
 }

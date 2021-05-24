@@ -47,5 +47,7 @@
         public const string UnknownNewsAuthor = "Unknown";
 
         public const string Password = "manager@toptrade.com";
+
+        public const string DefaultNewsImage = "/img/avatar-background-img.png";
     }
 }

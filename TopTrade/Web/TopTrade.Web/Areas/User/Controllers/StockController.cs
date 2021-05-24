@@ -57,9 +57,9 @@
                 var resultViewModel = await this.tradeService.OpenTradeAsync(input, userId);
                 return this.Ok(resultViewModel);
             }
-            catch (Exception error)
+            catch (Exception)
             {
-                return this.Json(error.Message);
+                return this.BadRequest();
             }
         }
 

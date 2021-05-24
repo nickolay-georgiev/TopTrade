@@ -77,6 +77,8 @@
 
             services.AddHangfireServer();
 
+            services.AddMemoryCache();
+
             services.AddControllersWithViews(
                 options =>
                     {

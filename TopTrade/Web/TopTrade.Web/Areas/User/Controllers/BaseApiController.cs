@@ -6,7 +6,7 @@
     [Authorize]
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class BaseApiController : Controller
+    public class BaseApiController : ControllerBase
     {
     }
 }
