@@ -13,7 +13,7 @@
 
         public string PaymentMethod { get; set; }
 
-        public string CardNumber { get; set; }
+        public string CardNumber { get; set; } = "132";
 
         public string TransactionStatus { get; set; }
     }

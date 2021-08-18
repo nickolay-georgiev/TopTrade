@@ -235,7 +235,6 @@
 
         public async Task AcceptWithdrawRequestAsync(WithdrawInputModel input, string userId)
         {
-
             if (input.Available < input.DesiredAmount)
             {
                 throw new InvalidOperationException(string.Format(GlobalConstants.ReachedWithdrawLimit, input.Available));
